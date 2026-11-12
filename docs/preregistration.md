@@ -122,3 +122,16 @@ Synthetic text documents with no PDF or OCR layer; delinquency history is self-d
 ## Addenda
 
 None yet.
+
+### Addendum 1 (2026-11-12, before any main-run output existed)
+
+The pilot (180 clean and 320 attacked bundles per model, 1,560 calls) measured throughput on two Kaggle T4 GPUs: Qwen2.5-1.5B 4.95 calls per second, Phi-4-mini 2.2, Olmo-3-7B 0.73 (one copy split across both GPUs). The main run of section 2.4 needs about 24,000 calls per model, which is 1.4, 3.1 and 9.2 session hours. The reduction order of section 6 cannot bring the total near six hours, so the run sizes change as follows. The sizes follow from the measured throughput and the six-hour limit only. Pilot outputs were read for parse rates, throughput and pipeline correctness, and the attack-success counts of the eight pilot variants were also visible. No attack, metric, model or decision rule changes.
+
+| Run | Models | Clean U | Targets P | Collateral Q |
+|---|---|---|---|---|
+| main | Qwen2.5-1.5B, Phi-4-mini | first 1,000 of U | first 150 of P | first 40 of Q |
+| mainL | Olmo-3-7B | first 200 of U | first 50 of P | none |
+| phr1 | Qwen2.5-1.5B, Phi-4-mini | first 150 of U | first 30 of P, all 26 attacks | none |
+| var1 to var3 | Qwen2.5-1.5B, Phi-4-mini | first 60 of U | first 20 of P, the 8 variance attacks | none |
+
+All subsets are prefixes of the shuffled lists defined in section 2.1, so the subsets are nested and the larger model's applicants are a subset of the smaller models'. The Olmo-3-7B run has no collateral sample and no phr1 or var runs. Its clean AUROC rests on about 14 positives and is descriptive only, and every Olmo comparison has roughly a third of the pairs of the other models. The 7B model therefore supports RQ4 only as an indication. Section 2.1's sample sizes of 1,500, 200 and 50 remain the candidate pools. Extraction calls cap at 256 new tokens instead of 320 (the pilot maximum was 231).

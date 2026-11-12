@@ -22,8 +22,8 @@ from src.segments import Segments
 
 SELECTION_SEED = 20261113
 N_UTILITY, N_TARGETS, N_COLLATERAL = 1500, 200, 50
-N_PHR1_CLEAN, N_PHR1_TARGETS = 300, 60
-N_VAR_CLEAN, N_VAR_TARGETS = 100, 30
+# Run sizes (prefixes of the shuffled U, P, Q lists): clean utility, targets, collateral. See preregistration addendum 1.
+RUN_SIZES = {"main": (1000, 150, 40), "mainL": (200, 50, 0), "phr1": (150, 30, 0), "var": (60, 20, 0)}
 VARIANCE_ATTACKS = ("IO1", "HI2", "FA2", "DX3", "EM2", "EM5", "EM11", "EM14")
 VARIANCE_SEEDS = (1, 2, 3)
 VARIANCE_TEMPERATURE = 0.7
@@ -90,9 +90,11 @@ def _bundles(sel: Selection, segments: Segments, specs: list[AttackSpec], clean_
 def build_bundles(sel: Selection, segments: Segments, run: str = "main") -> list[Bundle]:
     """All bundles of a run, clean first."""
     specs = load_catalog()
-    if run == "main":
-        clean_ids = list(dict.fromkeys(sel.U + sel.P + sel.Q))
-        return list(_bundles(sel, segments, specs, clean_ids, sel.P + sel.Q, specs))
+    if run in ("main", "mainL"):
+        nu, np_, nq = RUN_SIZES[run]
+        targets = sel.P[:np_] + sel.Q[:nq]
+        clean_ids = list(dict.fromkeys(sel.U[:nu] + targets))
+        return list(_bundles(sel, segments, specs, clean_ids, targets, specs))
     if run == "check":
         return list(_bundles(sel, segments, specs, sel.U[:16], [], specs))
     if run == "pilot":
@@ -100,16 +102,20 @@ def build_bundles(sel: Selection, segments: Segments, run: str = "main") -> list
         clean_ids = list(dict.fromkeys(sel.U[:140] + sel.P[:40] + sel.Q[:20]))
         return list(_bundles(sel, segments, specs, clean_ids, sel.P[:40], chosen))
     if run == "phr1":
-        return list(_bundles(sel, segments, specs, sel.U[:N_PHR1_CLEAN], sel.P[:N_PHR1_TARGETS], specs))
+        nu, np_, _ = RUN_SIZES["phr1"]
+        targets = sel.P[:np_]
+        return list(_bundles(sel, segments, specs, list(dict.fromkeys(sel.U[:nu] + targets)), targets, specs))
     if run.startswith("var"):
+        nu, np_, _ = RUN_SIZES["var"]
         chosen = [s for s in specs if s.id in VARIANCE_ATTACKS]
-        return list(_bundles(sel, segments, specs, sel.U[:N_VAR_CLEAN], sel.P[:N_VAR_TARGETS], chosen))
+        targets = sel.P[:np_]
+        return list(_bundles(sel, segments, specs, list(dict.fromkeys(sel.U[:nu] + targets)), targets, chosen))
     raise ValueError(run)
 
 
 def run_settings(run: str) -> tuple[int, float, int]:
     """phrasing, temperature, seed for a run tag."""
-    if run in ("main", "check", "pilot"):
+    if run in ("main", "mainL", "check", "pilot"):
         return 0, 0.0, 0
     if run == "phr1":
         return 1, 0.0, 0

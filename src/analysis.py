@@ -25,11 +25,18 @@ def load(run: str = "main") -> pd.DataFrame:
 
 
 def with_oracle(df: pd.DataFrame) -> pd.DataFrame:
-    """Give every model its own copy of the model-free oracle rows so arms can be compared per model."""
-    oracle = df[df["model"] == "oracle"]
-    models = [m for m in df["model"].unique() if m != "oracle"]
-    copies = [oracle.assign(model=m) for m in models]
-    return pd.concat([df[df["model"] != "oracle"], *copies], ignore_index=True)
+    """Give every model its own copy of the oracle rows of the same run, so arms can be compared per model."""
+    parts = []
+    for run, g in df.groupby("run"):
+        oracle = g[g["model"] == "oracle"]
+        models = [m for m in g["model"].unique() if m != "oracle"]
+        parts += [g[g["model"] != "oracle"], *[oracle.assign(model=m) for m in models]]
+    return pd.concat(parts, ignore_index=True)
+
+
+def load_runs(runs: list[str]) -> pd.DataFrame:
+    """Decision tables of several runs (each model belongs to one run), oracle rows matched within each run."""
+    return with_oracle(pd.concat([load(r) for r in runs], ignore_index=True))
 
 
 def attacked_targets(df: pd.DataFrame) -> pd.DataFrame:

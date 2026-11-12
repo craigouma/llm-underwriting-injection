@@ -13,7 +13,7 @@ import sys
 import time
 from pathlib import Path
 
-MAX_NEW = {"A": 64, "A_def": 64, "X": 320}
+MAX_NEW = {"A": 64, "A_def": 64, "X": 256}
 
 
 def slug(model: str) -> str:
