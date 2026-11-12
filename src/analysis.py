@@ -95,7 +95,7 @@ def extraction_accuracy(df: pd.DataFrame) -> pd.DataFrame:
     for model, g in b.groupby("model"):
         for f in FIELDS:
             col = g[f"fc_{f}"]
-            rows.append({"model": model, "field": f, "accuracy": col.fillna(False).astype(bool).mean(), "n": len(g)})
+            rows.append({"model": model, "field": f, "accuracy": float((col == True).mean())  # noqa: E712, "n": len(g)})
     return pd.DataFrame(rows)
 
 

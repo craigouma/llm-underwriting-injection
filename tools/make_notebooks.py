@@ -78,8 +78,8 @@ outputs) and produces every figure and table in the paper, plus the macros the p
 import pandas as pd
 from src import analysis as an, figures, report
 pd.set_option("display.width", 220); pd.set_option("display.max_columns", 40); pd.set_option("display.max_rows", 200)
-RUN = os.environ.get("UW_RUN", "main")
-df = an.with_oracle(an.load(RUN))
+RUNS = tuple(os.environ.get("UW_RUNS", "main,mainL").split(","))
+df = an.load_runs(list(RUNS))
 len(df)
 """),
     cell("markdown", "## Clean utility and extraction accuracy (RQ3)"),
@@ -94,7 +94,7 @@ len(df)
     cell("code", """
 from IPython.display import display
 paths = figures.make_all(df)
-report.main(RUN)
+report.main(RUNS)
 print([str(p) for p in paths])
 """),
 ])

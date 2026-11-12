@@ -21,8 +21,8 @@ ARM_LABELS = {"A": "A: LLM decides", "A_def": "A + prompt defense", "B": "B: LLM
               "B_oracle": "B, oracle extractor", "C_oracle": "C, oracle extractor"}
 ORACLE = "#8a8987"
 INK, INK2, GRID, NAVY = "#0b0b0b", "#52514e", "#e4e3df", "#1a3a5c"
-CAT_LABELS = {"instruction_override": "Override", "hidden_instruction": "Hidden note", "fake_authority": "Fake authority",
-              "delimiter_format": "Delimiter", "extraction_manipulation": "Extraction\nmanipulation"}
+CAT_LABELS = {"instruction_override": "Override", "hidden_instruction": "Hidden\nnote", "fake_authority": "Fake\nauthority",
+              "delimiter_format": "Delimiter", "extraction_manipulation": "Extraction"}
 MODEL_LABELS = {"Qwen/Qwen2.5-1.5B-Instruct": "Qwen2.5 1.5B", "microsoft/Phi-4-mini-instruct": "Phi-4-mini 3.8B",
                 "allenai/Olmo-3-7B-Instruct": "Olmo-3 7B"}
 MODEL_ORDER = list(MODEL_LABELS)
@@ -71,7 +71,8 @@ def fig_asr_by_category(df: pd.DataFrame) -> Path:
             ax.errorbar(x, sub["rate"], yerr=err, fmt="none", ecolor=INK2, elinewidth=0.8, capsize=0, zorder=4)
         ax.set_xticks(range(len(an.CATEGORIES)), [CAT_LABELS[c] for c in an.CATEGORIES], rotation=0, fontsize=7)
         ax.set_title(MODEL_LABELS[model], color=NAVY)
-        ax.set_ylim(0, 1)
+        ax.set_ylim(0, 1.04)
+        ax.set_yticks([0, 0.2, 0.4, 0.6, 0.8, 1.0])
         pct(ax)
         ax.grid(axis="x", visible=False)
     axes[0][0].set_ylabel("Attack success rate (Wilson 95% CI)")
@@ -111,8 +112,8 @@ def fig_tradeoff(df: pd.DataFrame) -> Path:
     for ax, model in zip(axes[0], models):
         g = t[t["model"] == model].reset_index(drop=True)
         ax.plot(g["clean_review_rate"], g["asr_extraction"], color=ARM_COLORS["C"], lw=2, marker="o", ms=5, mec="white", mew=1.5, zorder=3)
-        for _, r in g.iterrows():
-            ax.annotate(r["checks"].split("+")[-1], (r["clean_review_rate"], r["asr_extraction"]), xytext=(4, 5),
+        for i, r in g.iterrows():
+            ax.annotate(r["checks"].split("+")[-1], (r["clean_review_rate"], r["asr_extraction"]), xytext=(5, 6 if i % 2 == 0 else -11),
                         textcoords="offset points", fontsize=7, color=INK2)
         ax.set_title(MODEL_LABELS[model], color=NAVY)
         ax.set_xlabel("Review rate on clean inputs")
