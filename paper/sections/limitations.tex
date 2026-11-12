@@ -1,0 +1,18 @@
+\section{Limitations}
+\label{sec:limitations}
+
+\textbf{Synthetic documents.} The documents are short plain-text templates generated from tabular rows. Real payslips, statements and forms are longer, messier and more varied, and extraction on them is harder. All extraction accuracies here are likely to be optimistic for that reason, and the clean-input review rate of C is likely to be too low.
+
+\textbf{No PDF or OCR layer.} Real injection often relies on hidden text in a PDF, such as white or zero-size text, that a human cannot see and a text extractor passes on. Our documents are text, so hidden-text delivery and OCR errors are outside the results.
+
+\textbf{Small open-weight models.} We test three open-weight models of 1.5B to 7B parameters. Larger or hosted frontier models may resist instruction injection better and extract more accurately, so the numbers do not transfer to them. Three models cannot support a statement about model size beyond the pattern observed in these three, which also differ in family and training.
+
+\textbf{One dataset, income-complete rows.} All applicants come from one 2011 US consumer credit dataset, restricted to rows with a stated income, which removes about a fifth of the data. The scorecard, its thresholds and the segment bands depend on that choice. The thresholds rest on an assumed loss-to-margin ratio of six.
+
+\textbf{Self-declared delinquency.} The late-payment counts come from the application form. A lender would take them from a bureau report, so an omitted-late-payments attack (EM7) is easier here than in practice, and C has no independent source to check it against.
+
+\textbf{Attacker model.} The attack set is fixed and was written before any model was run. It contains 26 variants, three per instruction category, and no adaptive attacker who observes outputs and iterates. Adaptive attacks have bypassed prompt-level defenses that reported near-zero success on fixed sets~\cite{nasr2025}, so our estimates for the prompt-defended decider and for the instruction categories under B are lower bounds on what an adaptive attacker could obtain. The attacker also cannot touch the code, the scorecard or the review rule by assumption.
+
+\textbf{Design choices of the architectures.} C's checks and thresholds were fixed before the experiments but they are one design among many. Different bands would trade review rate against attack success differently, and the trade-off figure shows only the cumulative effect of the four check groups. The extraction prompt has no prompt-level defense of its own, so B and C test the architecture without that addition. The decider prompt states the lender policy, which we added after a clean-input check in which two models approved no one (Section~\ref{sec:method}), so A reflects a policy-aware prompt.
+
+\textbf{Statistical limits.} Applicants repeat across variants, so pairs are not independent. We report an applicant-level bootstrap beside the Wilson intervals, but per-variant and per-sophistication breakdowns rest on at most 200 targets and are descriptive. The AUROC on the utility sample has an interval of about $\pm 0.05$.
