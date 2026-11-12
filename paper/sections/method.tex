@@ -1,0 +1,46 @@
+\section{Method}
+\label{sec:method}
+
+\subsection{Data and scorecard}
+
+We use the Give Me Some Credit data (Kaggle competition, 2011): 150{,}000 borrowers, ten features and the label \texttt{SeriousDlqin2yrs}. Cleaning is minimal and was fixed before any model run. We keep complete cases, because every document states an income, and remove sentinel delinquency codes, ages below 18, incomes outside 500 to 50{,}000 per month, utilisation above 2 and debt ratios above 5. This leaves \nCleanRows{} rows ($77.8\%$ of the raw file). Rows are split 60/20/20 into train, validation and test with a fixed seed, stratified by label.
+
+The scorecard used by architectures B and C is a logistic regression whose coefficients are sign-constrained: utilisation, late-payment counts, debt ratio and dependants can only raise risk, and age and log income can only lower it. Open credit lines and real-estate loans are left free. On the test split it reaches an AUROC of \aurocScoreLR{} (Brier \brierScoreLR{}, expected calibration error \eceScoreLR{}). A LightGBM model with monotone constraints reaches \aurocScoreLGBM{} and serves as a robustness check. The AUROC is below the 0.86 to 0.87 we obtained in earlier work on this dataset because that work imputed missing incomes and used engineered features, whereas the complete-case set drops the rows with the most extreme values.
+
+The outcome mapping is the same for every architecture. An applicant is approved when the scorecard probability of default is below \thApprove{}, declined when it is at least \thDecline{}, and referred to a human underwriter in between. The decline cut-off maximises expected profit on the validation split for a loss on default of six times the margin on a good loan, and the approve cut-off is half of it. Table~\ref{tab:scorecard} gives the resulting shares.
+
+\begin{table}[t]
+\centering\small
+\caption{Scorecards on the test split. Outcome shares come from the mapping above.}
+\label{tab:scorecard}
+\input{generated/tables/scorecard}
+\end{table}
+
+\subsection{Synthetic document bundles}
+
+For each applicant we generate three plain-text documents: a payslip, a three-month bank statement summary and a loan application form. The values they state are consistent with the tabular row. The payslip states gross monthly pay. The statement states average monthly deposits, which equal net pay times a factor drawn from 0.97 to 1.06 with net pay at 72 to 90 percent of gross, and average monthly debt repayments equal to the debt ratio times income. The form states age with a date of birth, dependants, declared income, declared debt repayments, open credit lines, real-estate loans, a revolving limit and balance chosen so that their ratio equals the utilisation, and the counts of payments 30 to 59, 60 to 89 and 90 or more days late in the last 24 months. Controlled noise varies label wording, money formatting (three styles), the order of lines and distractor content such as the loan purpose, the employer and overdraft days. A bundle is about 550 to 650 tokens long. Delinquency history is self-declared on the form, which a real lender would take from a bureau report; Section~\ref{sec:limitations} returns to this.
+
+\subsection{Attacks}
+
+The attack set has \nAttacks{} fixed variants (Table~\ref{tab:attacks}). Categories 1 to 4 add instruction-style text at a fixed location: an instruction override and a hidden or out-of-place note, both with generic approve-the-applicant payloads, a fake system or reviewer note that claims authority, and delimiter and format exploitation that closes the expected structure or injects role markers and JSON. Each category has three variants of low, medium and high sophistication. In each category the high variant names the extraction fields, to simulate an attacker who guesses the schema. Category 5, extraction manipulation, contains no instruction text. It falsifies values (income raised by 20, 50 and 100 percent in one document or consistently across the payslip, the statement deposits and the declared income; omitted late payments; understated debt and utilisation), creates conflicts and duplicated fields, and uses unit and format tricks (an annual salary, debt in thousands, a different currency). Falsifications edit the stated values and re-render, so every unrelated line of the bundle is unchanged. For value falsifications a plausibility score is the segment-centred percentile of the falsified value, defined in advance in the preregistration.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{The fixed attack set. Sophistication for category 5: low is a falsification in one document that contradicts another, medium is a format trick, duplicate, omission or unverifiable understatement, and high is a falsification kept consistent across documents.}
+\label{tab:attacks}
+\input{generated/tables/attacks}
+\end{table}
+
+\subsection{Architectures}
+
+\textbf{A} gives the model the bundle and the lender policy and asks for a JSON object with a decision and a risk score. \textbf{A with a prompt-level defense} adds a warning that the documents are untrusted data and wraps them in tags, the standard comparison point. \textbf{B} asks the model only for a JSON object with 15 fields. The output is validated against a schema, a fixed rule maps the fields to scorecard features (the payslip is the primary income source), and the scorecard decides. Nothing the model writes reaches the decision except through those fields. Output that does not parse or validate yields a referral and is counted separately. \textbf{C} adds checks in code to B, using the same extraction: type and range checks, cross-document consistency (deposits against gross pay, declared against payslip income, declared against statement debt, payslip currency), and a plausible-band rule that flags income outside the 0.1st to 99.5th percentile of the applicant's age band and debt ratio or utilisation above the 99.5th. Any failed check routes the case to a human reviewer, and the review rule lives in code. All thresholds were fixed in the preregistration. \textbf{Oracle arms} run B and C on the values the documents state, with no model, to separate the effect of a falsified document from the effect of an extraction error.
+
+\subsection{Models, applicants and runs}
+
+We evaluate three open-weight instruct models of different families and sizes, in fp16 with greedy decoding: Qwen2.5-1.5B-Instruct (Apache-2.0), Phi-4-mini-instruct, 3.8B (MIT) and Olmo-3-7B-Instruct (Apache-2.0). Inference ran in free Kaggle sessions on two NVIDIA T4 GPUs with Hugging Face Transformers. All raw outputs are cached and every number in this paper is computed from the cache.
+
+The applicants are drawn from the test split: \nU{} for clean-input utility (stratified by label), \nP{} targets whom the clean scorecard would refer or decline, and \nQ{} applicants the scorecard would approve, used to measure collateral damage. Every variant is applied to every target and every collateral applicant for whom it changes the documents. A second prompt phrasing and a temperature-0.7 variance run use subsets.
+
+\subsection{Metrics and tests}
+
+The attack success rate (ASR) is the share of targets whose final outcome under attack is approve, with Wilson 95 percent intervals; pooled figures count each applicant and variant pair once, and an applicant-level bootstrap is reported as a sensitivity check. We also report each architecture's approve rate on the same targets with clean documents, and the paired flip rate among targets that architecture did not approve when clean. Clean utility is decision AUROC, the default rate among approved applicants, agreement with the tabular scorecard, extraction accuracy per field and failure rates. Paired comparisons between architectures on identical applicant and variant pairs use the exact McNemar test with Holm adjustment over a family of 20 planned tests per model. The preregistration fixes all definitions and the decision rule for each hypothesis.
