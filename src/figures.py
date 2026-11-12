@@ -58,12 +58,14 @@ def save(fig, name: str) -> Path:
 
 def fig_asr_by_category(df: pd.DataFrame) -> Path:
     t = an.asr(df, ["category"])
+    floor = an.clean_approve_rate(df).set_index(["model", "arm"])["rate"]
     models = models_in(t)
     fig, axes = plt.subplots(1, len(models), figsize=(3.4 * len(models), 3.2), sharey=True, squeeze=False)
     arms = ["A", "A_def", "B", "C"]
     width, gap = 0.17, 0.02
     for ax, model in zip(axes[0], models):
-        for j, arm in enumerate(arms):
+        if floor[(model, "A")] > 0.02:
+            ax.axhline(floor[(model, "A")], color=ARM_COLORS["A"], lw=0.9, ls=(0, (4, 3)), zorder=2)        for j, arm in enumerate(arms):
             sub = t[(t["model"] == model) & (t["arm"] == arm)].set_index("category").reindex(an.CATEGORIES)
             x = np.arange(len(an.CATEGORIES)) + (j - 1.5) * (width + gap)
             err = [(sub["rate"] - sub["lo"]).clip(lower=0), (sub["hi"] - sub["rate"]).clip(lower=0)]
