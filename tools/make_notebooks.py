@@ -90,6 +90,8 @@ len(df)
     cell("code", "display(an.family_tests(df).round(4))"),
     cell("markdown", "## Oracle attribution, review burden and plausibility trend (RQ2, RQ3, H2, H3)"),
     cell("code", "display(an.oracle_attribution(df).round(3)); display(an.review_burden(df).round(3)); display(an.caught_by_c(df).round(3)); display(an.plausibility_trend(df).round(3))"),
+    cell("markdown", "## Preregistered decision rules (H1 to H3), paired flips, collateral damage and utility under attack"),
+    cell("code", "display(an.hypotheses(df).round(4)); display(an.paired_flip(df, ['category']).round(3)); display(an.collateral(df).round(3)); display(an.utility_under_attack(df).round(4))"),
     cell("markdown", "## Figures and paper tables"),
     cell("code", """
 from IPython.display import display
