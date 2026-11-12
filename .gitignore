@@ -19,3 +19,6 @@ paper/*.synctex.gz
 
 # macOS
 .DS_Store
+
+# Kaggle job outputs pulled for inspection
+kaggle/pulled/
