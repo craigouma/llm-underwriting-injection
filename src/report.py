@@ -27,6 +27,10 @@ def p1(x: float) -> str:
     return "n/a" if pd.isna(x) else f"{100 * x:.1f}"
 
 
+def fmt_p(p: float) -> str:
+    return "$<0.001$" if p < 0.001 else f"{p:.3f}"
+
+
 def interval(row) -> str:
     return f"{p1(row['rate'])} ({p1(row['lo'])} to {p1(row['hi'])})"
 
@@ -114,7 +118,7 @@ def tests_table(df: pd.DataFrame) -> str:
         for _, r in f[(f["model"] == model) & (f["arm_a"].isin(["A", "B"]))].iterrows():
             if (r["arm_a"], r["arm_b"]) in {("A", "B"), ("B", "C"), ("A", "C"), ("A", "A_def")}:
                 rows.append([MODEL_LABELS[model], CAT_NAME[r["category"]], f"{ARM_NAME[r['arm_a']]} vs {ARM_NAME[r['arm_b']]}", str(int(r["n"])),
-                             f"{p1(r['asr_a'])} / {p1(r['asr_b'])}", f"{int(r['only_a'])} / {int(r['only_b'])}", f"{r['p_holm']:.3g}"])
+                             f"{p1(r['asr_a'])} / {p1(r['asr_b'])}", f"{int(r['only_a'])} / {int(r['only_b'])}", fmt_p(r['p_holm'])])
     return tabular(["Model", "Category", "Contrast", "Pairs", "ASR (\\%)", "Only first / second", "Holm $p$"], rows, "lllrrrr")
 
 
@@ -153,9 +157,9 @@ def hypotheses_table(df: pd.DataFrame) -> str:
     rows = []
     for _, r in h.iterrows():
         name = MODEL_LABELS[r["model"]]
-        rows.append([name, "H1", f"B pooled ASR {p1(r['h1_asr_b'])}\\% over {r['h1_n']} pairs, Wilson upper bound {p1(r['h1_hi'])}\\%; largest Holm $p$ of A vs B {r['h1_min_gap_p']:.3g}", verdict(r["h1"])])
+        rows.append([name, "H1", f"B pooled ASR {p1(r['h1_asr_b'])}\\% over {r['h1_n']} pairs, Wilson upper bound {p1(r['h1_hi'])}\\%; largest Holm $p$ of A vs B {fmt_p(r['h1_min_gap_p'])}", verdict(r["h1"])])
         rows.append(["", "H2", f"B extraction ASR lower bound {p1(r['h2_ext_lo'])}\\%; plausibility slope {r['h2_slope']:.2f} ({r['h2_slope_lo']:.2f} to {r['h2_slope_hi']:.2f})", verdict(r["h2"])])
-        rows.append(["", "H3", f"Extraction ASR B {p1(r['h3_asr_b'])}\\% to C {p1(r['h3_asr_c'])}\\% (Holm $p$ {r['h3_p']:.3g}); clean review rate of C {p1(r['h3_review_c'])}\\% against refer rate of B {p1(r['h3_refer_b'])}\\%", verdict(r["h3"])])
+        rows.append(["", "H3", f"Extraction ASR B {p1(r['h3_asr_b'])}\\% to C {p1(r['h3_asr_c'])}\\% (Holm $p$ {fmt_p(r['h3_p'])}); clean review rate of C {p1(r['h3_review_c'])}\\% against refer rate of B {p1(r['h3_refer_b'])}\\%", verdict(r["h3"])])
     return tabular(["Model", "Hypothesis", "Evidence", "Verdict"], rows, "llp{0.62\\textwidth}l")
 
 
@@ -188,7 +192,7 @@ def phrasing_table(main: pd.DataFrame, other: pd.DataFrame) -> str:
                     x = x.iloc[0]
                     rows.append([MODEL_LABELS[model] if (arm, pool) == ("A", "instruction") else "", ARM_NAME[arm], pool,
                                  rate_cell(x["rate_main"], x["n_main"]), rate_cell(x["rate_other"], x["n_other"])])
-    return tabular(["Model", "Arm", "Attacks", "Phrasing 1 (main)", "Phrasing 2"], rows, "lllrr")
+    return tabular(["Model", "Arm", "Attacks", "Main wording", "Second wording"], rows, "lllrr")
 
 
 def seed_table(main: pd.DataFrame, seeds: list[pd.DataFrame]) -> str:
