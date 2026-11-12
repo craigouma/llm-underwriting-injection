@@ -65,7 +65,8 @@ def fig_asr_by_category(df: pd.DataFrame) -> Path:
     width, gap = 0.17, 0.02
     for ax, model in zip(axes[0], models):
         if floor[(model, "A")] > 0.02:
-            ax.axhline(floor[(model, "A")], color=ARM_COLORS["A"], lw=0.9, ls=(0, (4, 3)), zorder=2)        for j, arm in enumerate(arms):
+            ax.axhline(floor[(model, "A")], color=ARM_COLORS["A"], lw=0.9, ls=(0, (4, 3)), zorder=2)
+        for j, arm in enumerate(arms):
             sub = t[(t["model"] == model) & (t["arm"] == arm)].set_index("category").reindex(an.CATEGORIES)
             x = np.arange(len(an.CATEGORIES)) + (j - 1.5) * (width + gap)
             err = [(sub["rate"] - sub["lo"]).clip(lower=0), (sub["hi"] - sub["rate"]).clip(lower=0)]
