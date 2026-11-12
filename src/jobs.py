@@ -93,6 +93,12 @@ def build_bundles(sel: Selection, segments: Segments, run: str = "main") -> list
     if run == "main":
         clean_ids = list(dict.fromkeys(sel.U + sel.P + sel.Q))
         return list(_bundles(sel, segments, specs, clean_ids, sel.P + sel.Q, specs))
+    if run == "check":
+        return list(_bundles(sel, segments, specs, sel.U[:16], [], specs))
+    if run == "pilot":
+        chosen = [s for s in specs if s.id in VARIANCE_ATTACKS]
+        clean_ids = list(dict.fromkeys(sel.U[:140] + sel.P[:40] + sel.Q[:20]))
+        return list(_bundles(sel, segments, specs, clean_ids, sel.P[:40], chosen))
     if run == "phr1":
         return list(_bundles(sel, segments, specs, sel.U[:N_PHR1_CLEAN], sel.P[:N_PHR1_TARGETS], specs))
     if run.startswith("var"):
@@ -103,7 +109,7 @@ def build_bundles(sel: Selection, segments: Segments, run: str = "main") -> list
 
 def run_settings(run: str) -> tuple[int, float, int]:
     """phrasing, temperature, seed for a run tag."""
-    if run == "main":
+    if run in ("main", "check", "pilot"):
         return 0, 0.0, 0
     if run == "phr1":
         return 1, 0.0, 0
