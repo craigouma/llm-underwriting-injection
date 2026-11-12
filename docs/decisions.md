@@ -29,3 +29,9 @@ Every choice the brief left open, and every departure from it, with the date and
 **Pilot findings that are not defects.** Phi-4-mini writes numbers with thousands separators ("6,255") in 22 of its 1,560 pilot calls despite the instruction not to, which is invalid JSON. They stay as logged parse failures. Qwen2.5-1.5B reports net pay in place of gross pay on the payslip in 55 of 146 clean bundles (38%). The scorecard decision still matches the reference in 99% of cases, but C flags those bundles through the declared-versus-payslip income check, so its clean review rate is 46%. Both are small-model extraction errors and belong in the RQ3 results.
 
 **Run sizes reduced after the pilot.** See preregistration addendum 1. The reduction is forced by measured throughput and the six-hour limit. The 7B model runs a subset (`mainL`).
+
+## 2026-11-12, grid outputs
+
+**Evaluation jobs read raw outputs from the grid kernels.** A script kernel that embeds the code and the cached raw outputs (1.3 MB of base64 for the Qwen runs alone) was rejected by Kaggle with a 400 error on save, while kernels up to 0.9 MB had been accepted. Evaluation and analysis kernels now attach the grid kernel as an input and copy its output files into `results/raw` before replay. The replayed decisions are the same, because the replay reads only the cached files.
+
+**Requirements file.** `requirements.txt` records the versions printed by a Kaggle kernel on 2026-11-12 (Python 3.13). The CUDA build of torch used for inference is 2.11.0.
