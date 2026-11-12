@@ -1,0 +1,3 @@
+\section{Reproducibility}
+
+The code, the preregistration, the decisions log, the attack catalogue, every cached model output and every result table are in the repository accompanying this paper (commit \commitHash{}), under the MIT licence for code and CC BY 4.0 for data and text. Seeds are fixed throughout: \texttt{20261112} for the train, validation and test split and \texttt{20261113} for the choice of applicants. Raw model outputs are stored per model and run under \texttt{results/raw}, and \texttt{src.evaluate} replays them through every architecture without calling a model. The analysis notebook reads only the resulting tables. The Give Me Some Credit data has to be downloaded from Kaggle (\texttt{data/README.md}). \computeStatement{}

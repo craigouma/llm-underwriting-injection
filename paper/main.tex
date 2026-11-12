@@ -1,0 +1,51 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{authblk}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\definecolor{navy}{HTML}{1A3A5C}
+\titleformat{\section}{\normalfont\Large\bfseries\color{navy}}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{navy}}{\thesubsection}{1em}{}
+\captionsetup{font=small,labelfont={bf,color=navy}}
+\setlist{itemsep=2pt,topsep=4pt}
+
+\input{generated/numbers}
+\input{generated/commit}
+
+\title{\textbf{Where Should the LLM Sit?\\
+Architectural Defenses Against Document-Borne Prompt Injection\\
+in Automated Credit Underwriting}}
+\author[1]{Craig Ouma}
+\affil[1]{Independent Researcher, Nairobi, Kenya}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\input{sections/abstract}
+\input{sections/introduction}
+\input{sections/related}
+\input{sections/threat}
+\input{sections/method}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/limitations}
+\input{sections/release}
+\input{sections/repro}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\appendix
+\input{sections/appendix}
+\end{document}
