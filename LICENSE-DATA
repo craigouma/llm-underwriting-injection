@@ -1,0 +1,20 @@
+Data and text licence
+
+The generated document bundles, the attack catalogue, the cached model outputs, the result tables,
+the figures and the paper text produced by this repository (everything under data/attacks/,
+results/ and paper/, and the derived files data/splits.csv and data/segments.json) are released
+under the Creative Commons Attribution 4.0 International licence (CC BY 4.0).
+
+  https://creativecommons.org/licenses/by/4.0/
+
+Attribution: Craig Ouma (2026), Where Should the LLM Sit? Architectural Defenses Against
+Document-Borne Prompt Injection in Automated Credit Underwriting.
+
+Third-party inputs keep their own terms:
+
+- The Give Me Some Credit data (Kaggle competition GiveMeSomeCredit, 2011) is not redistributed.
+  The Kaggle community mirror carries licence "unknown". Download it from Kaggle under the
+  competition's terms (see data/README.md).
+- Model weights used for inference (Qwen/Qwen2.5-1.5B-Instruct, Apache-2.0;
+  microsoft/Phi-4-mini-instruct, MIT; allenai/Olmo-3-7B-Instruct, Apache-2.0) are not
+  redistributed. The cached outputs they produced on synthetic inputs are released with this study.
