@@ -1,0 +1,4 @@
+\section{Threat model}
+\label{sec:threat}
+
+The attacker is an applicant who can edit the text of any document they submit. The attacker does not control the code, the scorecard, its thresholds, the review rule or the model weights, and cannot change documents issued by third parties after submission. The goal is an approval for an applicant whom the clean tabular scorecard would refer or decline. The attacker does not know which architecture is deployed. Instruction payloads are generic, with three variants per category that name the extraction fields to simulate an attacker who guesses the schema. The attack set is fixed, so the attacker does not adapt to observed outputs. Success is measured on the final outcome of the pipeline. A referral to a human reviewer counts as a failed attack, on the assumption that the reviewer sees the documents and applies independent verification.

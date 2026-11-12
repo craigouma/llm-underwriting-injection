@@ -1,0 +1,15 @@
+\section{Introduction}
+
+Lenders have started to let LLM agents read applicant documents, such as payslips, bank statements and application forms, before a credit decision is made. The applicant controls those documents. Text planted in them can try to steer the model that reads them, which is the setting of indirect prompt injection~\cite{greshake2023}. A vendor benchmark for agentic underwriting reports that the residual risk concentrates in injections placed inside uploaded documents~\cite{roelofs2026pibench}, and an industry write-up shows invisible text changing an LLM-generated credit score~\cite{snyk2025}.
+
+Defenses placed inside the prompt, such as marking untrusted content or warning the model, are the usual first response~\cite{hines2024,wallace2024}. They reduce attack success on the benchmarks they are tested on, but defenses of this kind have been bypassed by adaptive attackers~\cite{nasr2025}. A different response changes the architecture: decide where the LLM sits and what it is allowed to decide~\cite{beurerkellner2025,debenedetti2025camel}. In underwriting the choice is concrete. The LLM can make the decision, or it can extract fields and leave the decision to a trained scorecard, with or without code-level validation and a human-review rule.
+
+Moving the LLM out of the decision raises a second question that instruction-injection benchmarks leave aside. If the model only extracts fields, an applicant can still move the decision by changing what the documents say, with no instruction text at all. Measurements of real resumes find that most injected prompts contain only data~\cite{zhang2026resume}, and the design-pattern literature names this case as outside what architectural separation protects~\cite{debenedetti2025camel}. In lending it is application fraud passing through an extractor. How much of it reaches the decision, and how much validation recovers, has not been measured for credit decisions as far as we found (Section~\ref{sec:related}).
+
+This paper makes a controlled comparison on synthetic document bundles generated from \nCleanRows{} real credit records. It contributes:
+\begin{itemize}
+  \item A comparison of four configurations on identical applicants and attacks: the LLM as decider, the LLM as decider with a prompt-level defense, the LLM as extractor feeding a logistic scorecard (B), and B with schema, cross-document and plausible-band checks and a code-defined review rule (C), on \nModels{} open-weight models from \modelRange{}.
+  \item A measurement of the extraction-manipulation residual, with an oracle extractor that reads the values the documents state, so that the part of the effect due to the LLM and the part due to the falsified document are separated.
+  \item The cost of each architecture on clean inputs: decision quality, extraction accuracy, parse failures and human-review workload.
+  \item A released generator, a fixed set of \nAttacks{} attack variants, a preregistration and all cached model outputs.
+\end{itemize}
