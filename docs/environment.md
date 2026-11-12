@@ -19,13 +19,13 @@ Recorded 2026-11-12. Values marked "measured" came from commands run on this mac
 
 Cannot run the model grid. An 8B model at 4-bit needs roughly 5 GB for weights alone, which leaves little of the 8 GB for the operating system and the KV cache. CPU-only inference on two cores would be far too slow for the grid. A rough count is 1,000 applicants, about 30 attacked variants plus the clean input, and four to five pipeline variants, which gives on the order of 10^5 model calls per model (estimate, to be replaced by the Phase 4 count). I did not benchmark local inference, and I do not expect a benchmark to change the conclusion.
 
-Can run: data cleaning, scorecard training (logistic regression and LightGBM on 150,000 rows), document generation, attack functions, validation logic, metric code, unit tests, the analysis notebook on cached outputs, and the LaTeX build with `tectonic`.
+The machine could run light work (data cleaning, scorecard training, tests), but the study runs all computation on Kaggle by choice, see `docs/decisions.md`.
 
 ## Plan that follows
 
-1. All LLM inference runs as Kaggle GPU kernels pushed with `kaggle kernels push`. No notebook executes locally.
-2. Local code covers everything else in the list above.
-3. Outputs of each Kaggle run are pulled with `kaggle kernels output` into `results/` and are the only input to the analysis notebook.
+1. Every run executes on Kaggle through the API: scorecard training, document generation, tests, LLM inference and the analysis notebook. Nothing is installed locally and no notebook or model runs on this machine.
+2. Code is written locally as text files. A private Kaggle dataset carries the code to each kernel, and kernels are pushed with `kaggle kernels push`.
+3. Only small outputs are pulled back with `kaggle kernels output` into `results/`. They are the only input to the analysis.
 
 ## Kaggle compute
 
@@ -39,4 +39,4 @@ The Give Me Some Credit competition is visible to the CLI, and a community mirro
 
 ## Python environment
 
-Phase 1 pins a `uv` virtual environment on Python 3.12, because LightGBM and scikit-learn wheels for 3.14 may lag. Versions are recorded in `requirements.txt` at that point.
+Kaggle images provide Python 3.13, torch 2.11 and transformers 5.20 (measured by the smoke kernel). Additional pins are recorded in `requirements.txt` once the code settles.
