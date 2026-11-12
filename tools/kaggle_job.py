@@ -84,6 +84,7 @@ def main() -> None:
     ap.add_argument("--link", action="append", default=[], help="filename=dest/in/repo")
     ap.add_argument("--dataset", action="append", default=[])
     ap.add_argument("--kernel", action="append", default=[], help="other kernel whose output is an input")
+    ap.add_argument("--include", action="append", default=[], help="extra repository paths to bundle")
     ap.add_argument("--gpu", action="store_true")
     ap.add_argument("--internet", action="store_true")
     ap.add_argument("--no-wait", action="store_true")
@@ -94,7 +95,7 @@ def main() -> None:
     kdir = Path("kaggle/jobs") / a.name
     kdir.mkdir(parents=True, exist_ok=True)
     job = {"steps": a.step, "collect": a.collect, "links": dict(x.split("=", 1) for x in a.link)}
-    (kdir / "script.py").write_text(RUNNER.format(payload=build_payload(INCLUDE), job=json.dumps(job)))
+    (kdir / "script.py").write_text(RUNNER.format(payload=build_payload(INCLUDE + a.include), job=json.dumps(job)))
     (kdir / "kernel-metadata.json").write_text(json.dumps({
         "id": f"{OWNER}/{slug}", "title": slug, "code_file": "script.py", "language": "python", "kernel_type": "script",
         "is_private": "true", "enable_gpu": str(a.gpu).lower(), "enable_tpu": "false", "enable_internet": str(a.internet).lower(),
