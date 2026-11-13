@@ -288,6 +288,20 @@ def attacks_table() -> str:
     return tabular(["ID", "Category", "Level", "Payload or change"], rows, "llll").replace("\\begin{tabular}{llll}", "\\begin{tabular}{lllp{0.55\\textwidth}}")
 
 
+CHECK_NAME = {"none": "No checks", "range": "Range and missing fields", "range+currency": "+ currency", "range+currency+xdoc": "+ cross-document",
+              "range+currency+xdoc+segment": "+ plausible band"}
+
+
+def tradeoff_table(df: pd.DataFrame) -> str:
+    t = an.cumulative_check_tradeoff(df)
+    rows = []
+    for model in models(t):
+        g = t[t["model"] == model]
+        for i, (_, r) in enumerate(g.iterrows()):
+            rows.append([MODEL_LABELS[model] if i == 0 else "", CHECK_NAME[r["checks"]], p1(r["clean_review_rate"]), p1(r["asr_extraction"]), p1(r["asr_all"])])
+    return tabular(["Model", "Checks enabled (cumulative)", "Clean review (\\%)", "Extraction ASR (\\%)", "ASR, all attacks (\\%)"], rows, "llrrr")
+
+
 def compute_statement() -> str:
     c = json.loads(Path("results/compute.json").read_text())
     hours = {MODEL_ID[m]: v["seconds"] / 3600 for m, v in c["models"].items()}
@@ -375,6 +389,7 @@ def main(runs: tuple[str, ...] = ("main", "mainL")) -> None:
     write("collateral", collateral_table(df))
     write("attack_utility", attack_utility_table(df))
     write("variants", variants_table(df))
+    write("tradeoff", tradeoff_table(df))
     if Path("results/tables/decisions_phr1_oracle.csv.gz").exists():
         write("phrasing", phrasing_table(df, an.load_runs(["phr1"])))
         write("seeds", seed_table(df, [an.load_runs([f"var{i}"]) for i in (1, 2, 3)]))
