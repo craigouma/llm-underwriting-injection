@@ -1,0 +1,24 @@
+\begin{tabular}{llrr}
+\toprule
+Model & Inputs & Flagged by C (\%) & B successes caught \\
+\midrule
+Qwen2.5 1.5B & Clean inputs & 48.6 (45.5 to 51.7) & n/a \\
+ & Override & 65.3 (60.8 to 69.6) & 36 of 38 \\
+ & Hidden note & 56.4 (51.8 to 61.0) & 0 of 5 \\
+ & Fake authority & 56.9 (52.3 to 61.4) & 0 of 3 \\
+ & Delimiter & 67.3 (62.9 to 71.5) & 41 of 44 \\
+ & Extraction & 73.6 (71.7 to 75.5) & 284 of 398 \\
+Phi-4-mini 3.8B & Clean inputs & 17.7 (15.5 to 20.2) & n/a \\
+ & Override & 36.4 (32.1 to 41.0) & 9 of 9 \\
+ & Hidden note & 26.7 (22.8 to 30.9) & 3 of 3 \\
+ & Fake authority & 24.0 (20.3 to 28.2) & 3 of 3 \\
+ & Delimiter & 48.7 (44.1 to 53.3) & 33 of 33 \\
+ & Extraction & 50.7 (48.6 to 52.9) & 176 of 335 \\
+Olmo-3 7B & Clean inputs & 19.0 (14.2 to 25.0) & n/a \\
+ & Override & 47.3 (39.5 to 55.3) & 8 of 8 \\
+ & Hidden note & 21.3 (15.5 to 28.6) & 1 of 1 \\
+ & Fake authority & 22.7 (16.7 to 30.0) & n/a \\
+ & Delimiter & 24.0 (17.9 to 31.4) & 3 of 3 \\
+ & Extraction & 52.6 (48.8 to 56.3) & 78 of 131 \\
+\bottomrule
+\end{tabular}

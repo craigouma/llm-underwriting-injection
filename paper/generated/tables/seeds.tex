@@ -1,0 +1,22 @@
+\begin{tabular}{lllrr}
+\toprule
+Model & Arm & Attacks & Temperature 0 (pairs) & Temperature 0.7, mean (SD) \\
+\midrule
+Qwen2.5 1.5B & A & instruction & 75.0 (80) & 72.1 (0.7) \\
+ & A & extraction & 100.0 (80) & 78.8 (3.3) \\
+ & A + defense & instruction & 73.8 (80) & 66.2 (3.7) \\
+ & A + defense & extraction & 95.0 (80) & 68.3 (3.6) \\
+ & B & instruction & 3.8 (80) & 2.9 (0.7) \\
+ & B & extraction & 25.0 (80) & 23.8 (2.2) \\
+ & C & instruction & 0.0 (80) & 0.0 (0.0) \\
+ & C & extraction & 0.0 (80) & 0.0 (0.0) \\
+Phi-4-mini 3.8B & A & instruction & 50.0 (80) & 43.8 (3.7) \\
+ & A & extraction & 0.0 (80) & 4.6 (0.7) \\
+ & A + defense & instruction & 16.2 (80) & 27.1 (2.6) \\
+ & A + defense & extraction & 0.0 (80) & 2.5 (1.2) \\
+ & B & instruction & 2.5 (80) & 2.1 (0.7) \\
+ & B & extraction & 15.0 (80) & 15.4 (1.9) \\
+ & C & instruction & 0.0 (80) & 0.0 (0.0) \\
+ & C & extraction & 0.0 (80) & 0.0 (0.0) \\
+\bottomrule
+\end{tabular}

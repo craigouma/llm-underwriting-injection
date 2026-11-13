@@ -1,0 +1,21 @@
+\begin{tabular}{llrrr}
+\toprule
+Model & Checks enabled (cumulative) & Clean review (\%) & Extraction ASR (\%) & ASR, all attacks (\%) \\
+\midrule
+Qwen2.5 1.5B & No checks & 0.0 & 19.8 & 12.8 \\
+ & Range and missing fields & 0.0 & 14.2 & 9.8 \\
+ & + currency & 2.0 & 13.6 & 9.5 \\
+ & + cross-document & 47.1 & 6.0 & 3.5 \\
+ & + plausible band & 48.6 & 5.7 & 3.3 \\
+Phi-4-mini 3.8B & No checks & 0.0 & 16.7 & 10.1 \\
+ & Range and missing fields & 6.4 & 13.5 & 8.1 \\
+ & + currency & 6.4 & 11.7 & 7.1 \\
+ & + cross-document & 16.0 & 8.3 & 4.4 \\
+ & + plausible band & 17.7 & 7.9 & 4.2 \\
+Olmo-3 7B & No checks & 0.0 & 19.8 & 11.3 \\
+ & Range and missing fields & 17.5 & 11.5 & 6.6 \\
+ & + currency & 17.5 & 11.2 & 6.4 \\
+ & + cross-document & 18.0 & 8.6 & 4.6 \\
+ & + plausible band & 19.0 & 8.0 & 4.2 \\
+\bottomrule
+\end{tabular}

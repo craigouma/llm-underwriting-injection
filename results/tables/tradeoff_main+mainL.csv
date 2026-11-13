@@ -1,0 +1,16 @@
+model,checks,clean_review_rate,asr_all,asr_extraction
+Qwen/Qwen2.5-1.5B-Instruct,none,0.0,0.1282186022070415,0.1984047856430708
+microsoft/Phi-4-mini-instruct,none,0.0,0.10063058328954283,0.1669990029910269
+allenai/Olmo-3-7B-Instruct,none,0.0,0.1133122028526149,0.19788519637462235
+Qwen/Qwen2.5-1.5B-Instruct,range,0.0,0.09800315291644772,0.14207377866400797
+microsoft/Phi-4-mini-instruct,range,0.064,0.08092485549132948,0.13509471585244268
+allenai/Olmo-3-7B-Instruct,range,0.175,0.06576862123613313,0.1148036253776435
+Qwen/Qwen2.5-1.5B-Instruct,range+currency,0.02,0.09485023646873358,0.13609172482552342
+microsoft/Phi-4-mini-instruct,range+currency,0.064,0.07146610614818708,0.11714855433698904
+allenai/Olmo-3-7B-Instruct,range+currency,0.175,0.06418383518225039,0.11178247734138973
+Qwen/Qwen2.5-1.5B-Instruct,range+currency+xdoc,0.471,0.034944823962165,0.05982053838484546
+microsoft/Phi-4-mini-instruct,range+currency+xdoc,0.16,0.0441408302679979,0.08325024925224327
+allenai/Olmo-3-7B-Instruct,range+currency+xdoc,0.18,0.04595879556259905,0.08610271903323263
+Qwen/Qwen2.5-1.5B-Instruct,range+currency+xdoc+segment,0.486,0.03336836573830793,0.05682951146560319
+microsoft/Phi-4-mini-instruct,range+currency+xdoc+segment,0.177,0.041776142932212296,0.07926221335992024
+allenai/Olmo-3-7B-Instruct,range+currency+xdoc+segment,0.19,0.041996830427892234,0.08006042296072508

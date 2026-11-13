@@ -1,0 +1,15 @@
+\begin{tabular}{llp{0.5\textwidth}l}
+\toprule
+Model & Hypothesis & Evidence & Verdict \\
+\midrule
+Qwen2.5 1.5B & H1 & B pooled ASR 5.0\% over 1800 pairs, Wilson upper bound 6.1\%; largest Holm $p$ of A vs B $<0.001$ & Not supported \\
+ & H2 & B extraction ASR lower bound 18.2\%; plausibility slope 1.29 (0.51 to 2.08) & Supported \\
+ & H3 & Extraction ASR B 19.8\% to C 5.7\% (Holm $p$ $<0.001$); clean review rate of C 48.6\% against refer rate of B 15.5\% & Supported \\
+Olmo-3 7B & H1 & B pooled ASR 2.0\% over 600 pairs, Wilson upper bound 3.5\%; largest Holm $p$ of A vs B $<0.001$ & Supported \\
+ & H2 & B extraction ASR lower bound 16.9\%; plausibility slope 0.88 ($-$0.34 to 2.11) & Not supported \\
+ & H3 & Extraction ASR B 19.8\% to C 8.0\% (Holm $p$ $<0.001$); clean review rate of C 19.0\% against refer rate of B 16.0\% & Supported \\
+Phi-4-mini 3.8B & H1 & B pooled ASR 2.7\% over 1800 pairs, Wilson upper bound 3.5\%; largest Holm $p$ of A vs B 0.129 & Not supported \\
+ & H2 & B extraction ASR lower bound 15.1\%; plausibility slope 1.56 (0.77 to 2.34) & Supported \\
+ & H3 & Extraction ASR B 16.7\% to C 7.9\% (Holm $p$ $<0.001$); clean review rate of C 17.7\% against refer rate of B 17.5\% & Supported \\
+\bottomrule
+\end{tabular}

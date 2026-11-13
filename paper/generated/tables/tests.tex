@@ -1,0 +1,66 @@
+\begin{tabular}{lllrrrr}
+\toprule
+Model & Category & Contrast & Pairs & ASR (\%) & Only first / second & Holm $p$ \\
+\midrule
+Qwen2.5 1.5B & Override & A vs B & 450 & 100.0 / 8.4 & 412 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Override & A vs C & 450 & 100.0 / 0.4 & 448 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Override & B vs C & 450 & 8.4 / 0.4 & 36 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Override & A vs A + defense & 450 & 100.0 / 66.7 & 150 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Hidden note & A vs B & 450 & 100.0 / 1.1 & 445 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Hidden note & A vs C & 450 & 100.0 / 1.1 & 445 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Hidden note & B vs C & 450 & 1.1 / 1.1 & 0 / 0 & 1.000 \\
+Qwen2.5 1.5B & Hidden note & A vs A + defense & 450 & 100.0 / 96.7 & 15 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Fake authority & A vs B & 450 & 100.0 / 0.7 & 447 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Fake authority & A vs C & 450 & 100.0 / 0.7 & 447 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Fake authority & B vs C & 450 & 0.7 / 0.7 & 0 / 0 & 1.000 \\
+Qwen2.5 1.5B & Fake authority & A vs A + defense & 450 & 100.0 / 96.9 & 14 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Delimiter & A vs B & 450 & 66.7 / 9.8 & 297 / 41 & $<0.001$ \\
+Qwen2.5 1.5B & Delimiter & A vs C & 450 & 66.7 / 0.7 & 297 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Delimiter & B vs C & 450 & 9.8 / 0.7 & 41 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Delimiter & A vs A + defense & 450 & 66.7 / 66.7 & 0 / 0 & 1.000 \\
+Qwen2.5 1.5B & Extraction & A vs B & 2006 & 95.0 / 19.8 & 1522 / 14 & $<0.001$ \\
+Qwen2.5 1.5B & Extraction & A vs C & 2006 & 95.0 / 5.7 & 1796 / 4 & $<0.001$ \\
+Qwen2.5 1.5B & Extraction & B vs C & 2006 & 19.8 / 5.7 & 284 / 0 & $<0.001$ \\
+Qwen2.5 1.5B & Extraction & A vs A + defense & 2006 & 95.0 / 91.4 & 120 / 47 & $<0.001$ \\
+Phi-4-mini 3.8B & Override & A vs B & 450 & 0.2 / 2.0 & 1 / 9 & 0.129 \\
+Phi-4-mini 3.8B & Override & A vs C & 450 & 0.2 / 0.0 & 1 / 0 & 1.000 \\
+Phi-4-mini 3.8B & Override & B vs C & 450 & 2.0 / 0.0 & 9 / 0 & 0.027 \\
+Phi-4-mini 3.8B & Override & A vs A + defense & 450 & 0.2 / 0.0 & 1 / 0 & 1.000 \\
+Phi-4-mini 3.8B & Hidden note & A vs B & 450 & 25.6 / 0.7 & 114 / 2 & $<0.001$ \\
+Phi-4-mini 3.8B & Hidden note & A vs C & 450 & 25.6 / 0.0 & 115 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Hidden note & B vs C & 450 & 0.7 / 0.0 & 3 / 0 & 1.000 \\
+Phi-4-mini 3.8B & Hidden note & A vs A + defense & 450 & 25.6 / 2.2 & 105 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Fake authority & A vs B & 450 & 52.2 / 0.7 & 234 / 2 & $<0.001$ \\
+Phi-4-mini 3.8B & Fake authority & A vs C & 450 & 52.2 / 0.0 & 235 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Fake authority & B vs C & 450 & 0.7 / 0.0 & 3 / 0 & 1.000 \\
+Phi-4-mini 3.8B & Fake authority & A vs A + defense & 450 & 52.2 / 27.1 & 113 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Delimiter & A vs B & 450 & 89.3 / 7.3 & 375 / 6 & $<0.001$ \\
+Phi-4-mini 3.8B & Delimiter & A vs C & 450 & 89.3 / 0.0 & 402 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Delimiter & B vs C & 450 & 7.3 / 0.0 & 33 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Delimiter & A vs A + defense & 450 & 89.3 / 45.6 & 197 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Extraction & A vs B & 2006 & 0.0 / 16.7 & 0 / 334 & $<0.001$ \\
+Phi-4-mini 3.8B & Extraction & A vs C & 2006 & 0.0 / 7.9 & 1 / 159 & $<0.001$ \\
+Phi-4-mini 3.8B & Extraction & B vs C & 2006 & 16.7 / 7.9 & 176 / 0 & $<0.001$ \\
+Phi-4-mini 3.8B & Extraction & A vs A + defense & 2006 & 0.0 / 0.0 & 1 / 0 & 1.000 \\
+Olmo-3 7B & Override & A vs B & 150 & 69.3 / 5.3 & 97 / 1 & $<0.001$ \\
+Olmo-3 7B & Override & A vs C & 150 & 69.3 / 0.0 & 104 / 0 & $<0.001$ \\
+Olmo-3 7B & Override & B vs C & 150 & 5.3 / 0.0 & 8 / 0 & 0.039 \\
+Olmo-3 7B & Override & A vs A + defense & 150 & 69.3 / 0.0 & 104 / 0 & $<0.001$ \\
+Olmo-3 7B & Hidden note & A vs B & 150 & 14.7 / 0.7 & 22 / 1 & $<0.001$ \\
+Olmo-3 7B & Hidden note & A vs C & 150 & 14.7 / 0.0 & 22 / 0 & $<0.001$ \\
+Olmo-3 7B & Hidden note & B vs C & 150 & 0.7 / 0.0 & 1 / 0 & 1.000 \\
+Olmo-3 7B & Hidden note & A vs A + defense & 150 & 14.7 / 2.0 & 19 / 0 & $<0.001$ \\
+Olmo-3 7B & Fake authority & A vs B & 150 & 76.7 / 0.0 & 115 / 0 & $<0.001$ \\
+Olmo-3 7B & Fake authority & A vs C & 150 & 76.7 / 0.0 & 115 / 0 & $<0.001$ \\
+Olmo-3 7B & Fake authority & B vs C & 150 & 0.0 / 0.0 & 0 / 0 & 1.000 \\
+Olmo-3 7B & Fake authority & A vs A + defense & 150 & 76.7 / 46.7 & 46 / 1 & $<0.001$ \\
+Olmo-3 7B & Delimiter & A vs B & 150 & 99.3 / 2.0 & 146 / 0 & $<0.001$ \\
+Olmo-3 7B & Delimiter & A vs C & 150 & 99.3 / 0.0 & 149 / 0 & $<0.001$ \\
+Olmo-3 7B & Delimiter & B vs C & 150 & 2.0 / 0.0 & 3 / 0 & 1.000 \\
+Olmo-3 7B & Delimiter & A vs A + defense & 150 & 99.3 / 68.0 & 47 / 0 & $<0.001$ \\
+Olmo-3 7B & Extraction & A vs B & 662 & 0.0 / 19.8 & 0 / 131 & $<0.001$ \\
+Olmo-3 7B & Extraction & A vs C & 662 & 0.0 / 8.0 & 0 / 53 & $<0.001$ \\
+Olmo-3 7B & Extraction & B vs C & 662 & 19.8 / 8.0 & 78 / 0 & $<0.001$ \\
+Olmo-3 7B & Extraction & A vs A + defense & 662 & 0.0 / 0.0 & 0 / 0 & 1.000 \\
+\bottomrule
+\end{tabular}
