@@ -122,7 +122,8 @@ def fig_tradeoff(df: pd.DataFrame) -> Path:
         ax.set_xlabel("Review rate on clean inputs")
         pct(ax, "x")
         pct(ax)
-        ax.set_ylim(bottom=0)
+        ax.set_yticks([0, 0.05, 0.10, 0.15, 0.20])
+        ax.set_ylim(0, 0.215)
     axes[0][0].set_ylabel("ASR, extraction manipulation")
     return save(fig, "fig_tradeoff")
 

@@ -216,7 +216,7 @@ def collateral_table(df: pd.DataFrame) -> str:
     rows = []
     for model in models(g.reset_index()):
         for arm in an.LLM_ARMS:
-            if (model, arm) in g.index:
+            if (model, arm) in g.index and pd.notna(g.loc[(model, arm)]["instruction"]):
                 x = g.loc[(model, arm)]
                 rows.append([MODEL_LABELS[model] if arm == "A" else "", ARM_NAME[arm], p1(x["clean"]), p1(x["instruction"]), p1(x["extraction"])])
     return tabular(["Model", "Arm", "Clean", "Instruction attacks", "Extraction attacks"], rows, "llrrr")

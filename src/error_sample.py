@@ -64,7 +64,8 @@ def main() -> None:
                     clean = bundles[(r["applicant_id"], "clean")]
                     raw = backend.complete(job_key(TASK[r["arm"]], 0, b))
                     diff = changed_lines(clean.text(), b.text()) if r["attack_id"] != "clean" else "(clean bundle)"
-                    wrong = [c[3:] for c in r.index if c.startswith("fc_") and pd.notna(r[c]) and not r[c]]
+                    truth = b.stated.as_dict()
+                    wrong = [f"{c[3:]} (stated {truth[c[3:]]})" for c in r.index if c.startswith("fc_") and pd.notna(r[c]) and not r[c]]
                     out.append(f"\n## Case {n}: {name}\n- model {model}, arm {r['arm']}, applicant {r['applicant_id']}, attack {r['attack_id']}, "
                                f"reference outcome {r['outcome_ref']}, outcome {r['outcome']}, flags `{r['flags'] if isinstance(r['flags'], str) else ''}`\n"
                                + (f"- wrongly extracted fields: {', '.join(wrong)}\n" if wrong else "")
