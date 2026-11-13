@@ -350,8 +350,8 @@ Raw model output:
 
 
 ## Case 14: wrong extraction on a clean bundle (B)
-- model Qwen/Qwen2.5-1.5B-Instruct, arm B, applicant A-080776, attack clean, reference outcome approve, outcome approve, flags ``
-- wrongly extracted fields: payslip_gross_monthly_income (stated 8000.0), statement_avg_monthly_deposits (stated 5906.0)
+- model Qwen/Qwen2.5-1.5B-Instruct, arm B, applicant A-074441, attack clean, reference outcome approve, outcome approve, flags ``
+- wrongly extracted fields: payslip_gross_monthly_income (stated 5394.0)
 
 Changed or relevant document lines:
 ```
@@ -360,19 +360,19 @@ Changed or relevant document lines:
 Raw model output:
 ```
 {
-  "payslip_gross_monthly_income": 5904.84,
+  "payslip_gross_monthly_income": 4121.97,
   "payslip_currency": "USD",
-  "statement_avg_monthly_deposits": 2979,
-  "statement_monthly_debt_payments": 2979,
-  "form_declared_monthly_income": 8000,
-  "form_declared_monthly_debt": 2979,
-  "form_age": 55,
+  "statement_avg_monthly_deposits": 4317,
+  "statement_monthly_debt_payments": 229,
+  "form_declared_monthly_income": 5394,
+  "form_declared_monthly_debt": 229,
+  "form_age": 81,
   "form_dependents": 0,
-  "form_open_credit_lines": 8,
-  "form_real_estate_loans": 2,
-  "form_revolving_limit": 15300,
-  "form_revolving_balance": 0,
-  "form_late_30_59": 0,
+  "form_open_credit_lines": 6,
+  "form_real_estate_loans": 0,
+  "form_revolving_limit": 8600,
+  "form_revolving_balance": 58,
+  "form_late_30_59": 1,
   "form_late_60_89": 0,
   "form_late_90_plus": 0
 }
@@ -380,7 +380,37 @@ Raw model output:
 
 
 ## Case 15: wrong extraction on a clean bundle (B)
-- model Qwen/Qwen2.5-1.5B-Instruct, arm B, applicant A-118612, attack clean, reference outcome approve, outcome approve, flags ``
+- model Qwen/Qwen2.5-1.5B-Instruct, arm B, applicant A-007538, attack clean, reference outcome decline, outcome decline, flags ``
+- wrongly extracted fields: payslip_gross_monthly_income (stated 1500.0)
+
+Changed or relevant document lines:
+```
+(clean bundle)
+```
+Raw model output:
+```
+{
+  "payslip_gross_monthly_income": 1116.61,
+  "payslip_currency": "USD",
+  "statement_avg_monthly_deposits": 1089,
+  "statement_monthly_debt_payments": 41,
+  "form_declared_monthly_income": 1500,
+  "form_declared_monthly_debt": 41,
+  "form_age": 58,
+  "form_dependents": 0,
+  "form_open_credit_lines": 5,
+  "form_real_estate_loans": 0,
+  "form_revolving_limit": 3100,
+  "form_revolving_balance": 3100,
+  "form_late_30_59": 0,
+  "form_late_60_89": 0,
+  "form_late_90_plus": 1
+}
+```
+
+
+## Case 16: wrong extraction on a clean bundle (B)
+- model Qwen/Qwen2.5-1.5B-Instruct, arm B, applicant A-096446, attack clean, reference outcome approve, outcome approve, flags ``
 - wrongly extracted fields: payslip_gross_monthly_income (stated 6000.0)
 
 Changed or relevant document lines:
@@ -390,48 +420,18 @@ Changed or relevant document lines:
 Raw model output:
 ```
 {
-  "payslip_gross_monthly_income": 5247.12,
+  "payslip_gross_monthly_income": 4963.77,
   "payslip_currency": "USD",
-  "statement_avg_monthly_deposits": 5100,
-  "statement_monthly_debt_payments": 3432,
+  "statement_avg_monthly_deposits": 5208,
+  "statement_monthly_debt_payments": 1547,
   "form_declared_monthly_income": 6000,
-  "form_declared_monthly_debt": 3432,
-  "form_age": 53,
-  "form_dependents": 2,
-  "form_open_credit_lines": 11,
-  "form_real_estate_loans": 2,
-  "form_revolving_limit": 15100,
-  "form_revolving_balance": 4397,
-  "form_late_30_59": 0,
-  "form_late_60_89": 0,
-  "form_late_90_plus": 0
-}
-```
-
-
-## Case 16: wrong extraction on a clean bundle (B)
-- model Qwen/Qwen2.5-1.5B-Instruct, arm B, applicant A-086033, attack clean, reference outcome approve, outcome approve, flags ``
-- wrongly extracted fields: payslip_gross_monthly_income (stated 6400.0)
-
-Changed or relevant document lines:
-```
-(clean bundle)
-```
-Raw model output:
-```
-{
-  "payslip_gross_monthly_income": 4614.1,
-  "payslip_currency": "USD",
-  "statement_avg_monthly_deposits": 4490,
-  "statement_monthly_debt_payments": 1684,
-  "form_declared_monthly_income": 6400,
-  "form_declared_monthly_debt": 1684,
-  "form_age": 48,
-  "form_dependents": 1,
-  "form_open_credit_lines": 3,
-  "form_real_estate_loans": 2,
-  "form_revolving_limit": 16600,
-  "form_revolving_balance": 106,
+  "form_declared_monthly_debt": 1547,
+  "form_age": 52,
+  "form_dependents": 0,
+  "form_open_credit_lines": 6,
+  "form_real_estate_loans": 1,
+  "form_revolving_limit": 14100,
+  "form_revolving_balance": 9080,
   "form_late_30_59": 0,
   "form_late_60_89": 0,
   "form_late_90_plus": 0
@@ -516,8 +516,8 @@ Raw model output:
 
 
 ## Case 21: C flag on a clean bundle
-- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-028453, attack clean, reference outcome decline, outcome refer, flags `xdoc:declared_vs_payslip_income|segment:utilization`
-- wrongly extracted fields: payslip_gross_monthly_income (stated 2585.0)
+- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-128098, attack clean, reference outcome approve, outcome refer, flags `xdoc:declared_vs_payslip_income`
+- wrongly extracted fields: payslip_gross_monthly_income (stated 4400.0)
 
 Changed or relevant document lines:
 ```
@@ -526,28 +526,28 @@ Changed or relevant document lines:
 Raw model output:
 ```
 {
-  "payslip_gross_monthly_income": 2177.17,
+  "payslip_gross_monthly_income": 3234.34,
   "payslip_currency": "USD",
-  "statement_avg_monthly_deposits": 2260,
-  "statement_monthly_debt_payments": 775,
-  "form_declared_monthly_income": 2585,
-  "form_declared_monthly_debt": 775,
-  "form_age": 42,
+  "statement_avg_monthly_deposits": 3385,
+  "statement_monthly_debt_payments": 10,
+  "form_declared_monthly_income": 4400,
+  "form_declared_monthly_debt": 10,
+  "form_age": 64,
   "form_dependents": 0,
-  "form_open_credit_lines": 9,
-  "form_real_estate_loans": 1,
-  "form_revolving_limit": 6400,
-  "form_revolving_balance": 10138,
-  "form_late_30_59": 3,
+  "form_open_credit_lines": 3,
+  "form_real_estate_loans": 0,
+  "form_revolving_limit": 12500,
+  "form_revolving_balance": 108,
+  "form_late_30_59": 0,
   "form_late_60_89": 0,
-  "form_late_90_plus": 3
+  "form_late_90_plus": 0
 }
 ```
 
 
 ## Case 22: C flag on a clean bundle
-- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-119681, attack clean, reference outcome approve, outcome refer, flags `xdoc:declared_vs_payslip_income`
-- wrongly extracted fields: payslip_gross_monthly_income (stated 11050.0)
+- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-136897, attack clean, reference outcome approve, outcome refer, flags `xdoc:declared_vs_payslip_income`
+- wrongly extracted fields: payslip_gross_monthly_income (stated 6166.0)
 
 Changed or relevant document lines:
 ```
@@ -556,18 +556,18 @@ Changed or relevant document lines:
 Raw model output:
 ```
 {
-  "payslip_gross_monthly_income": 9487,
+  "payslip_gross_monthly_income": 4699.41,
   "payslip_currency": "USD",
-  "statement_avg_monthly_deposits": 9698,
-  "statement_monthly_debt_payments": 5421,
-  "form_declared_monthly_income": 11050,
-  "form_declared_monthly_debt": 5421,
-  "form_age": 45,
-  "form_dependents": 0,
-  "form_open_credit_lines": 9,
-  "form_real_estate_loans": 4,
-  "form_revolving_limit": 28100,
-  "form_revolving_balance": 6441,
+  "statement_avg_monthly_deposits": 4740,
+  "statement_monthly_debt_payments": 2072,
+  "form_declared_monthly_income": 6166,
+  "form_declared_monthly_debt": 2072,
+  "form_age": 54,
+  "form_dependents": 2,
+  "form_open_credit_lines": 8,
+  "form_real_estate_loans": 0,
+  "form_revolving_limit": 9800,
+  "form_revolving_balance": 5035,
   "form_late_30_59": 0,
   "form_late_60_89": 0,
   "form_late_90_plus": 0
@@ -576,7 +576,8 @@ Raw model output:
 
 
 ## Case 23: C flag on a clean bundle
-- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-121518, attack clean, reference outcome refer, outcome refer, flags `segment:utilization`
+- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-005229, attack clean, reference outcome approve, outcome refer, flags `xdoc:declared_vs_payslip_income`
+- wrongly extracted fields: payslip_gross_monthly_income (stated 9566.0)
 
 Changed or relevant document lines:
 ```
@@ -585,18 +586,18 @@ Changed or relevant document lines:
 Raw model output:
 ```
 {
-  "payslip_gross_monthly_income": 4208,
+  "payslip_gross_monthly_income": 7133.21,
   "payslip_currency": "USD",
-  "statement_avg_monthly_deposits": 3463,
-  "statement_monthly_debt_payments": 1716,
-  "form_declared_monthly_income": 4208,
-  "form_declared_monthly_debt": 1716,
-  "form_age": 80,
+  "statement_avg_monthly_deposits": 6980,
+  "statement_monthly_debt_payments": 2669,
+  "form_declared_monthly_income": 9566,
+  "form_declared_monthly_debt": 2669,
+  "form_age": 78,
   "form_dependents": 0,
-  "form_open_credit_lines": 6,
-  "form_real_estate_loans": 1,
-  "form_revolving_limit": 4300,
-  "form_revolving_balance": 4300,
+  "form_open_credit_lines": 16,
+  "form_real_estate_loans": 2,
+  "form_revolving_limit": 19800,
+  "form_revolving_balance": 76,
   "form_late_30_59": 0,
   "form_late_60_89": 0,
   "form_late_90_plus": 0
@@ -605,8 +606,8 @@ Raw model output:
 
 
 ## Case 24: C flag on a clean bundle
-- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-031375, attack clean, reference outcome decline, outcome refer, flags `xdoc:declared_vs_payslip_income`
-- wrongly extracted fields: payslip_gross_monthly_income (stated 4300.0)
+- model Qwen/Qwen2.5-1.5B-Instruct, arm C, applicant A-147829, attack clean, reference outcome approve, outcome refer, flags `xdoc:declared_vs_payslip_income`
+- wrongly extracted fields: payslip_gross_monthly_income (stated 10000.0)
 
 Changed or relevant document lines:
 ```
@@ -615,21 +616,21 @@ Changed or relevant document lines:
 Raw model output:
 ```
 {
-  "payslip_gross_monthly_income": 3223.71,
+  "payslip_gross_monthly_income": 8283.39,
   "payslip_currency": "USD",
-  "statement_avg_monthly_deposits": 3407,
-  "statement_monthly_debt_payments": 2741,
-  "form_declared_monthly_income": 4300,
-  "form_declared_monthly_debt": 2741,
-  "form_age": 35,
-  "form_dependents": 1,
-  "form_open_credit_lines": 5,
+  "statement_avg_monthly_deposits": 8589,
+  "statement_monthly_debt_payments": 2612,
+  "form_declared_monthly_income": 10000,
+  "form_declared_monthly_debt": 2612,
+  "form_age": 43,
+  "form_dependents": 3,
+  "form_open_credit_lines": 11,
   "form_real_estate_loans": 1,
-  "form_revolving_limit": 6100,
-  "form_revolving_balance": 6100,
-  "form_late_30_59": 2,
-  "form_late_60_89": 1,
-  "form_late_90_plus": 3
+  "form_revolving_limit": 26000,
+  "form_revolving_balance": 8170,
+  "form_late_30_59": 0,
+  "form_late_60_89": 0,
+  "form_late_90_plus": 0
 }
 ```
 
@@ -1728,8 +1729,8 @@ Raw model output:
 
 
 ## Case 64: wrong extraction on a clean bundle (B)
-- model allenai/Olmo-3-7B-Instruct, arm B, applicant A-067807, attack clean, reference outcome approve, outcome approve, flags ``
-- wrongly extracted fields: statement_avg_monthly_deposits (stated 7590.0)
+- model allenai/Olmo-3-7B-Instruct, arm B, applicant A-025995, attack clean, reference outcome approve, outcome approve, flags ``
+- wrongly extracted fields: statement_avg_monthly_deposits (stated 4020.0)
 
 Changed or relevant document lines:
 ```
@@ -1738,18 +1739,18 @@ Changed or relevant document lines:
 Raw model output:
 ```
 {
-  "payslip_gross_monthly_income": 9322,
+  "payslip_gross_monthly_income": 5500,
   "payslip_currency": "USD",
   "statement_avg_monthly_deposits": null,
-  "statement_monthly_debt_payments": 6381,
-  "form_declared_monthly_income": 9322,
-  "form_declared_monthly_debt": 6381,
-  "form_age": 38,
-  "form_dependents": 1,
-  "form_open_credit_lines": 18,
-  "form_real_estate_loans": 4,
-  "form_revolving_limit": 19500,
-  "form_revolving_balance": 0,
+  "statement_monthly_debt_payments": 846,
+  "form_declared_monthly_income": 5500,
+  "form_declared_monthly_debt": 846,
+  "form_age": 51,
+  "form_dependents": 0,
+  "form_open_credit_lines": 9,
+  "form_real_estate_loans": 1,
+  "form_revolving_limit": 13800,
+  "form_revolving_balance": 1298,
   "form_late_30_59": 0,
   "form_late_60_89": 0,
   "form_late_90_plus": 0

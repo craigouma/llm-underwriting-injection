@@ -52,6 +52,7 @@ def save(fig, name: str) -> Path:
     FIGURES.mkdir(parents=True, exist_ok=True)
     path = FIGURES / f"{name}.pdf"
     fig.savefig(path)
+    fig.savefig(FIGURES / f"{name}.png", dpi=200)
     plt.close(fig)
     return path
 

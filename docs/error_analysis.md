@@ -34,12 +34,12 @@ Every sampled success of C falls into one of two groups. Late payments and revol
 
 | Category | Cases | Count |
 |---|---|---|
-| Gross pay reported lower than the stated gross, as net pay would be | 14, 15, 16 (Qwen: 5,905 for 8,000; 5,247 for 6,000; 4,614 for 6,400), 37 (Phi: 1,333 for 1,600) | 4 |
+| Gross pay reported lower than the stated gross, as net pay would be | 14, 15, 16 (Qwen: 4,122 for 5,394; 1,117 for 1,500; 4,964 for 6,000), 37 (Phi: 1,333 for 1,600) | 4 |
 | Gross pay reported far from the stated value | 38 (Phi: 606 for 7,324), 39 (Phi: 6 for 6,100), 40 (Phi: 8,545 for 10,517) | 3 |
 | A count read wrongly | 13 (Qwen: real-estate loans) | 1 |
 | The deposits field left empty | 61 to 64 (Olmo) | 4 |
 
-In case 14 the model also wrote the monthly debt payment (2,979) in the deposits field, whose stated value is 5,906. In the four gross-pay cases of Qwen and Phi that lie below the stated value, the outcome of B equals the reference outcome, and B agrees with the reference on 98.4% of Qwen's clean bundles. The errors matter for C, which compares the payslip against the declared income.
+In the four gross-pay cases of Qwen and Phi that lie below the stated value, the outcome of B equals the reference outcome, and B agrees with the reference on 98.4% of Qwen's clean bundles. The errors matter for C, which compares the payslip against the declared income.
 
 ## Format failures (parse, schema or refusal), 12 cases
 
@@ -55,11 +55,11 @@ The Qwen cases show a format effect that protects the pipeline. The model follow
 
 | Category | Cases | Count |
 |---|---|---|
-| A cross-document or range flag caused by a wrongly extracted payslip income | 21, 22, 24 (Qwen), 45, 46, 47 (Phi) | 6 |
+| A cross-document or range flag caused by a wrongly extracted payslip income | 21, 22, 23, 24 (Qwen), 45, 46, 47 (Phi) | 7 |
 | A missing-field flag caused by an empty deposits field | 69 to 72 (Olmo) | 4 |
-| A plausible-band flag on a correctly extracted bundle | 23 (Qwen), 48 (Phi), both on utilisation | 2 |
+| A plausible-band flag on a correctly extracted bundle | 48 (Phi), on utilisation | 1 |
 
-Ten of the 12 flags follow from an extraction error. A better extractor lowers the review burden of C. The two band flags on correct extractions mark applicants whose revolving utilisation is in the top 0.5% of their age band. That is the intended behaviour of the check and a cost that no extractor removes.
+Eleven of the 12 flags follow from an extraction error. A better extractor lowers the review burden of C. The one band flag on a correct extraction marks an applicant whose revolving utilisation is in the top 0.5% of their age band. That is the intended behaviour of the check and a cost that no extractor removes.
 
 ## Summary
 
