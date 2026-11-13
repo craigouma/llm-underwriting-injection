@@ -354,6 +354,8 @@ def numbers(df: pd.DataFrame, metrics: dict, sel_sizes: dict) -> str:
         text += macro(f"slope{key}", signed(r["slope"]))
         text += macro(f"slope{key}ci", f"{signed(r['lo'])} to {signed(r['hi'])}")
         text += macro(f"slope{key}p", "$<0.001$" if r["p"] < 0.001 else f"{r['p']:.3f}")
+    for _, r in an.flag_causes(df).iterrows():
+        text += macro(f"flagWrong{MODEL_ID[r['model']]}", p1(r["rate"]))
     for _, r in an.clean_approve_rate(df).iterrows():
         if r["arm"] in ARM_ID and r["model"] in MODEL_ID:
             text += macro(f"cleanApprove{MODEL_ID[r['model']]}{ARM_ID[r['arm']]}", p1(r["rate"]))

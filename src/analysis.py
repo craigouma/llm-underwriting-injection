@@ -296,3 +296,17 @@ def seed_variance(main: pd.DataFrame, seeds: list[pd.DataFrame]) -> pd.DataFrame
     runs = pd.concat([pooled_rates(s)[["model", "arm", "pool", "rate"]].assign(seed=i + 1) for i, s in enumerate(seeds)])
     spread = runs.groupby(["model", "arm", "pool"])["rate"].agg(asr_seed_mean="mean", asr_seed_sd="std").reset_index()
     return base.merge(spread, on=["model", "arm", "pool"])
+
+
+def flag_causes(df: pd.DataFrame) -> pd.DataFrame:
+    """Clean bundles that C flags: how many have a wrongly extracted or missing field in the extraction shared with B."""
+    fields = [c for c in df.columns if c.startswith("fc_")]
+    clean = df[df["in_U"] & (df["attack_id"] == "clean") & df["arm"].isin(["B", "C"])]
+    rows = []
+    for model, g in clean.groupby("model"):
+        b = g[g["arm"] == "B"].set_index("applicant_id")
+        c = g[g["arm"] == "C"].set_index("applicant_id")
+        flagged = c.index[c["review"].astype(bool)]
+        wrong = b[fields].eq(False).any(axis=1) | b["incomplete"].astype(bool) | b["schema_invalid"].astype(bool)
+        rows.append({"model": model, "n": len(flagged), "k": int(wrong.loc[flagged].sum())})
+    return add_ci(pd.DataFrame(rows))

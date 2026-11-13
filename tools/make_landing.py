@@ -45,9 +45,9 @@ h1 small{display:block;margin-top:20px;font-size:.58em;line-height:1.3;font-weig
 .label{flex:1 1 150px;max-width:190px;padding-top:4px;font-family:var(--sans);font-size:13.5px;font-weight:600;line-height:1.35}
 .label.accent{color:var(--accent)}
 .body{flex:999 1 480px;min-width:0;max-width:740px}
-.lead{margin:0;font-size:23px;line-height:1.48;letter-spacing:-.005em;text-wrap:pretty}
-.abstract{margin:0;font-size:18px;line-height:1.7;color:oklch(0.27 0.012 70);hyphens:auto;text-wrap:pretty}
-.note{margin:0;font-size:16px;line-height:1.65;color:oklch(0.38 0.012 70);text-wrap:pretty}
+.lead{margin:0;font-size:23px;line-height:1.48;letter-spacing:-.005em;text-align:justify;text-justify:inter-word;hyphens:auto;text-wrap:pretty}
+.abstract{margin:0;font-size:18px;line-height:1.7;color:oklch(0.27 0.012 70);text-align:justify;text-justify:inter-word;hyphens:auto;text-wrap:pretty}
+.note{margin:0;font-size:16px;line-height:1.65;color:oklch(0.38 0.012 70);text-align:justify;text-justify:inter-word;hyphens:auto;text-wrap:pretty}
 .note code{font-family:var(--mono);font-size:13px}
 .scroll{overflow-x:auto}
 table{width:100%;min-width:560px;border-collapse:collapse;font-size:16px;font-variant-numeric:lining-nums tabular-nums}
