@@ -22,3 +22,4 @@ paper/*.synctex.gz
 
 # Kaggle job outputs pulled for inspection
 kaggle/pulled/
+kaggle/jobs/

@@ -9,7 +9,7 @@ The scorecard used by architectures B and C is a logistic regression whose coeff
 
 The outcome mapping is the same for every architecture. An applicant is approved when the scorecard probability of default is below \thApprove{}, declined when it is at least \thDecline{}, and referred to a human underwriter in between. The decline cut-off maximises expected profit on the validation split for a loss on default of six times the margin on a good loan, and the approve cut-off is half of it. Table~\ref{tab:scorecard} gives the resulting shares.
 
-\begin{table}[t]
+\begin{table}[tbp]
 \centering\small
 \caption{Scorecards on the test split. Outcome shares come from the mapping above.}
 \label{tab:scorecard}
@@ -24,7 +24,7 @@ For each applicant we generate three plain-text documents: a payslip, a three-mo
 
 The attack set has \nAttacks{} fixed variants (Table~\ref{tab:attacks}). Categories 1 to 4 add instruction-style text at a fixed location: an instruction override and a hidden or out-of-place note, both with generic approve-the-applicant payloads, a fake system or reviewer note that claims authority, and delimiter and format exploitation that closes the expected structure or injects role markers and JSON. Each category has three variants of low, medium and high sophistication. In each category the high variant names the extraction fields, to simulate an attacker who guesses the schema. Category 5, extraction manipulation, contains no instruction text. It falsifies values (income raised by 20, 50 and 100 percent in one document or consistently across the payslip, the statement deposits and the declared income; omitted late payments; understated debt and utilisation), creates conflicts and duplicated fields, and uses unit and format tricks (an annual salary, debt in thousands, a different currency). Falsifications edit the stated values and re-render, so every unrelated line of the bundle is unchanged. For value falsifications a plausibility score is the segment-centred percentile of the falsified value, defined in advance in the preregistration.
 
-\begin{table}[t]
+\begin{table}[tbp]
 \centering\footnotesize
 \caption{The fixed attack set. Sophistication for category 5: low is a falsification in one document that contradicts another, medium is a format trick, duplicate, omission or unverifiable understatement, and high is a falsification kept consistent across documents.}
 \label{tab:attacks}

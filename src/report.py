@@ -27,6 +27,10 @@ def p1(x: float) -> str:
     return "n/a" if pd.isna(x) else f"{100 * x:.1f}"
 
 
+def signed(x: float, digits: int = 2) -> str:
+    return f"$-${abs(x):.{digits}f}" if x < 0 else f"{x:.{digits}f}"
+
+
 def fmt_p(p: float) -> str:
     return "$<0.001$" if p < 0.001 else f"{p:.3f}"
 
@@ -144,7 +148,7 @@ def oracle_table(df: pd.DataFrame) -> str:
                 r = o[(o["model"] == model) & (o["arm"] == arm) & (o["category"] == cat)]
                 if len(r):
                     r = r.iloc[0]
-                    rows.append([MODEL_LABELS[model], arm, p1(r["asr"]), p1(r["asr_oracle"]), p1(r["llm_attributable"])])
+                    rows.append([MODEL_LABELS[model], arm, p1(r["asr"]), p1(r["asr_oracle"]), signed(100 * r["llm_attributable"], 1)])
     return tabular(["Model", "Arm", "ASR (\\%)", "Oracle ASR (\\%)", "Difference (points)"], rows, "llrrr")
 
 
@@ -158,7 +162,7 @@ def hypotheses_table(df: pd.DataFrame) -> str:
     for _, r in h.iterrows():
         name = MODEL_LABELS[r["model"]]
         rows.append([name, "H1", f"B pooled ASR {p1(r['h1_asr_b'])}\\% over {r['h1_n']} pairs, Wilson upper bound {p1(r['h1_hi'])}\\%; largest Holm $p$ of A vs B {fmt_p(r['h1_min_gap_p'])}", verdict(r["h1"])])
-        rows.append(["", "H2", f"B extraction ASR lower bound {p1(r['h2_ext_lo'])}\\%; plausibility slope {r['h2_slope']:.2f} ({r['h2_slope_lo']:.2f} to {r['h2_slope_hi']:.2f})", verdict(r["h2"])])
+        rows.append(["", "H2", f"B extraction ASR lower bound {p1(r['h2_ext_lo'])}\\%; plausibility slope {signed(r['h2_slope'])} ({signed(r['h2_slope_lo'])} to {signed(r['h2_slope_hi'])})", verdict(r["h2"])])
         rows.append(["", "H3", f"Extraction ASR B {p1(r['h3_asr_b'])}\\% to C {p1(r['h3_asr_c'])}\\% (Holm $p$ {fmt_p(r['h3_p'])}); clean review rate of C {p1(r['h3_review_c'])}\\% against refer rate of B {p1(r['h3_refer_b'])}\\%", verdict(r["h3"])])
     return tabular(["Model", "Hypothesis", "Evidence", "Verdict"], rows, "llp{0.5\\textwidth}l")
 
@@ -347,8 +351,8 @@ def numbers(df: pd.DataFrame, metrics: dict, sel_sizes: dict) -> str:
             text += macro(f"fail{key}", p1(r["parse_failure"] + r["refusal"] + r["schema_invalid"] + r["incomplete"]))
     for _, r in an.plausibility_trend(df).iterrows():
         key = MODEL_ID[r["model"]]
-        text += macro(f"slope{key}", f"{r['slope']:.2f}")
-        text += macro(f"slope{key}ci", f"{r['lo']:.2f} to {r['hi']:.2f}")
+        text += macro(f"slope{key}", signed(r["slope"]))
+        text += macro(f"slope{key}ci", f"{signed(r['lo'])} to {signed(r['hi'])}")
         text += macro(f"slope{key}p", "$<0.001$" if r["p"] < 0.001 else f"{r['p']:.3f}")
     for _, r in an.clean_approve_rate(df).iterrows():
         if r["arm"] in ARM_ID and r["model"] in MODEL_ID:

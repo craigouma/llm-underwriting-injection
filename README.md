@@ -34,7 +34,8 @@ Model outputs are cached in `results/raw`, so every table and figure in the pape
 2. `python -m src.train_scorecard` rebuilds the cleaned data, the splits, the scorecards and the thresholds.
 3. `python -m src.evaluate --run main --models Qwen/Qwen2.5-1.5B-Instruct microsoft/Phi-4-mini-instruct --oracle` replays the cached outputs through every architecture and writes `results/tables/decisions_main_*.csv.gz`. Repeat for the other runs listed in `docs/preregistration.md`.
 4. `notebooks/analysis.ipynb` (or `python -c "from src import analysis as an, figures, report; df = an.load_runs(['main','mainL']); figures.make_all(df); report.main(('main','mainL'))"`) writes `paper/figures/*.pdf` and `paper/generated/*`.
-5. Compile `paper/main.tex` with a standard LaTeX toolchain.
+5. Compile `paper/main.tex` with a standard LaTeX toolchain (`pdflatex`, `bibtex`, `pdflatex` twice). The compiled paper is `paper/where_should_the_llm_sit.pdf`.
+6. `python3 tools/make_landing.py` rebuilds the landing page `index.html` from `site/landing.json` and the numbers in `paper/generated/numbers.tex`, so the page shows the same figures as the paper. It uses the standard library only.
 
 `pytest` runs the unit tests (documents, attacks, metrics, pipelines).
 

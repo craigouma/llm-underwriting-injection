@@ -112,6 +112,7 @@ def fig_plausibility(df: pd.DataFrame) -> Path:
 def fig_tradeoff(df: pd.DataFrame) -> Path:
     LABELS = {"none": "no checks", "range": "+ range", "range+currency": "+ currency", "range+currency+xdoc": "+ cross-document",
               "range+currency+xdoc+segment": "+ band"}
+    OFFSETS = [(6, 6, "left"), (6, 6, "left"), (6, -12, "left"), (-6, -13, "right"), (-6, 7, "right")]
     t = an.cumulative_check_tradeoff(df)
     models = models_in(t)
     fig, axes = plt.subplots(1, len(models), figsize=(3.4 * len(models), 3.0), sharey=True, squeeze=False)
@@ -119,7 +120,8 @@ def fig_tradeoff(df: pd.DataFrame) -> Path:
         g = t[t["model"] == model].reset_index(drop=True)
         ax.plot(g["clean_review_rate"], g["asr_extraction"], color=ARM_COLORS["C"], lw=2, marker="o", ms=5, mec="white", mew=1.5, zorder=3)
         for i, r in g.iterrows():
-            ax.annotate(LABELS.get(r["checks"], ""), (r["clean_review_rate"], r["asr_extraction"]), xytext=(6, 6 if i % 2 == 0 else -12),
+            dx, dy, ha = OFFSETS[i]
+            ax.annotate(LABELS.get(r["checks"], ""), (r["clean_review_rate"], r["asr_extraction"]), xytext=(dx, dy), ha=ha,
                         textcoords="offset points", fontsize=7, color=INK2)
         ax.set_title(MODEL_LABELS[model], color=NAVY)
         ax.set_xlabel("Review rate on clean inputs")
