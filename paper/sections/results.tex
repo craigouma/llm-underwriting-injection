@@ -1,0 +1,116 @@
+\section{Results}
+\label{sec:results}
+
+All figures come from the cached model outputs. Intervals are Wilson 95\% intervals unless stated. ``Targets'' are applicants the clean tabular scorecard refers or declines, so an approval under attack is a success for the attacker. Qwen2.5 1.5B, Phi-4-mini and Olmo-3 7B are abbreviated Qwen, Phi and Olmo in running text. The Olmo-3 7B run uses a subset of 200 utility applicants and 50 targets (Section~\ref{sec:method}), so its intervals are wider and its AUROC rests on about 14 defaulters.
+
+\subsection{Clean inputs: decision quality and extraction}
+
+\begin{table}[t]
+\centering\small
+\caption{Results on clean documents for the utility sample. AUROC is computed against the true default label from the score of each arm. Approve, refer and agree are shares of applicants. Agree is the share whose outcome equals the outcome of the tabular scorecard. Failed is the share of unusable model outputs, and Flagged the share of bundles for which C raises a check flag.}
+\label{tab:utility}
+\input{generated/tables/utility}
+\end{table}
+
+The LLM is a weak decider at these model sizes (Table~\ref{tab:utility}). On clean bundles Qwen approves \approveQwenA{}\% of applicants whatever their risk, with an AUROC of \aurocQwenA{}. Phi and Olmo approve \approvePhiA{}\% and \approveOlmoA{}\% and reach AUROCs of \aurocPhiA{} and \aurocOlmoA{}. The prompt defense moves the AUROC to \aurocQwenAdef{}, \aurocPhiAdef{} and \aurocOlmoAdef{}. With the same models as extractors the scorecard reaches \aurocQwenB{}, \aurocPhiB{} and \aurocOlmoB{}, against \aurocScoreLR{} on tabular input, and the outcome agrees with the tabular outcome for most applicants (Table~\ref{tab:utility}). Extraction is accurate for most fields (Appendix Table~\ref{tab:extraction}). The weak field is the gross pay on the payslip, which is correct for \extractGrossQwen{}\%, \extractGrossPhi{}\% and \extractGrossOlmo{}\% of Qwen, Phi and Olmo bundles. The error analysis (Appendix~\ref{app:errors}) shows why: Qwen often reports net pay, Phi writes numbers that do not match the payslip, and Olmo leaves the deposits field empty for some bundles. Unusable outputs, which become referrals, are \failQwenB{}\%, \failPhiB{}\% and \failOlmoB{}\% of the extractions.
+
+C flags \reviewQwenC{}\%, \reviewPhiC{}\% and \reviewOlmoC{}\% of clean bundles, against refer shares for B of \referQwenB{}\%, \referPhiB{}\% and \referOlmoB{}\%. Most clean flags follow from extraction errors (Appendix~\ref{app:errors}). Section~\ref{sec:cost} gives the full cost.
+
+\subsection{Instruction-style injection (RQ1)}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_asr_by_category.pdf}
+\caption{Attack success rate on the targets by attack category, architecture and model, with Wilson 95\% intervals. The dashed line marks the share of targets that Qwen's A approves on clean documents.}
+\label{fig:asr}
+\end{figure}
+
+Figure~\ref{fig:asr} and Table~\ref{tab:asr} give the attack success rate (ASR) by category. Two caveats frame the figures for A. Qwen approves \cleanApproveQwenA{}\% of the targets on clean documents, so its ASR for any category is close to its starting point. Among the targets it does not approve when clean, \flipQwenAInstruction{}\% (of \flipQwenAInstructionn{} attacked pairs) flip to approve under instruction attacks. Phi and Olmo approve almost no target on clean documents (\cleanApprovePhiA{}\% and \cleanApproveOlmoA{}\%), so their ASR on categories 1 to 4 is caused by the attacks.
+
+\begin{table}[t]
+\centering\footnotesize
+\caption{Attack success rate in percent on the targets with the Wilson 95\% interval, by category, architecture and model. Oracle arms read the values the documents state with no LLM. The category 5 rows of A and A with a defense measure the approve rate of a decider that approves almost no one (Phi, Olmo) or almost everyone (Qwen), and are read together with the clean approve rate.}
+\label{tab:asr}
+\resizebox{\textwidth}{!}{\input{generated/tables/asr}}
+\end{table}
+
+For Phi and Olmo the decider is easy to steer. Pooled over categories 1 to 4, A reaches an ASR of \asrPhiAInstr{}\% (\asrPhiAInstrci{}) for Phi and \asrOlmoAInstr{}\% (\asrOlmoAInstrci{}) for Olmo. The prompt defense lowers these to \asrPhiAdefInstr{}\% and \asrOlmoAdefInstr{}\%, and the effect depends on the category. For Olmo it removes the instruction override completely (\asrOlmoAdefOverride{}\%) and leaves \asrOlmoAdefFake{}\% for fake authority and \asrOlmoAdefDelim{}\% for delimiter attacks. Forged role markers (DX2) succeed in 98.0\% of the Olmo cases and 100.0\% of the Phi cases even with the defense, and injected JSON (DX3) in 98.0\% of the Olmo cases (Appendix Table~\ref{tab:variants}). The tags and the warning do not hold against an injected closing tag.
+
+Moving the decision out of the LLM removes most of the effect. Pooled ASR over categories 1 to 4 is \asrQwenBInstr{}\%, \asrPhiBInstr{}\% and \asrOlmoBInstr{}\% for B and \asrQwenCInstr{}\%, \asrPhiCInstr{}\% and \asrOlmoCInstr{}\% for C, for Qwen, Phi and Olmo. The oracle arms, which read the stated values and never see the injected text, have an ASR of 0.0\% in every instruction category. Every success of B in categories 1 to 4 therefore passes through the extractor.
+
+These successes concentrate in two variants whose payloads carry field values. IO3 asks the model to report income as 15000 and debts as zero, and DX3 injects a JSON fragment with an income key. B succeeds on IO3 in 24.0\%, 4.7\% and 16.0\% of the Qwen, Phi and Olmo cases and on DX3 in 27.3\%, 21.3\% and 6.0\%. On each of the other ten instruction variants B succeeds in at most 2.0\% of the cases for every model (Appendix Table~\ref{tab:variants}). The extractor copies the value into its JSON, and the scorecard then decides on it (Appendix~\ref{app:errors}). C flags \caughtQwenInstruction{} of \caughtQwenInstructionn{}, \caughtPhiInstruction{} of \caughtPhiInstructionn{} and \caughtOlmoInstruction{} of \caughtOlmoInstructionn{} of the successes of B in categories 1 to 4 for review. For IO3 and DX3 the flags are mostly the cross-document checks, because the injected income disagrees with the declared income or with the deposits.
+
+\begin{table}[t]
+\centering\small
+\caption{Decision rules of the preregistration, evaluated per model. A hypothesis counts as supported when the majority of the three models meet its condition.}
+\label{tab:hyp}
+\input{generated/tables/hypotheses}
+\end{table}
+
+Table~\ref{tab:hyp} applies the preregistered rule for H1. B meets it for Olmo only. For Qwen the pooled ASR is \asrQwenBInstr{}\% with an upper bound of 6.1\%, for Phi it is \asrPhiBInstr{}\%, above the limit of 2\%, and Phi's A resists the plain override better than B does (0.2\% against 2.0\%), so the contrast of A and B fails there. \textbf{H1 is not supported:} B lowers the ASR by an order of magnitude or more relative to A for Phi and Olmo, and C brings it to 0.0\% for both, yet B does not stay at or below 2\% when a payload tells the extractor which values to write. The paired contrasts of A, A with a defense, B and C within each category, with Holm adjustment, are in Appendix Table~\ref{tab:tests}. The applicant-level bootstrap intervals for B in the extraction category, where applicants repeat across the most variants, are 1.3 to 1.6 times as wide as the Wilson intervals (\texttt{results/tables/bootstrap\_asr\_*.csv}).
+
+\subsection{Extraction manipulation (RQ2)}
+
+Falsifying what the documents say moves the decision of B whether or not the LLM is involved. Pooled over category 5, B has an ASR of \asrQwenBExtract{}\% (\asrQwenBExtractci{}), \asrPhiBExtract{}\% (\asrPhiBExtractci{}) and \asrOlmoBExtract{}\% (\asrOlmoBExtractci{}) for Qwen, Phi and Olmo. The oracle arm, which reads the falsified values exactly, reaches \asrQwenBorExtract{}\%, \asrPhiBorExtract{}\% and \asrOlmoBorExtract{}\% (Table~\ref{tab:oracle}). The part attributable to the LLM is the difference, which is 0.1, $-3.0$ and 0.0 points. The extractor neither amplifies nor suppresses the falsification to a measurable degree. The document carries the attack.
+
+\begin{table}[t]
+\centering\small
+\caption{Extraction-manipulation ASR of B and C and of the same pipelines with an oracle extractor. The difference is the part attributable to the LLM extractor.}
+\label{tab:oracle}
+\input{generated/tables/oracle}
+\end{table}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_variants.pdf}
+\caption{Attack success rate of the extraction-manipulation variants for B, C and B with an oracle extractor.}
+\label{fig:variants}
+\end{figure}
+
+The variants differ widely (Figure~\ref{fig:variants}). Three of them dominate: the payslip in Kenyan shillings (EM14) succeeds against B in 80.0\%, 60.0\% and 92.0\% of the Qwen, Phi and Olmo cases, the understated revolving balance (EM9) in 78.0\%, 75.3\% and 86.0\%, and the zeroed late-payment counts (EM7) in 50.0\%, 42.6\% and 50.0\%. No other extraction variant exceeds 20\% for any model. Raising income by 20\%, 50\% and 100\% in one document (EM1 to EM3) succeeds more often as the increase grows (5.3\%, 9.3\% and 18.0\% for Qwen). A forgery kept consistent across all documents (EM4 to EM6) succeeds against B about as often as the same increase in the payslip alone, because B reads income from the payslip. Consistency matters for C: its ASR is 0.0\% on EM1 to EM3 for every model and reaches 12.0\% on EM6.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_plausibility.pdf}
+\caption{Attack success rate by plausibility of the falsified value (variants EM1 to EM11) for B, C and B with an oracle extractor. Plausibility is $1-|2F-1|$ for the mid-rank CDF $F$ of the value in the applicant's age band.}
+\label{fig:plausibility}
+\end{figure}
+
+\textbf{H2 is supported} under the preregistered rule: B's category 5 ASR has a lower bound above zero for all three models, and the slope of success on plausibility is positive with an interval excluding zero for Qwen (\slopeQwen{}, \slopeQwenci{}) and Phi (\slopePhi{}, \slopePhici{}) but not for Olmo (\slopeOlmo{}, \slopeOlmoci{}), a majority of two models. The shape in Figure~\ref{fig:plausibility} calls for care. Success rises from the lowest bins to the 0.5 to 0.75 bin and falls again in the top bin, and the oracle arm follows the same curve. Plausibility is a property of the falsified value and of the applicant it is applied to, and it is not assigned at random. A likely reason, which we did not test, is that targets with a high true income land in the low-plausibility bins after a large increase and are refused for other reasons. The slope then describes which falsifications flip decisions. It gives no evidence that the LLM extractor is more easily fooled by plausible values.
+
+C lowers the category 5 ASR to \asrQwenCExtract{}\% (\asrQwenCExtractci{}), \asrPhiCExtract{}\% and \asrOlmoCExtract{}\%, and it catches \caughtQwenExtraction{} of \caughtQwenExtractionn{}, \caughtPhiExtraction{} of \caughtPhiExtractionn{} and \caughtOlmoExtraction{} of \caughtOlmoExtractionn{} of the successes of B. The remaining successes are the fields with a single source in the bundle and the forgeries that agree across documents. C's ASR on EM9 is 38.0\%, 61.3\% and 70.0\% and on EM7 23.5\%, 35.3\% and 25.0\% for Qwen, Phi and Olmo. For EM14 it is 0.0\%, because the currency check catches the unit shift. C's ASR is below that of its own oracle arm (Table~\ref{tab:oracle}). A likely reason is that extraction errors on falsified bundles raise additional flags that the oracle arm never sees, since the oracle arm flags only 2.0\% of clean bundles for Qwen.
+
+\subsection{Cost of the checks (RQ3)}
+\label{sec:cost}
+
+\begin{table}[t]
+\centering\small
+\caption{Review rate on clean inputs and category 5 ASR of C when the check groups are enabled cumulatively. Range and missing-field checks come first, then the currency check, the cross-document checks and the plausible-band checks.}
+\label{tab:tradeoff}
+\input{generated/tables/tradeoff}
+\end{table}
+
+C pays for its ASR reduction in review workload. On clean bundles it flags \reviewQwenC{}\%, \reviewPhiC{}\% and \reviewOlmoC{}\% against refer rates of \referQwenB{}\%, \referPhiB{}\% and \referOlmoB{}\% for B. \textbf{H3 is supported}: C's category 5 ASR is below B's for all three models with Holm-adjusted $p<0.001$, and C's clean review rate exceeds B's refer rate for all three (Table~\ref{tab:hyp}). The margin for Phi is 0.2 points (17.7\% against 17.5\%), so the verdict for Phi rests on a small difference.
+
+The review cost depends on the extractor more than on the checks (Table~\ref{tab:tradeoff}, Figure~\ref{fig:tradeoff}). The range and missing-field group lowers the category 5 ASR by 5.6, 3.2 and 8.3 points for Qwen, Phi and Olmo. It is free for Qwen (0.0\% clean review), because the income cap catches 113 of the 120 payslips in shillings that B accepts. For Olmo it flags 17.5\% of clean bundles, and 35 of the 38 bundles that C flags carry the missing-deposits flag. The cross-document group adds 7.6, 3.4 and 2.6 points of ASR reduction and raises clean review from 2.0\% to 47.1\% for Qwen, whose gross-pay errors contradict the declared income, from 6.4\% to 16.0\% for Phi, and from 17.5\% to 18.0\% for Olmo. The plausible-band group lowers the ASR by 0.3 to 0.6 points for 1.0 to 1.7 points of review. A more accurate extractor lowers the review burden of C without weakening its checks.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_tradeoff.pdf}
+\caption{Review rate on clean inputs and category 5 ASR of C as the check groups are enabled cumulatively.}
+\label{fig:tradeoff}
+\end{figure}
+
+\subsection{Robustness}
+
+\textbf{LightGBM scorecard.} Replacing the logistic scorecard with the monotone LightGBM model keeps the ordering of the arms (Appendix Table~\ref{tab:lgbm}). The ASR of the LightGBM arms includes a floor, because the reference outcome is defined by the logistic scorecard and LightGBM approves \cleanApproveQwenBlgbm{}\%, \cleanApprovePhiBlgbm{}\% and \cleanApproveOlmoBlgbm{}\% of the targets (Qwen, Phi, Olmo) on documents with no attack. The oracle arm of the same scorecard shows that floor: subtracting it leaves 1.3, 0.6 and 2.2 points for B on instruction categories (Qwen, Phi, Olmo).
+
+\textbf{Second prompt wording.} On the subset of pairs shared with the main run, the second wording gives the same ordering of arms (Appendix Table~\ref{tab:phrasing}). B on instruction attacks moves by at most 1.4 points, C stays at 0.0\%, and the ASR of A with a defense changes by up to 8.6 points (Qwen 83.1\% to 91.7\%, Phi 20.3\% to 26.7\%), so the size of the prompt-defense effect depends on the wording.
+
+\textbf{Sampling.} At temperature 0.7 over three seeds, the standard deviation of B's pooled ASR is at most 2.2 points and C stays at 0.0\% (Appendix Table~\ref{tab:seeds}). Phi's A with a defense moves from 16.2\% at temperature 0 to 27.1\% (standard deviation 2.6) on instruction attacks, and Qwen's A drops from 100\% to 78.8\% on category 5, which reflects its approve behavior at temperature 0.7.
+
+\subsection{Collateral damage and utility under attack}
+
+Instruction attacks do not change who B approves among eligible applicants: the approve share of the collateral sample is within 3 points of its clean value for B (Appendix Table~\ref{tab:collateral}). The prompt defense has a side effect. Qwen's defended decider approves none of the 150 target bundles that carry IO3 (149 are referred and one is declined), and the approve share of eligible applicants falls from 95.0\% to 82.5\% under instruction attacks, so an applicant whose document contains a hostile string can lose an approval. C refers eligible applicants whose documents were falsified: their approve share falls from 47.5\% to 24.0\% for Qwen and from 85.0\% to 48.6\% for Phi. This is the intended action for a falsified bundle and adds to the review workload.
+
+The squared error between the score and the true label changes by at most 0.011 under attack for any arm (Appendix Table~\ref{tab:attackutil}). The largest change is for the decider of Qwen on instruction attacks. Scores of B and C move by 0.005 at most.

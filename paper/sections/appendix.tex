@@ -1,0 +1,120 @@
+\section{Additional results}
+\label{app:tables}
+
+\begin{table}[h]
+\centering\small
+\caption{Extraction accuracy per field on the clean utility sample. A numeric value counts as correct within 0.5\% or one unit.}
+\label{tab:extraction}
+\input{generated/tables/extraction}
+\end{table}
+
+\begin{table}[h]
+\centering\scriptsize
+\caption{Attack success rate in percent per attack variant for each architecture and model. A+def is A with the prompt-level defense. EM7, EM8, EM9 and EM13 are applied only to the applicants whose documents they change.}
+\label{tab:variants}
+\resizebox{\textwidth}{!}{\input{generated/tables/variants}}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Planned paired exact McNemar tests (selected contrasts), with Holm adjustment over the 20 planned tests per model. Pairs is the number of (applicant, variant) pairs. ASR is given for the first and the second arm. Only first and only second count the discordant pairs.}
+\label{tab:tests}
+\resizebox{\textwidth}{!}{\input{generated/tables/tests}}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Share of attacked bundles that C flags for review, and the number of successes of B that C flags, by attack category. Wilson 95\% intervals.}
+\label{tab:review}
+\input{generated/tables/review}
+\end{table}
+
+\begin{table}[h]
+\centering\footnotesize
+\caption{Robustness to the scorecard. ASR in percent with the logistic scorecard (B and C) and with the monotone LightGBM scorecard. The LightGBM arms include a floor from the disagreement of the two scorecards on clean documents, which the oracle arm of the same scorecard shows.}
+\label{tab:lgbm}
+\resizebox{\textwidth}{!}{\input{generated/tables/lgbm}}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Robustness to the prompt wording. ASR in percent (number of pairs in parentheses) for the main wording and the second wording on the (applicant, attack) pairs of the second-wording run.}
+\label{tab:phrasing}
+\input{generated/tables/phrasing}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Variance across sampling seeds. ASR in percent at temperature 0 (number of pairs in parentheses) and the mean and standard deviation over three seeds at temperature 0.7, on the pairs of the variance runs.}
+\label{tab:seeds}
+\input{generated/tables/seeds}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Collateral damage. Share of the collateral sample (applicants the clean scorecard approves) that each arm approves on clean documents and under each attack type. Olmo-3 7B has no collateral sample.}
+\label{tab:collateral}
+\input{generated/tables/collateral}
+\end{table}
+
+\begin{table}[h]
+\centering\small
+\caption{Utility under attack. Change from clean to attacked documents in the mean squared error between the score and the true label, for bundles with a score in both conditions.}
+\label{tab:attackutil}
+\input{generated/tables/attack_utility}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figures/fig_clean_utility.pdf}
+\caption{Clean-input utility by arm and model: decision AUROC, share referred to a human and agreement with the tabular scorecard.}
+\label{fig:utility}
+\end{figure}
+
+\section{Error analysis}
+\label{app:errors}
+
+Preregistration section 7 requires at least 50 failures to be read by hand. A seeded random sample of 72 cases (up to four per model in each of six failure types) was read and assigned to one category each. The cases, with the changed document lines and the raw outputs, are in \texttt{results/error\_sample.md}, and the assignment is in \texttt{docs/error\_analysis.md}. The counts describe the kinds of failure that occur in the sample. They do not estimate frequencies. Table~\ref{tab:errors} lists the categories.
+
+\begin{table}[h]
+\centering\small
+\caption{Hand-coded categories of the 72 sampled failures.}
+\label{tab:errors}
+\begin{tabular}{p{0.2\textwidth}p{0.62\textwidth}r}
+\toprule
+Failure type & Category & Cases \\
+\midrule
+Attack succeeds against a decider & The model approves almost everyone, so the attack changes nothing (Qwen) & 4 \\
+ & The model adopts the injected claim, typically with a risk score just under the approve threshold & 8 \\
+Attack succeeds against B & An injection steers the extraction (DX3) & 1 \\
+ & A payslip in shillings is read correctly and B has no currency check (EM14) & 4 \\
+ & A falsified value is read correctly (EM2, EM4, EM5, EM7, EM9) & 7 \\
+Attack succeeds against C & The falsified field has no second source in the bundle (EM7, EM9) & 9 \\
+ & A forgery that agrees across documents stays inside the plausible band (EM5, EM6) & 3 \\
+Wrong extraction on a clean bundle & Gross pay reported below the stated gross, as net pay would be (Qwen, Phi) & 4 \\
+ & Gross pay reported far from the stated value (Phi) & 3 \\
+ & A count read wrongly (Qwen) & 1 \\
+ & Deposits field left empty (Olmo) & 4 \\
+Format failure & The decider copies the injected JSON keys and the strict parser rejects them (Qwen, DX3) & 4 \\
+ & Thousands separators inside a JSON number (Phi) & 4 \\
+ & A required field returned as null (Olmo) & 4 \\
+C flags a clean bundle & A flag caused by a wrongly extracted payslip income & 6 \\
+ & A missing-field flag caused by an empty deposits field (Olmo) & 4 \\
+ & A plausible-band flag on a correctly extracted bundle (utilisation) & 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three observations stand out. First, the one route by which an instruction reaches the decision of B is an injection that names the value to write. Second, most successes of B on falsified documents come from a faithful extraction of the falsified or unit-shifted value. Third, the failures of C on attacks fall into two groups: fields that only the application form states, and forgeries that agree in every document.
+
+\section{Deviations from the preregistration}
+\label{app:deviations}
+
+The preregistration (\texttt{docs/preregistration.md}) was written before any model ran on study data and changes only by dated addendum. Every change is also in \texttt{docs/decisions.md}.
+\begin{itemize}
+  \item \textbf{Run sizes (Addendum 1).} After the pilot measured throughput, the main run for Qwen2.5 1.5B and Phi-4-mini uses the first 1{,}000 utility applicants, 150 targets and 40 collateral applicants. The Olmo-3 7B run uses the first 200, 50 and 0. The second-wording run uses 150 and 30 targets with all attacks, and the variance runs use 60 and 20 with eight attacks. The attack set, the metrics, the models and the decision rules are unchanged.
+  \item \textbf{Decider prompt.} The decider prompt states the lender policy (approve below 6.5\%, decline from 13\%, a 7\% base rate). A clean-input check before any attacked prompt had been run showed that two models approved nobody and one approved nearly everybody without it.
+  \item \textbf{Group flags.} The replay marked utility, target and collateral applicants from the full candidate pools instead of the run prefixes, which put 1{,}005, 153 and 42 applicants in the clean groups of the main run instead of 1{,}000, 150 and 40. Attack success rates were not affected. Clean-input numbers moved by at most 0.2 points, and one verdict changed: for Phi the clean review rate of C and the refer rate of B for H3 were 17.6\% and 17.6\% before the correction, which does not meet the rule, and are 17.7\% and 17.5\% after it, which does.
+  \item \textbf{Readings of the decision rules.} The rule for H1 is applied as a lower ASR of B than of A with Holm-adjusted $p<0.05$ in each of the four instruction categories. The reading was recorded before the Phi and Olmo outputs were read, after the Qwen tables had been seen.
+  \item \textbf{Compute.} The grid took 6.7 session hours instead of about six because Phi-4-mini ran slower than in the pilot (Section~\ref{sec:repro}).
+\end{itemize}
