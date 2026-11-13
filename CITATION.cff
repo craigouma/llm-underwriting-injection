@@ -4,7 +4,7 @@ title: "Where Should the LLM Sit? Architectural Defenses Against Document-Borne 
 type: software
 authors:
   - family-names: Ouma
-    given-names: Craig
+    given-names: Craig Carlos
 repository-code: "https://github.com/craigouma/llm-underwriting-injection"
 license: MIT
 date-released: "2026-11-12"

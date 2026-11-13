@@ -44,8 +44,10 @@ Every choice the brief left open, and every departure from it, with the date and
 
 ## 2026-11-13, release
 
-**Landing page.** The page follows the layout Craig supplied (editorial serif on warm paper, one accent colour, labelled rows, headline numbers, ruled figure captions, BibTeX box). The supplied file needs a browser runtime, so the page is built as plain static HTML by `tools/make_landing.py` from `site/landing.json`. Every number on the page comes from `paper/generated/numbers.tex`, so the page and the paper cannot disagree, and the Google Scholar tags sit in the real `<head>`. The page lists the contact address that appears on Craig's other papers, and uses the author name of the brief ("Craig Ouma") to match the PDF and the citation file.
+**Landing page.** The page follows the layout Craig supplied (editorial serif on warm paper, one accent colour, labelled rows, headline numbers, ruled figure captions, BibTeX box). The supplied file needs a browser runtime, so the page is built as plain static HTML by `tools/make_landing.py` from `site/landing.json`. Every number on the page comes from `paper/generated/numbers.tex`, so the page and the paper cannot disagree, and the Google Scholar tags sit in the real `<head>`. The page lists the contact address that appears on Craig's other papers, and uses the author name "Craig Carlos Ouma", as in his earlier papers.
 
 **Paper build.** LaTeX was compiled in a Kaggle kernel with internet access (TeX Live from the distribution packages), so nothing was installed on the local machine. The compiled paper is `paper/where_should_the_llm_sit.pdf`, and its generated tables and figures come from commit `5142b87`.
 
 **Published.** The repository and a GitHub Pages site (`main` branch, root) were published on Craig's request after the paper, the tables and the landing page were committed.
+
+**Author name changed on 2026-11-13.** Craig asked for "Craig Carlos Ouma", the name on his earlier papers, replacing "Craig Ouma" from the brief. It is changed in `paper/main.tex`, `CITATION.cff`, `LICENSE`, `LICENSE-DATA` and the landing page, and the paper was recompiled. The earlier entry above that records "Craig Ouma" describes the state before this change.

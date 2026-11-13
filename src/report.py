@@ -340,6 +340,8 @@ def numbers(df: pd.DataFrame, metrics: dict, sel_sizes: dict) -> str:
         text += macro(f"asr{key}", p1(r["rate"]))
         text += macro(f"asr{key}ci", f"{p1(r['lo'])} to {p1(r['hi'])}")
         text += macro(f"asr{key}n", f"{int(r['n']):,}".replace(",", "\\,"))
+        text += macro(f"asr{key}k", str(int(r["k"])))
+        text += macro(f"asr{key}hi", p1(r["hi"]))
     u = an.clean_utility(df)
     for _, r in u.iterrows():
         if r["arm"] in ARM_ID and r["model"] in MODEL_ID:
