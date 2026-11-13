@@ -160,7 +160,7 @@ def hypotheses_table(df: pd.DataFrame) -> str:
         rows.append([name, "H1", f"B pooled ASR {p1(r['h1_asr_b'])}\\% over {r['h1_n']} pairs, Wilson upper bound {p1(r['h1_hi'])}\\%; largest Holm $p$ of A vs B {fmt_p(r['h1_min_gap_p'])}", verdict(r["h1"])])
         rows.append(["", "H2", f"B extraction ASR lower bound {p1(r['h2_ext_lo'])}\\%; plausibility slope {r['h2_slope']:.2f} ({r['h2_slope_lo']:.2f} to {r['h2_slope_hi']:.2f})", verdict(r["h2"])])
         rows.append(["", "H3", f"Extraction ASR B {p1(r['h3_asr_b'])}\\% to C {p1(r['h3_asr_c'])}\\% (Holm $p$ {fmt_p(r['h3_p'])}); clean review rate of C {p1(r['h3_review_c'])}\\% against refer rate of B {p1(r['h3_refer_b'])}\\%", verdict(r["h3"])])
-    return tabular(["Model", "Hypothesis", "Evidence", "Verdict"], rows, "llp{0.62\\textwidth}l")
+    return tabular(["Model", "Hypothesis", "Evidence", "Verdict"], rows, "llp{0.5\\textwidth}l")
 
 
 def rate_cell(k_rate: float, n: int | float) -> str:
@@ -283,7 +283,7 @@ def attacks_table() -> str:
 
     rows = []
     for s in load_catalog():
-        desc = DESCRIPTIONS.get(s.id) or "``" + s.params["payload"].replace("\n", " ").replace("_", "\\_").replace("#", "\\#").replace("&", "\\&").replace("%", "\\%").replace("$", "\\$").replace("{", "\\{").replace("}", "\\}").replace("<", "$<$").replace(">", "$>$").replace("|", "$|$").replace("`", "'") + "''"
+        desc = (DESCRIPTIONS[s.id].replace("%", "\\%") if s.id in DESCRIPTIONS else None) or "``" + s.params["payload"].replace("\n", " ").replace("_", "\\_").replace("#", "\\#").replace("&", "\\&").replace("%", "\\%").replace("$", "\\$").replace("{", "\\{").replace("}", "\\}").replace("<", "$<$").replace(">", "$>$").replace("|", "$|$").replace("`", "'") + "''"
         rows.append([s.id, TEXT_NAMES[s.category], s.sophistication, desc])
     return tabular(["ID", "Category", "Level", "Payload or change"], rows, "llll").replace("\\begin{tabular}{llll}", "\\begin{tabular}{lllp{0.55\\textwidth}}")
 

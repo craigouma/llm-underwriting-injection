@@ -12,14 +12,15 @@
 \centering\scriptsize
 \caption{Attack success rate in percent per attack variant for each architecture and model. A+def is A with the prompt-level defense. EM7, EM8, EM9 and EM13 are applied only to the applicants whose documents they change.}
 \label{tab:variants}
-\resizebox{\textwidth}{!}{\input{generated/tables/variants}}
+\adjustbox{max width=\textwidth}{\input{generated/tables/variants}}
 \end{table}
 
 \begin{table}[h]
 \centering\small
 \caption{Planned paired exact McNemar tests (selected contrasts), with Holm adjustment over the 20 planned tests per model. Pairs is the number of (applicant, variant) pairs. ASR is given for the first and the second arm. Only first and only second count the discordant pairs.}
 \label{tab:tests}
-\resizebox{\textwidth}{!}{\input{generated/tables/tests}}
+\scriptsize
+\adjustbox{max width=\textwidth}{\input{generated/tables/tests}}
 \end{table}
 
 \begin{table}[h]
@@ -33,7 +34,7 @@
 \centering\footnotesize
 \caption{Robustness to the scorecard. ASR in percent with the logistic scorecard (B and C) and with the monotone LightGBM scorecard. The LightGBM arms include a floor from the disagreement of the two scorecards on clean documents, which the oracle arm of the same scorecard shows.}
 \label{tab:lgbm}
-\resizebox{\textwidth}{!}{\input{generated/tables/lgbm}}
+\adjustbox{max width=\textwidth}{\input{generated/tables/lgbm}}
 \end{table}
 
 \begin{table}[h]

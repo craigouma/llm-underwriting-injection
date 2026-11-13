@@ -9,7 +9,7 @@ All figures come from the cached model outputs. Intervals are Wilson 95\% interv
 \centering\small
 \caption{Results on clean documents for the utility sample. AUROC is computed against the true default label from the score of each arm. Approve, refer and agree are shares of applicants. Agree is the share whose outcome equals the outcome of the tabular scorecard. Failed is the share of unusable model outputs, and Flagged the share of bundles for which C raises a check flag.}
 \label{tab:utility}
-\input{generated/tables/utility}
+\adjustbox{max width=\textwidth}{\input{generated/tables/utility}}
 \end{table}
 
 The LLM is a weak decider at these model sizes (Table~\ref{tab:utility}). On clean bundles Qwen approves \approveQwenA{}\% of applicants whatever their risk, with an AUROC of \aurocQwenA{}. Phi and Olmo approve \approvePhiA{}\% and \approveOlmoA{}\% and reach AUROCs of \aurocPhiA{} and \aurocOlmoA{}. The prompt defense moves the AUROC to \aurocQwenAdef{}, \aurocPhiAdef{} and \aurocOlmoAdef{}. With the same models as extractors the scorecard reaches \aurocQwenB{}, \aurocPhiB{} and \aurocOlmoB{}, against \aurocScoreLR{} on tabular input, and the outcome agrees with the tabular outcome for most applicants (Table~\ref{tab:utility}). Extraction is accurate for most fields (Appendix Table~\ref{tab:extraction}). The weak field is the gross pay on the payslip, which is correct for \extractGrossQwen{}\%, \extractGrossPhi{}\% and \extractGrossOlmo{}\% of Qwen, Phi and Olmo bundles. The error analysis (Appendix~\ref{app:errors}) shows why: Qwen often reports net pay, Phi writes numbers that do not match the payslip, and Olmo leaves the deposits field empty for some bundles. Unusable outputs, which become referrals, are \failQwenB{}\%, \failPhiB{}\% and \failOlmoB{}\% of the extractions.
@@ -31,7 +31,7 @@ Figure~\ref{fig:asr} and Table~\ref{tab:asr} give the attack success rate (ASR) 
 \centering\footnotesize
 \caption{Attack success rate in percent on the targets with the Wilson 95\% interval, by category, architecture and model. Oracle arms read the values the documents state with no LLM. The category 5 rows of A and A with a defense measure the approve rate of a decider that approves almost no one (Phi, Olmo) or almost everyone (Qwen), and are read together with the clean approve rate.}
 \label{tab:asr}
-\resizebox{\textwidth}{!}{\input{generated/tables/asr}}
+\adjustbox{max width=\textwidth}{\input{generated/tables/asr}}
 \end{table}
 
 For Phi and Olmo the decider is easy to steer. Pooled over categories 1 to 4, A reaches an ASR of \asrPhiAInstr{}\% (\asrPhiAInstrci{}) for Phi and \asrOlmoAInstr{}\% (\asrOlmoAInstrci{}) for Olmo. The prompt defense lowers these to \asrPhiAdefInstr{}\% and \asrOlmoAdefInstr{}\%, and the effect depends on the category. For Olmo it removes the instruction override completely (\asrOlmoAdefOverride{}\%) and leaves \asrOlmoAdefFake{}\% for fake authority and \asrOlmoAdefDelim{}\% for delimiter attacks. Forged role markers (DX2) succeed in 98.0\% of the Olmo cases and 100.0\% of the Phi cases even with the defense, and injected JSON (DX3) in 98.0\% of the Olmo cases (Appendix Table~\ref{tab:variants}). The tags and the warning do not hold against an injected closing tag.
