@@ -12,7 +12,7 @@ from pathlib import Path
 import pandas as pd
 
 from src.eval.metrics import field_correct
-from src.jobs import Selection, build_bundles, select
+from src.jobs import Selection, build_bundles, run_groups, select
 from src.pipelines import scorers
 from src.pipelines.base import REFER, Backend, Decision, ReplayBackend
 from src.pipelines.decider import DeciderPipeline
@@ -81,7 +81,7 @@ def table_for(run: str, model: str | None, sel: Selection, segments: Segments, a
         paths = [Path(p) for p in sorted(glob.glob(str(RAW / run / f"{slug(model)}.shard*.jsonl")))]
         backend = ReplayBackend.from_jsonl(paths, model, run)
     arms = build_arms(backend, segments, phrasing)
-    U, P, Q = set(sel.U), set(sel.P), set(sel.Q)
+    U, P, Q = run_groups(sel, run)
     rows = []
     for bundle in bundles:
         row_id = int(bundle.applicant_id[2:])

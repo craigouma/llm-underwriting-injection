@@ -113,6 +113,13 @@ def build_bundles(sel: Selection, segments: Segments, run: str = "main") -> list
     raise ValueError(run)
 
 
+def run_groups(sel: Selection, run: str) -> tuple[set[int], set[int], set[int]]:
+    """Applicants of the clean-utility, target and collateral groups of a run: prefixes of the shuffled pools."""
+    sizes = {"main": RUN_SIZES["main"], "mainL": RUN_SIZES["mainL"], "phr1": RUN_SIZES["phr1"], "pilot": (140, 40, 20), "check": (16, 0, 0)}
+    nu, np_, nq = RUN_SIZES["var"] if run.startswith("var") else sizes[run]
+    return set(sel.U[:nu]), set(sel.P[:np_]), set(sel.Q[:nq])
+
+
 def run_settings(run: str) -> tuple[int, float, int]:
     """phrasing, temperature, seed for a run tag."""
     if run in ("main", "mainL", "check", "pilot"):
