@@ -1,0 +1,71 @@
+{
+ "gpus_per_session": 2,
+ "gpu": "NVIDIA Tesla T4",
+ "models": {
+  "Qwen/Qwen2.5-1.5B-Instruct": {
+   "runs": {
+    "main": {
+     "seconds": 3311.5,
+     "calls": 17955
+    },
+    "phr1": {
+     "seconds": 495.7,
+     "calls": 2802
+    },
+    "var1": {
+     "seconds": 144.9,
+     "calls": 720
+    },
+    "var2": {
+     "seconds": 148.5,
+     "calls": 720
+    },
+    "var3": {
+     "seconds": 136.7,
+     "calls": 720
+    }
+   },
+   "seconds": 4237.3,
+   "calls": 22917
+  },
+  "microsoft/Phi-4-mini-instruct": {
+   "runs": {
+    "main": {
+     "seconds": 11060.8,
+     "calls": 17955
+    },
+    "phr1": {
+     "seconds": 1332.0,
+     "calls": 2802
+    },
+    "var1": {
+     "seconds": 373.7,
+     "calls": 720
+    },
+    "var2": {
+     "seconds": 382.6,
+     "calls": 720
+    },
+    "var3": {
+     "seconds": 364.9,
+     "calls": 720
+    }
+   },
+   "seconds": 13514.0,
+   "calls": 22917
+  },
+  "allenai/Olmo-3-7B-Instruct": {
+   "runs": {
+    "mainL": {
+     "seconds": 6248.9,
+     "calls": 4536
+    }
+   },
+   "seconds": 6248.9,
+   "calls": 4536
+  }
+ },
+ "session_hours": 6.67,
+ "gpu_hours": 13.33,
+ "calls": 50370
+}
