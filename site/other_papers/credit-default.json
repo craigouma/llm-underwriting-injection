@@ -1,0 +1,200 @@
+{
+  "meta": {
+    "title": "Explainable Credit Default Prediction for Microfinance",
+    "subtitle": "A Gradient Boosting and SHAP Study on Consumer Credit Data",
+    "scholar_title": "Explainable Credit Default Prediction for Microfinance: A Gradient Boosting and SHAP Study on Consumer Credit Data",
+    "html_title": "Explainable Credit Default Prediction — Craig Carlos Ouma",
+    "og_title": "Explainable Credit Default Prediction — Craig Carlos Ouma",
+    "og_description": "Three classifiers on 150,000 borrowers. SHAP reveals revolving utilisation and delinquency history dominate. All models calibrate poorly — a finding with direct deployment implications.",
+    "tags": [
+      "Preprint",
+      "SHAP Explainability",
+      "Microfinance"
+    ],
+    "date_label": "June 2026",
+    "year": "2026",
+    "online_date": "2026/06/16",
+    "authors": [
+      {
+        "name": "Craig Carlos Ouma",
+        "scholar": "Ouma, Craig Carlos",
+        "affiliation": "Independent Researcher",
+        "email": "craigcarlos95@gmail.com"
+      }
+    ],
+    "site_url": "https://craigouma.github.io/credit-default/",
+    "pdf": "credit_default_shap.pdf",
+    "keywords": [
+      "credit scoring",
+      "default prediction",
+      "SHAP",
+      "LightGBM",
+      "XGBoost",
+      "explainability",
+      "microfinance",
+      "East Africa"
+    ],
+    "keywords_display": [
+      "Credit scoring",
+      "Default prediction",
+      "SHAP explainability",
+      "LightGBM",
+      "XGBoost",
+      "Microfinance",
+      "East Africa",
+      "Gini coefficient",
+      "KS statistic",
+      "Model calibration",
+      "Fair lending"
+    ]
+  },
+  "actions": [
+    {
+      "label": "Download PDF",
+      "url": "credit_default_shap.pdf"
+    },
+    {
+      "label": "Code &amp; Notebook",
+      "url": "https://github.com/craigouma/credit-default"
+    },
+    {
+      "label": "Dataset",
+      "url": "https://www.kaggle.com/datasets/brycecf/give-me-some-credit-dataset"
+    }
+  ],
+  "stats": [
+    {
+      "value": "150,000",
+      "label": "Borrowers"
+    },
+    {
+      "value": "0.868",
+      "label": "Best AUROC"
+    },
+    {
+      "value": "0.735",
+      "label": "Gini coefficient"
+    },
+    {
+      "value": "6.68%",
+      "label": "Default rate"
+    }
+  ],
+  "key_finding": "Revolving credit utilisation (mean |SHAP| = 0.198) and maximum prior delinquency status (0.131) together account for the bulk of predictive signal — consistent with credit bureau practice and providing face-validity for the model. All three tree models are poorly calibrated; raw probabilities should not be used directly as default-rate thresholds without recalibration.",
+  "abstract": "Credit scoring models underpin lending decisions for millions of borrowers, yet in many microfinance settings they operate as black boxes — lenders know the score but not the story behind it. This paper trains and compares three classifiers (Logistic Regression, XGBoost, and LightGBM) on the Give Me Some Credit consumer credit dataset (150,000 borrowers, 6.68% default rate) and applies SHAP (SHapley Additive exPlanations) to make the best-performing model's decisions transparent. All three classifiers perform within a narrow AUROC band of 0.862–0.868, with XGBoost leading marginally. The SHAP analysis reveals that revolving credit utilisation and maximum delinquency status together drive the bulk of predictive signal — consistent with established credit theory. Younger borrowers and those with lower incomes face systematically higher predicted default risk, while revolving utilisation shows a notable threshold effect near 0.5. We also find that all three tree models are poorly calibrated, with direct implications for threshold-based lending decisions. These results support SHAP-augmented gradient boosting as a practical, explainable credit scoring framework for microfinance lenders operating under regulatory transparency requirements.",
+  "table": {
+    "title": "Model Comparison",
+    "header": [
+      "Model",
+      "AUROC",
+      "Gini",
+      "KS",
+      "AUPRC"
+    ],
+    "groups": [
+      {
+        "name": "",
+        "rows": [
+          [
+            "!XGBoost",
+            "!0.8677",
+            "!0.7354",
+            "!0.5806",
+            "!0.3979"
+          ],
+          [
+            "LightGBM",
+            "0.8634",
+            "0.7269",
+            "0.5783",
+            "0.3767"
+          ],
+          [
+            "Logistic Regression",
+            "0.8620",
+            "0.7239",
+            "0.5724",
+            "0.3881"
+          ]
+        ]
+      }
+    ],
+    "note": "All three models are within 0.006 AUROC of each other — Logistic Regression trails XGBoost by only 0.006, suggesting lenders who prioritise interpretability can choose the linear model without material loss in discriminative power."
+  },
+  "figures_title": "Key Figures",
+  "figures": [
+    {
+      "src": "fig_shap_beeswarm.png",
+      "alt": "SHAP beeswarm",
+      "caption": "SHAP beeswarm — feature direction and magnitude. High revolving utilisation and any prior delinquency push predictions towards default."
+    },
+    [
+      {
+        "src": "fig_shap_bar.png",
+        "alt": "SHAP bar",
+        "caption": "Mean |SHAP| — global feature importance"
+      },
+      {
+        "src": "fig_roc_pr.png",
+        "alt": "ROC and PR curves",
+        "caption": "ROC and precision–recall curves"
+      }
+    ],
+    {
+      "src": "fig_shap_dependence.png",
+      "alt": "SHAP dependence plots",
+      "caption": "SHAP dependence plots for the top 3 features. Revolving utilisation shows a threshold effect near 0.5; the jump from zero to one prior delinquency carries the largest single risk increment."
+    },
+    [
+      {
+        "src": "fig_calibration.png",
+        "alt": "Calibration curves",
+        "caption": "Calibration — all tree models deviate substantially from perfect. Platt scaling recommended before deployment."
+      },
+      {
+        "src": "fig_eda.png",
+        "alt": "EDA",
+        "caption": "Class distribution and missing value summary"
+      }
+    ]
+  ],
+  "bibtex": "@misc{ouma2026credit,\n  title   = {Explainable Credit Default Prediction for\n             Microfinance: {A} Gradient Boosting and\n             {SHAP} Study on Consumer Credit Data},\n  author  = {Ouma, Craig Carlos},\n  year    = {2026},\n  month   = {June},\n  note    = {Preprint},\n  url     = {https://craigouma.github.io/credit-default/}\n}",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/craigouma/credit-default"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=hI6OXwsAAAAJ&hl=en"
+    },
+    {
+      "label": "Where Should the LLM Sit?",
+      "url": "https://craigouma.github.io/llm-underwriting-injection/"
+    },
+    {
+      "label": "Sentinel-1 Flood Mapping, Kenya",
+      "url": "https://craigouma.github.io/kenya-floods-sar-2024/"
+    },
+    {
+      "label": "EO Drought and Food Security",
+      "url": "https://craigouma.github.io/eo-drought-food-security-kenya/"
+    },
+    {
+      "label": "Child Nutrition SHAP",
+      "url": "https://craigouma.github.io/child-nutrition-shap/"
+    },
+    {
+      "label": "Neonatal Early Warning",
+      "url": "https://craigouma.github.io/neonatal-paper/"
+    },
+    {
+      "label": "ECG Classification",
+      "url": "https://craigouma.github.io/ptbxl-ecg-paper/"
+    }
+  ],
+  "footer": [
+    "Craig Carlos Ouma &middot; Independent Researcher &middot; 2026",
+    "Dataset: Give Me Some Credit (TransUnion / Kaggle)"
+  ]
+}

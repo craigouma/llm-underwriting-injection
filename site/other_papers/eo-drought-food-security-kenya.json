@@ -1,0 +1,286 @@
+{
+  "meta": {
+    "title": "Satellite-Derived Drought Indicators as Early Predictors of Food Insecurity Risk in Northern Kenya's Arid and Semi-Arid Lands",
+    "subtitle": "",
+    "scholar_title": "Satellite-Derived Drought Indicators as Early Predictors of Food Insecurity Risk in Northern Kenya's Arid and Semi-Arid Lands",
+    "html_title": "Satellite-Derived Drought Indicators as Early Predictors of Food Insecurity Risk in Northern Kenya: Craig Carlos Ouma",
+    "og_title": "Satellite-Derived Drought Indicators as Early Predictors of Food Insecurity Risk in Northern Kenya: Craig Carlos Ouma",
+    "og_description": "CHIRPS rainfall and MODIS vegetation data against 2,350 FEWS NET food insecurity classifications. Satellite indicators alone anticipate the direction of 59% of phase deteriorations one to six months ahead, which a persistence rule misses entirely.",
+    "tags": [
+      "Preprint",
+      "SHAP Explainability",
+      "Drought Early Warning",
+      "Independent Research"
+    ],
+    "date_label": "September 2026",
+    "year": "2026",
+    "online_date": "2026/09/19",
+    "authors": [
+      {
+        "name": "Craig Carlos Ouma",
+        "scholar": "Ouma, Craig Carlos",
+        "affiliation": "Independent Researcher",
+        "email": "craigcarlos95@gmail.com"
+      }
+    ],
+    "site_url": "https://craigouma.github.io/eo-drought-food-security-kenya/",
+    "pdf": "paper/eo_drought_food_security.pdf",
+    "keywords": [
+      "earth observation",
+      "drought early warning",
+      "food security",
+      "CHIRPS",
+      "MODIS NDVI",
+      "vegetation condition index",
+      "standardized precipitation index",
+      "SHAP",
+      "XGBoost",
+      "Kenya ASAL"
+    ],
+    "keywords_display": [
+      "Earth observation",
+      "Drought early warning",
+      "Food security",
+      "CHIRPS",
+      "MODIS NDVI",
+      "Vegetation Condition Index",
+      "Standardized Precipitation Index",
+      "SHAP explainability",
+      "XGBoost",
+      "Kenya ASAL"
+    ]
+  },
+  "actions": [
+    {
+      "label": "Download PDF",
+      "url": "paper/eo_drought_food_security.pdf"
+    },
+    {
+      "label": "Notebook",
+      "url": "https://github.com/craigouma/eo-drought-food-security-kenya/blob/main/notebook/eo_drought_food_security.ipynb"
+    },
+    {
+      "label": "Code &amp; Data",
+      "url": "https://github.com/craigouma/eo-drought-food-security-kenya"
+    },
+    {
+      "label": "CHIRPS",
+      "url": "https://www.chc.ucsb.edu/data/chirps"
+    }
+  ],
+  "stats": [
+    {
+      "value": "2,350",
+      "label": "County-Periods"
+    },
+    {
+      "value": "45 yrs",
+      "label": "Rainfall Record"
+    },
+    {
+      "value": "0.913",
+      "label": "AUROC, Satellite Only"
+    },
+    {
+      "value": "59%",
+      "label": "Deteriorations Caught"
+    }
+  ],
+  "key_finding": "A model using only satellite rainfall and vegetation data does not beat persistence, which simply repeats each county's previous published classification (accuracy 0.810 against 0.850). The comparison inverts on the 205 county-periods where the classification actually moved, where persistence is wrong by construction: the satellite model assigns the correct class in 58.5% of them and anticipates the direction of 59.3% of deteriorations at one month of lead, rising to 63.3% at six months. Feeding the previous classification back into the model raises accuracy to 0.824 and cuts deterioration detection to 41.6%.",
+  "abstract": "Food security classifications for Kenya's arid and semi-arid counties are published roughly three times a year and rest on field assessment. Satellite rainfall and vegetation data, by contrast, arrive continuously and at no cost to the user. This paper measures how much of the published classification those satellite indicators can actually anticipate. Monthly rainfall from CHIRPS (1981 to 2026) and 16-day vegetation indices from MODIS (2001 to 2026) are reduced to county means for all 47 Kenyan counties, converted into a gamma-fitted Standardized Precipitation Index and a Kogan Vegetation Condition Index, and matched against 2,350 county-period acute food insecurity classifications published by FEWS NET between 2011 and 2026. An XGBoost classifier using only Earth observation features, evaluated by expanding-window walk-forward validation across 1,363 out-of-sample county-periods, separates Minimal, Stressed, and Crisis-or-worse classifications with an accuracy of 0.810 and a macro-averaged AUROC of 0.913, against 0.607 for a majority-class rule. A SHAP analysis identifies vegetation condition lagged two months and the six-month rainfall index as the leading time-varying drivers, and places the Crisis decision boundary near a VCI of 18, inside the severe vegetation deficit band that Kenya's National Drought Management Authority already uses operationally.",
+  "scope": "The outcome variable is the acute food insecurity classification published by FEWS NET for Kenya, obtained from its public data warehouse, not a proxy index constructed from the same satellite data used as predictors. Earth observation indicators were extracted for all 47 Kenyan counties so the classifier has a national panel to learn from; the five arid and semi-arid counties of Turkana, Marsabit, Samburu, Baringo, and Wajir are the subject of the reported results and are evaluated separately throughout. Full reasoning in the repository's <code>DECISIONS.md</code>. This is independent research and is not produced, reviewed, commissioned, or endorsed by FEWS NET, NDMA, the Kenya Space Agency, or the European Space Agency.",
+  "table": {
+    "title": "Model Comparison",
+    "header": [
+      "Model",
+      "Accuracy",
+      "Macro F1",
+      "AUROC",
+      "Deteriorations caught"
+    ],
+    "groups": [
+      {
+        "name": "",
+        "rows": [
+          [
+            "Majority class",
+            "0.607",
+            "0.252",
+            "n/a",
+            "0%"
+          ],
+          [
+            "!Persistence (previous bulletin)",
+            "!0.850",
+            "!0.769",
+            "n/a",
+            "0%"
+          ],
+          [
+            "Satellite only, 1 month lead",
+            "0.810",
+            "0.707",
+            "0.913",
+            "!59.3%"
+          ],
+          [
+            "Satellite only, 6 month lead",
+            "0.809",
+            "0.716",
+            "0.912",
+            "!63.3%"
+          ],
+          [
+            "Satellite plus previous bulletin",
+            "0.824",
+            "0.710",
+            "0.933",
+            "41.6%"
+          ],
+          [
+            "Satellite without county identity",
+            "0.775",
+            "0.664",
+            "0.896",
+            "54.0%"
+          ]
+        ]
+      }
+    ],
+    "note": "Pooled expanding-window walk-forward validation, 2016 to 2026, 1,363 out-of-sample county-periods, of which 205 record a change in classification and 113 a deterioration. Persistence is correct on every stable period and, by construction, on none of the changes."
+  },
+  "data": {
+    "title": "Data",
+    "header": [
+      "Source",
+      "Variable",
+      "Resolution",
+      "Coverage used"
+    ],
+    "rows": [
+      [
+        "CHIRPS v2.0",
+        "Monthly rainfall",
+        "0.05 degree",
+        "1981-01 to 2026-08"
+      ],
+      [
+        "MOD13Q1 and MYD13Q1 v6.1",
+        "NDVI",
+        "250 m, 16-day",
+        "2001-01 to 2026-08"
+      ],
+      [
+        "FEWS NET classifications",
+        "IPC-compatible phase",
+        "Sub-county units",
+        "2011-01 to 2026-06"
+      ],
+      [
+        "HDX Kenya COD-AB",
+        "County boundaries",
+        "47 counties",
+        "Current"
+      ]
+    ],
+    "note": "CHIRPS is in the public domain, with rights waived by its producer. NASA places no restriction on the subsequent use, sale, or redistribution of MODIS data. FEWS NET distributes the classification records used here under a public data usage policy. None of the four required an account, a key, or an approval process."
+  },
+  "findings_title": "Thresholds the model learned",
+  "findings": [
+    {
+      "title": "Vegetation Condition Index below 18",
+      "text": "The point at which vegetation condition switches from pushing the model away from a Crisis call to pushing it toward one. Kenya's NDMA already classifies a VCI between 10 and 20 as a severe vegetation deficit, so the learned boundary and the operational one agree."
+    },
+    {
+      "title": "Six-month SPI below &minus;0.75",
+      "text": "The six-month rainfall accumulation carries about two and a half times the weight of the one-month and three-month versions. Two weak seasons matter; one weak month does not."
+    },
+    {
+      "title": "Two consecutive months of deficit, not one",
+      "text": "Vegetation condition lagged two months contributes more than the current month, so a trigger written on sustained deficit matches the model's behaviour better than one written on an instantaneous reading."
+    },
+    {
+      "title": "No accuracy penalty for acting six months early",
+      "text": "Performance is flat from one to six months of lead, so a county crossing both conditions can be flagged at the earlier point."
+    }
+  ],
+  "figures_title": "Key Figures",
+  "figures": [
+    {
+      "src": "paper/fig_classification_performance.png",
+      "alt": "Confusion matrix, alert trade-off, and deterioration detection by lead time",
+      "caption": "Confusion matrix, Crisis alert trade-off, and deteriorations anticipated by lead time"
+    },
+    {
+      "src": "paper/fig_rainfall_vci_timeseries.png",
+      "alt": "SPI-3 and VCI time series for the five study counties",
+      "caption": "Rainfall and vegetation indicators against classified phases, five ASAL counties, 2011 onward"
+    },
+    [
+      {
+        "src": "paper/fig_county_map.png",
+        "alt": "Map of the five study counties",
+        "caption": "The five study counties, shaded by mean annual rainfall"
+      },
+      {
+        "src": "paper/fig_shap_bar.png",
+        "alt": "SHAP global importance",
+        "caption": "Mean |SHAP|, contribution to the Crisis class and overall"
+      }
+    ],
+    {
+      "src": "paper/fig_shap_dependence.png",
+      "alt": "SHAP dependence plots",
+      "caption": "Where each indicator starts pushing the model toward a Crisis call"
+    },
+    {
+      "src": "paper/fig_shap_beeswarm.png",
+      "alt": "SHAP beeswarm",
+      "caption": "Per-observation contributions to a Crisis call"
+    }
+  ],
+  "bibtex": "@misc{ouma2026eodrought,\n  title   = {Satellite-Derived Drought Indicators as Early\n             Predictors of Food Insecurity Risk in Northern\n             {Kenya's} Arid and Semi-Arid Lands},\n  author  = {Ouma, Craig Carlos},\n  year    = {2026},\n  month   = {September},\n  note    = {Preprint},\n  url     = {https://craigouma.github.io/eo-drought-food-security-kenya/}\n}",
+  "links": [
+    {
+      "label": "FEWS NET Kenya",
+      "url": "https://fews.net/east-africa/kenya"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/craigouma/eo-drought-food-security-kenya"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=hI6OXwsAAAAJ&hl=en"
+    },
+    {
+      "label": "Where Should the LLM Sit?",
+      "url": "https://craigouma.github.io/llm-underwriting-injection/"
+    },
+    {
+      "label": "Sentinel-1 Flood Mapping, Kenya",
+      "url": "https://craigouma.github.io/kenya-floods-sar-2024/"
+    },
+    {
+      "label": "Child Nutrition SHAP",
+      "url": "https://craigouma.github.io/child-nutrition-shap/"
+    },
+    {
+      "label": "Neonatal Early Warning",
+      "url": "https://craigouma.github.io/neonatal-paper/"
+    },
+    {
+      "label": "ECG Classification",
+      "url": "https://craigouma.github.io/ptbxl-ecg-paper/"
+    },
+    {
+      "label": "Credit Default SHAP",
+      "url": "https://craigouma.github.io/credit-default/"
+    }
+  ],
+  "footer": [
+    "Craig Carlos Ouma &middot; Independent Researcher &middot; 2026",
+    "Data: CHIRPS (Climate Hazards Center, UCSB), MODIS MOD13Q1 and MYD13Q1 (NASA), FEWS NET acute food insecurity classifications, HDX Kenya COD-AB",
+    "Not affiliated with, commissioned by, or endorsed by FEWS NET, NDMA, the Kenya Space Agency, or the European Space Agency"
+  ]
+}

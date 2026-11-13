@@ -1,0 +1,213 @@
+{
+  "meta": {
+    "title": "Interpretable Machine Learning for Child Stunting and Wasting Risk",
+    "subtitle": "A Cross-National Evidence Base for Programme Monitoring and Targeting",
+    "scholar_title": "Interpretable Machine Learning for Child Stunting and Wasting Risk: A Cross-National Evidence Base for Programme Monitoring and Targeting",
+    "html_title": "Interpretable Machine Learning for Child Stunting and Wasting Risk: Craig Carlos Ouma",
+    "og_title": "Interpretable Machine Learning for Child Stunting and Wasting Risk: Craig Carlos Ouma",
+    "og_description": "880 country-survey observations, 150 countries. An XGBoost classifier separates WHO high-burden stunting observations with AUROC 0.948. SHAP finds WASH access, GDP per capita, and under-5 population as the dominant drivers.",
+    "tags": [
+      "Preprint",
+      "SHAP Explainability",
+      "Programme Monitoring",
+      "Independent Research"
+    ],
+    "date_label": "August 2026",
+    "year": "2026",
+    "online_date": "2026/08/10",
+    "authors": [
+      {
+        "name": "Craig Carlos Ouma",
+        "scholar": "Ouma, Craig Carlos",
+        "affiliation": "Independent Researcher",
+        "email": "craigcarlos95@gmail.com"
+      }
+    ],
+    "site_url": "https://craigouma.github.io/child-nutrition-shap/",
+    "pdf": "paper/child_nutrition_shap.pdf",
+    "keywords": [
+      "child stunting",
+      "child wasting",
+      "SHAP",
+      "XGBoost",
+      "explainability",
+      "programme monitoring",
+      "theory of change",
+      "data quality assessment",
+      "M&E"
+    ],
+    "keywords_display": [
+      "Child stunting",
+      "Child wasting",
+      "SHAP explainability",
+      "XGBoost",
+      "LightGBM",
+      "Programme monitoring",
+      "Theory of change",
+      "Data quality assessment",
+      "WASH access",
+      "M&amp;E"
+    ]
+  },
+  "actions": [
+    {
+      "label": "Download PDF",
+      "url": "paper/child_nutrition_shap.pdf"
+    },
+    {
+      "label": "Live Dashboard",
+      "url": "dashboard/"
+    },
+    {
+      "label": "Code &amp; Notebook",
+      "url": "https://github.com/craigouma/child-nutrition-shap"
+    },
+    {
+      "label": "Dataset",
+      "url": "https://www.kaggle.com/datasets/ruchi798/malnutrition-across-the-globe"
+    }
+  ],
+  "stats": [
+    {
+      "value": "880",
+      "label": "Country-Surveys"
+    },
+    {
+      "value": "150",
+      "label": "Countries"
+    },
+    {
+      "value": "0.948",
+      "label": "Best AUROC"
+    },
+    {
+      "value": "67%",
+      "label": "High-Burden Share"
+    }
+  ],
+  "key_finding": "A composite WASH access indicator (mean |SHAP| = 2.12) dominates the model, more than double the next driver, GDP per capita (0.98). An XGBoost classifier separates WHO high-burden stunting observations (prevalence at or above 20%) from lower-burden ones with AUROC 0.948. A parallel wasting model achieves AUROC 0.774, consistent with wasting's more acute, shock-driven character relative to stunting's chronic, structural determinants.",
+  "abstract": "Programme teams that monitor child nutrition outcomes typically rely on periodic household surveys that arrive months after data collection and are reported at a level too coarse to guide week-to-week targeting decisions. This paper asks a narrower, programme-relevant question: given the country-level structural and survey-design information already available to a monitoring team at the time a survey is planned or released, can a model flag which country-survey observations are likely to fall in the World Health Organization's high or very-high public-health-significance category for child stunting, and which factors drive that classification. Using 880 country-survey observations covering 150 countries between 1983 and 2019, an XGBoost classifier separates high-burden from lower-burden observations with an AUROC of 0.948 and an AUPRC of 0.975. A SHAP analysis identifies a composite WASH access indicator, GDP per capita, and under-5 population size as the three dominant drivers. A parallel model for high-burden wasting achieves an AUROC of 0.774. The paper applies the USAID Data Quality Assessment framework (Validity, Integrity, Precision, Reliability, Timeliness) to the panel used here, and translates each SHAP-identified driver into a candidate output or outcome indicator that a programme monitoring system could track.",
+  "scope": "No individual or household-level nutrition dataset cleared a pre-specified data quality checklist without requiring gated access to survey microdata (full search log in the repository's <code>DECISIONS.md</code>). This paper is honestly scoped as a country-level driver and burden-classification analysis rather than an individual-child determinants study, and states that limitation directly rather than simulating individual records to avoid it. This is independent research relevant to a programme monitoring role and is not produced, reviewed, or endorsed by GAIN.",
+  "table": {
+    "title": "Model Comparison",
+    "header": [
+      "Model (Target)",
+      "AUROC",
+      "AUPRC",
+      "Sensitivity",
+      "Specificity"
+    ],
+    "groups": [
+      {
+        "name": "",
+        "rows": [
+          [
+            "!XGBoost (stunting)",
+            "!0.948",
+            "!0.975",
+            "!0.873",
+            "!0.879"
+          ],
+          [
+            "LightGBM (stunting)",
+            "0.947",
+            "0.974",
+            "0.907",
+            "0.879"
+          ],
+          [
+            "XGBoost (wasting, secondary)",
+            "0.774",
+            "0.550",
+            "n/a",
+            "n/a"
+          ]
+        ]
+      }
+    ],
+    "note": "Sensitivity and specificity reported at a 0.5 probability threshold on the primary stunting task's 176-observation holdout. The wasting model uses a separately stratified holdout at the WHO's 15% threshold."
+  },
+  "figures_title": "Key Figures",
+  "figures": [
+    {
+      "src": "paper/fig_theory_of_change.png",
+      "alt": "Theory of change diagram",
+      "caption": "Theory of change: this analysis sits between programme outputs and outcomes"
+    },
+    {
+      "src": "paper/fig_shap_beeswarm.png",
+      "alt": "SHAP beeswarm",
+      "caption": "SHAP beeswarm: WASH access, GDP per capita, and population push high-burden classification"
+    },
+    [
+      {
+        "src": "paper/fig_shap_bar.png",
+        "alt": "SHAP bar",
+        "caption": "Mean |SHAP| &ndash; global feature importance"
+      },
+      {
+        "src": "paper/fig_roc_pr.png",
+        "alt": "ROC and PR curves",
+        "caption": "ROC and precision-recall curves, stunting classification"
+      }
+    ],
+    {
+      "src": "paper/fig_shap_dependence.png",
+      "alt": "SHAP dependence plots",
+      "caption": "SHAP dependence plots for the top 3 drivers. WASH access shows a threshold effect between 60% and 80% access."
+    },
+    {
+      "src": "paper/fig_eda.png",
+      "alt": "EDA",
+      "caption": "Class distribution and missingness summary"
+    }
+  ],
+  "bibtex": "@misc{ouma2026childnutrition,\n  title   = {Interpretable Machine Learning for Child\n             Stunting and Wasting Risk: {A} Cross-National\n             Evidence Base for Programme Monitoring and\n             Targeting},\n  author  = {Ouma, Craig Carlos},\n  year    = {2026},\n  month   = {August},\n  note    = {Preprint},\n  url     = {https://craigouma.github.io/child-nutrition-shap/}\n}",
+  "links": [
+    {
+      "label": "Interactive Dashboard",
+      "url": "dashboard/"
+    },
+    {
+      "label": "Tableau/Power BI Build Spec",
+      "url": "dashboard/tableau_powerbi_build_spec.md"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/craigouma/child-nutrition-shap"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=hI6OXwsAAAAJ&hl=en"
+    },
+    {
+      "label": "Where Should the LLM Sit?",
+      "url": "https://craigouma.github.io/llm-underwriting-injection/"
+    },
+    {
+      "label": "Sentinel-1 Flood Mapping, Kenya",
+      "url": "https://craigouma.github.io/kenya-floods-sar-2024/"
+    },
+    {
+      "label": "EO Drought and Food Security",
+      "url": "https://craigouma.github.io/eo-drought-food-security-kenya/"
+    },
+    {
+      "label": "Neonatal Early Warning",
+      "url": "https://craigouma.github.io/neonatal-paper/"
+    },
+    {
+      "label": "ECG Classification",
+      "url": "https://craigouma.github.io/ptbxl-ecg-paper/"
+    },
+    {
+      "label": "Credit Default SHAP",
+      "url": "https://craigouma.github.io/credit-default/"
+    }
+  ],
+  "footer": [
+    "Craig Carlos Ouma &middot; Independent Researcher &middot; 2026",
+    "Dataset: UNICEF/WHO/World Bank Joint Malnutrition Estimates via malnutrition-across-the-globe (Kaggle), joined with World Bank Open Data",
+    "Not affiliated with, commissioned by, or endorsed by GAIN"
+  ]
+}

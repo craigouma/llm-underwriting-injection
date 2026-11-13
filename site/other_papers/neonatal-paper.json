@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "title": "Self-Supervised Early Warning of Critical Cardiorespiratory Events in Neonatal Vital-Sign Telemetry",
+    "subtitle": "A Pilot Feasibility Study",
+    "scholar_title": "Self-Supervised Early Warning of Critical Cardiorespiratory Events in Neonatal Vital-Sign Telemetry: A Pilot Feasibility Study",
+    "html_title": "Neonatal Early Warning — Craig Carlos Ouma",
+    "og_title": "Neonatal Early Warning of Critical Cardiorespiratory Events — Craig Carlos Ouma",
+    "og_description": "Self-supervised prediction of imminent desaturation from continuous neonatal telemetry. GRU achieves AUROC 0.70–0.96; median warning lead time 80 s.",
+    "tags": [
+      "Preprint",
+      "Pilot Study"
+    ],
+    "date_label": "June 2026",
+    "year": "2026",
+    "online_date": "2026/06/09",
+    "authors": [
+      {
+        "name": "Craig Carlos Ouma",
+        "scholar": "Ouma, Craig Carlos",
+        "affiliation": "Independent Researcher",
+        "email": "craigcarlos95@gmail.com"
+      }
+    ],
+    "site_url": "https://craigouma.github.io/neonatal-paper/",
+    "pdf": "Neonatal-Pilot.pdf",
+    "keywords": [
+      "neonatal monitoring",
+      "desaturation prediction",
+      "early warning",
+      "GRU",
+      "LightGBM",
+      "cardiorespiratory events",
+      "SpO2",
+      "NICU"
+    ],
+    "keywords_display": [
+      "Neonatal monitoring",
+      "Desaturation prediction",
+      "Cardiorespiratory events",
+      "Early warning",
+      "GRU",
+      "LightGBM",
+      "NICU",
+      "Pulse oximetry",
+      "Time-series classification",
+      "Self-supervised learning"
+    ]
+  },
+  "actions": [
+    {
+      "label": "Download PDF",
+      "url": "Neonatal-Pilot.pdf"
+    },
+    {
+      "label": "Code &amp; Notebook",
+      "url": "https://github.com/craigouma/neonatal-paper"
+    }
+  ],
+  "stats": [
+    {
+      "value": "3",
+      "label": "Neonates monitored"
+    },
+    {
+      "value": "0.70–0.96",
+      "label": "AUROC (GRU, LOPO)"
+    },
+    {
+      "value": "80 s",
+      "label": "Median warning lead time"
+    }
+  ],
+  "abstract": "Continuous bedside monitoring generates dense vital-sign telemetry for hospitalised neonates, yet most of this signal is consumed by threshold alarms that fire only once an event is already underway. We investigate whether short-horizon <em>prediction</em> of critical cardiorespiratory events is feasible from routinely collected pulse-oximetry and temperature telemetry, using self-supervised labels derived from the signal itself rather than scarce clinical outcome labels. Using continuous recordings from three neonates (838,613 raw samples; 1,113 cumulative monitoring hours), we frame the task as predicting whether a desaturation event (SpO&#x2082;&nbsp;&lt;&nbsp;85%) will occur within a 60-second horizon, given a 30-second window of preceding telemetry. We evaluate a gradient-boosting baseline on engineered window features and a gated recurrent unit (GRU) on raw sequences, under strict leave-one-patient-out validation. The GRU achieves an area under the receiver operating characteristic curve (AUROC) of 0.70–0.96 across held-out patients, outperforming the gradient-boosting baseline (0.69–0.91). A leakage-safe lead-time analysis shows that flagged desaturations are warned a median of 80 seconds in advance, while also exposing a gap between ranking performance and event-level sensitivity that ROC alone hides. We position this as a proof-of-concept: with three patients the results establish feasibility and surface methodological constraints, but not population-level performance. Code and a reproducible training notebook are released.",
+  "bibtex": "@misc{ouma2026neonatal,\n  title     = {Self-Supervised Early Warning of Critical\n               Cardiorespiratory Events in Neonatal\n               Vital-Sign Telemetry: A Pilot Feasibility Study},\n  author    = {Ouma, Craig Carlos},\n  year      = {2026},\n  month     = {June},\n  note      = {Preprint},\n  url       = {https://craigouma.github.io/neonatal-paper/}\n}",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/craigouma/neonatal-paper"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=hI6OXwsAAAAJ&hl=en"
+    },
+    {
+      "label": "Where Should the LLM Sit?",
+      "url": "https://craigouma.github.io/llm-underwriting-injection/"
+    },
+    {
+      "label": "Sentinel-1 Flood Mapping, Kenya",
+      "url": "https://craigouma.github.io/kenya-floods-sar-2024/"
+    },
+    {
+      "label": "EO Drought and Food Security",
+      "url": "https://craigouma.github.io/eo-drought-food-security-kenya/"
+    },
+    {
+      "label": "Child Nutrition SHAP",
+      "url": "https://craigouma.github.io/child-nutrition-shap/"
+    },
+    {
+      "label": "ECG Classification",
+      "url": "https://craigouma.github.io/ptbxl-ecg-paper/"
+    },
+    {
+      "label": "Credit Default SHAP",
+      "url": "https://craigouma.github.io/credit-default/"
+    }
+  ],
+  "footer": [
+    "Craig Carlos Ouma &middot; Independent Researcher &middot; 2026",
+    "No personal identifiers in data"
+  ]
+}

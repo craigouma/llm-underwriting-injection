@@ -1,0 +1,278 @@
+{
+  "meta": {
+    "title": "How Well Do Globally Trained Sentinel-1 Flood Mapping Methods Transfer to Kenya?",
+    "subtitle": "An Evaluation Against UNOSAT Rapid Mapping of the 2024 Long-Rains Floods",
+    "scholar_title": "How Well Do Globally Trained Sentinel-1 Flood Mapping Methods Transfer to Kenya? An Evaluation Against UNOSAT Rapid Mapping of the 2024 Long-Rains Floods",
+    "html_title": "Sentinel-1 Flood Mapping of the 2024 Kenya Long-Rains Floods: Craig Carlos Ouma",
+    "og_title": "Sentinel-1 Flood Mapping Methods Tested on Kenya's 2024 Floods: Craig Carlos Ouma",
+    "og_description": "Classical and deep learning Sentinel-1 flood maps scored against UNOSAT rapid mapping of the 2024 Kenya floods. A Sen1Floods11 U-Net doubles the agreement of the best threshold method along the Tana, finds a quarter of Nairobi's mapped flooding, and misses most flooded buildings.",
+    "tags": [
+      "Preprint",
+      "Sentinel-1 SAR",
+      "Independent Research"
+    ],
+    "date_label": "October 2026",
+    "year": "2026",
+    "online_date": "2026/10/10",
+    "authors": [
+      {
+        "name": "Craig Carlos Ouma",
+        "scholar": "Ouma, Craig Carlos",
+        "affiliation": "Independent Researcher",
+        "email": "craigcarlos95@gmail.com"
+      }
+    ],
+    "site_url": "https://craigouma.github.io/kenya-floods-sar-2024/",
+    "pdf": "paper/kenya_floods_sar.pdf",
+    "keywords": [
+      "Sentinel-1",
+      "SAR",
+      "flood mapping",
+      "Sen1Floods11",
+      "U-Net",
+      "change detection",
+      "UNOSAT",
+      "Kenya",
+      "Tana River",
+      "urban flooding"
+    ],
+    "keywords_display": [
+      "Sentinel-1",
+      "SAR flood mapping",
+      "Sen1Floods11",
+      "U-Net",
+      "Change detection",
+      "UNOSAT rapid mapping",
+      "Urban flooding",
+      "Tana River",
+      "Kenya"
+    ]
+  },
+  "actions": [
+    {
+      "label": "Download PDF",
+      "url": "paper/kenya_floods_sar.pdf"
+    },
+    {
+      "label": "Notebook",
+      "url": "https://github.com/craigouma/kenya-floods-sar-2024/blob/main/notebook/kenya_floods_sar.ipynb"
+    },
+    {
+      "label": "Code &amp; Data",
+      "url": "https://github.com/craigouma/kenya-floods-sar-2024"
+    }
+  ],
+  "stats": [
+    {
+      "value": "0.347",
+      "label": "Riverine IoU, U-Net"
+    },
+    {
+      "value": "0.160",
+      "label": "Best Classical Method"
+    },
+    {
+      "value": "1 in 4",
+      "label": "Nairobi Flooding Found, U-Net"
+    },
+    {
+      "value": "2.7&times;",
+      "label": "IoU Swing from Timing"
+    }
+  ],
+  "key_finding": "A U-Net trained only on Sen1Floods11, which contains no Kenyan data, agrees with UNOSAT's flood maps along the Tana about twice as well as the best threshold or change-detection rule (IoU 0.347 against 0.160), and its flooded area matches UNOSAT's to within about 1% on two references. The same model finds only 3 to 14% of the buildings UNOSAT counted as affected, because its masks stay out of settlements, while a simple change-detection rule comes within the range expected from building data alone. In Nairobi, methods that keep their false alarms in check find about a quarter of the mapped flooding.",
+  "abstract": "Kenya's March to May 2024 long rains brought flooding along the Tana River and across Nairobi and its neighbouring counties, and UNOSAT mapped it from optical satellite imagery, which cloud blocks during the rains. This paper measures how well Sentinel-1 radar flood mapping methods developed elsewhere transfer to these Kenyan landscapes, using UNOSAT's maps as an independent reference. Nine methods were compared, from Otsu thresholds and change detection to U-Nets trained on Sen1Floods11, with no Kenyan data used in training. In riverine settings, at Garissa and along 8,785 km² of the Tana and Galana rivers, the main U-Net agreed with UNOSAT at an IoU of 0.347 (95% interval 0.331 to 0.364), against 0.160 for the best classical method, and its flooded area was within about 1% of UNOSAT's on two references. In the urban analysis of Nairobi, Kiambu and Machakos every method's interval overlapped, and built-up land was where all nine failed. Timing mattered as much as method: at Garissa the U-Net scored 0.215 against a reference three days after the radar pass and 0.581 against one nine days before it, because the river was still rising. The best extent model placed only 3 to 14% of UNOSAT's affected buildings inside its masks, so extent and exposure call for different products. Applied to every pass from April to June, the U-Net shows flood water on the middle Tana peaking at 535 km² on 20 May and near the delta about four weeks later.",
+  "scope": "The reference is UNOSAT's rapid mapping of activation FL20240426KEN, drawn from Sentinel-2 and Pléiades imagery and described by UNOSAT as preliminary and not field-validated. It is treated as an independent reference, not ground truth. No Kenyan or UNOSAT data were used to train any model. Full reasoning for every choice is in the repository's <code>DECISIONS.md</code>. This is independent research and is not produced, reviewed, commissioned, or endorsed by UNOSAT, UNITAR, ESA, the Copernicus programme, NDMA, the Kenya Space Agency, or the Kenya Red Cross.",
+  "figures_title": "Key figures",
+  "figures": [
+    {
+      "src": "paper/fig_panels_garissa.png",
+      "alt": "Garissa pre and post event radar, UNOSAT flood water, U-Net flood water and agreement map",
+      "caption": "Garissa and Mororo, 5 May 2024: radar, UNOSAT reference, U-Net, and agreement"
+    },
+    {
+      "src": "paper/fig_iou_by_method.png",
+      "alt": "IoU by method for riverine and urban groups with intervals",
+      "caption": "IoU by method and setting, with 1 km block bootstrap intervals"
+    },
+    [
+      {
+        "src": "paper/fig_aoi_map.png",
+        "alt": "Map of Kenya with the evaluation areas",
+        "caption": "Evaluation areas and the Tana and Galana corridor"
+      },
+      {
+        "src": "paper/fig_day_gap.png",
+        "alt": "IoU against days between radar and optical images",
+        "caption": "Agreement against the radar-to-reference day gap"
+      }
+    ],
+    {
+      "src": "paper/fig_f1_landcover.png",
+      "alt": "F1 by land cover class and method",
+      "caption": "F1 by land cover: built-up land is where every method fails"
+    },
+    {
+      "src": "paper/fig_exposure.png",
+      "alt": "Buildings in flood masks against UNOSAT counts",
+      "caption": "Buildings inside each flood mask against UNOSAT's structure counts"
+    },
+    {
+      "src": "paper/fig_tana_series.png",
+      "alt": "Lower Tana flood water by county through April to June 2024",
+      "caption": "Lower Tana flood water by county, April to June 2024"
+    }
+  ],
+  "bibtex": "@misc{ouma2026kenyafloods,\n  title   = {How Well Do Globally Trained {Sentinel-1} Flood Mapping\n             Methods Transfer to {Kenya}? An Evaluation Against\n             {UNOSAT} Rapid Mapping of the 2024 Long-Rains Floods},\n  author  = {Ouma, Craig Carlos},\n  year    = {2026},\n  month   = {October},\n  note    = {Preprint},\n  url     = {https://craigouma.github.io/kenya-floods-sar-2024/}\n}",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/craigouma/kenya-floods-sar-2024"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=hI6OXwsAAAAJ&hl=en"
+    },
+    {
+      "label": "Where Should the LLM Sit?",
+      "url": "https://craigouma.github.io/llm-underwriting-injection/"
+    },
+    {
+      "label": "EO Drought and Food Security",
+      "url": "https://craigouma.github.io/eo-drought-food-security-kenya/"
+    },
+    {
+      "label": "Child Nutrition SHAP",
+      "url": "https://craigouma.github.io/child-nutrition-shap/"
+    },
+    {
+      "label": "Neonatal Early Warning",
+      "url": "https://craigouma.github.io/neonatal-paper/"
+    },
+    {
+      "label": "ECG Classification",
+      "url": "https://craigouma.github.io/ptbxl-ecg-paper/"
+    },
+    {
+      "label": "Credit Default SHAP",
+      "url": "https://craigouma.github.io/credit-default/"
+    }
+  ],
+  "footer": [
+    "Craig Carlos Ouma &middot; Independent Researcher &middot; 2026",
+    "Data: UNOSAT FL20240426KEN (CC BY-SA), Copernicus Sentinel-1 via Microsoft Planetary Computer, Sen1Floods11, JRC Global Surface Water, ESA WorldCover, Copernicus DEM, Google Open Buildings",
+    "Not affiliated with, commissioned by, or endorsed by UNOSAT, UNITAR, ESA, the Copernicus programme, NDMA, the Kenya Space Agency, or the Kenya Red Cross"
+  ],
+  "table": {
+    "title": "Agreement with UNOSAT, by setting",
+    "header": [
+      "Method",
+      "Riverine IoU",
+      "Urban IoU",
+      "Buildings found, Garissa 5 May"
+    ],
+    "groups": [
+      {
+        "name": "",
+        "rows": [
+          [
+            "Otsu threshold, VH",
+            "0.116",
+            "!0.192",
+            "0.10&times;"
+          ],
+          [
+            "Change detection, &minus;3&nbsp;dB, VV",
+            "0.160",
+            "0.151",
+            "0.76&times;"
+          ],
+          [
+            "Change detection, &minus;3&nbsp;dB, VH",
+            "0.155",
+            "0.165",
+            "!1.01&times;"
+          ],
+          [
+            "*U-Net, Sen1Floods11 hand + weak labels",
+            "!0.347",
+            "0.221",
+            "0.14&times;"
+          ],
+          [
+            "U-Net, pre- and post-event, hand labels",
+            "0.277",
+            "!0.228",
+            "0.25&times;"
+          ]
+        ]
+      }
+    ],
+    "note": "IoU for the flood class, pooled within each group. Riverine: Garissa on two reference dates and 70 tiles along the Tana and Galana rivers; urban: the Nairobi, Kiambu and Machakos analysis of 1 May 2024. In the urban column every method's 95% interval overlaps the others'. Buildings found is the number of Open Buildings centroids in the flood mask divided by UNOSAT's structure count; with UNOSAT's own flood extent the ratio is 1.26, so building data alone shift it by about 30%."
+  },
+  "data": {
+    "title": "Data",
+    "header": [
+      "Source",
+      "Role",
+      "Resolution"
+    ],
+    "rows": [
+      [
+        "UNOSAT FL20240426KEN, via HDX",
+        "Reference flood water",
+        "Pléiades, Sentinel-2"
+      ],
+      [
+        "Sentinel-1 GRD, Planetary Computer",
+        "SAR input, VV and VH",
+        "10 m"
+      ],
+      [
+        "Sen1Floods11 v1.1",
+        "Training data",
+        "10 m chips"
+      ],
+      [
+        "JRC Global Surface Water",
+        "Permanent water",
+        "30 m"
+      ],
+      [
+        "ESA WorldCover 2021",
+        "Land cover",
+        "10 m"
+      ],
+      [
+        "Copernicus DEM GLO-30, GLO-30 HAND",
+        "Terrain correction, HAND",
+        "30 m"
+      ],
+      [
+        "Google Open Buildings v3",
+        "Exposure",
+        "Building points"
+      ]
+    ],
+    "note": "Every input is public and needed no account. Flood rasters and tables produced here are released under CC BY 4.0; UNOSAT's data and their rasterised versions remain under CC BY-SA."
+  },
+  "findings_title": "What the evaluation shows",
+  "findings": [
+    {
+      "title": "A public model transfers to Kenyan floodplains",
+      "text": "The Sen1Floods11 U-Net scores 0.424 all-water IoU on the benchmark's own test chips, in line with the published 0.408, and agrees with UNOSAT at Garissa on 5 May at an IoU of 0.544."
+    },
+    {
+      "title": "Built-up land defeats every method",
+      "text": "F1 for the flood class on built-up land is below 0.11 for all nine methods in both settings. Cropland and herbaceous wetland are where the methods work best."
+    },
+    {
+      "title": "The day gap matters more than the method",
+      "text": "At Garissa the U-Net's map from a radar pass three days before the 29 April optical image agrees at an IoU of 0.22, and from a pass nine days after it at 0.58: the Tana was still rising. In Nairobi, passes five days either side of the reference find almost nothing."
+    },
+    {
+      "title": "Extent and exposure need different products",
+      "text": "The method that maps flood extent best misses most flooded buildings, and the one that counts buildings best maps extent poorly."
+    }
+  ]
+}

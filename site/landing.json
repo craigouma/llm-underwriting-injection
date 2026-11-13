@@ -2,92 +2,309 @@
   "meta": {
     "title": "Where Should the LLM Sit?",
     "subtitle": "Architectural Defenses Against Document-Borne Prompt Injection in Automated Credit Underwriting",
-    "tags": ["Preprint", "LLM Security", "Credit Underwriting", "Independent Research"],
+    "tags": [
+      "Preprint",
+      "LLM Security",
+      "Credit Underwriting",
+      "Independent Research"
+    ],
     "date_label": "November 2026",
     "year": "2026",
     "online_date": "2026/11/13",
     "authors": [
-      {"name": "Craig Carlos Ouma", "scholar": "Ouma, Craig Carlos", "affiliation": "Independent Researcher", "email": "craigcarlos95@gmail.com"}
+      {
+        "name": "Craig Carlos Ouma",
+        "scholar": "Ouma, Craig Carlos",
+        "affiliation": "Independent Researcher",
+        "email": "craigcarlos95@gmail.com"
+      }
     ],
     "site_url": "https://craigouma.github.io/llm-underwriting-injection/",
     "pdf": "paper/where_should_the_llm_sit.pdf",
-    "repo": "https://github.com/craigouma/llm-underwriting-injection",
-    "notebook": "https://github.com/craigouma/llm-underwriting-injection/blob/main/notebooks/analysis.ipynb",
-    "keywords": ["prompt injection", "credit underwriting", "LLM security", "document extraction", "scorecards", "application fraud", "open-weight models"],
-    "keywords_display": ["Prompt injection", "Credit underwriting", "LLM security", "Document extraction", "Scorecards", "Application fraud", "Open-weight models"],
+    "keywords": [
+      "prompt injection",
+      "credit underwriting",
+      "LLM security",
+      "document extraction",
+      "scorecards",
+      "application fraud",
+      "open-weight models"
+    ],
+    "keywords_display": [
+      "Prompt injection",
+      "Credit underwriting",
+      "LLM security",
+      "Document extraction",
+      "Scorecards",
+      "Application fraud",
+      "Open-weight models"
+    ],
     "og_description": "Where should the LLM sit in an automated underwriting pipeline? A preregistered comparison of an LLM that decides, an LLM that only extracts fields, and extraction with checks, under 26 injection and falsification attacks on synthetic documents.",
     "og_image": "paper/figures/fig_asr_by_category.png"
   },
+  "actions": [
+    {
+      "label": "Download PDF",
+      "url": "paper/where_should_the_llm_sit.pdf"
+    },
+    {
+      "label": "Notebook",
+      "url": "https://github.com/craigouma/llm-underwriting-injection/blob/main/notebooks/analysis.ipynb"
+    },
+    {
+      "label": "Code &amp; Data",
+      "url": "https://github.com/craigouma/llm-underwriting-injection"
+    }
+  ],
   "stats": [
-    {"value": "{{asrPhiAInstr}} / {{asrOlmoAInstr}}%", "label": "Injected instructions that succeed against an LLM decider, Phi-4-mini and Olmo-3 7B"},
-    {"value": "{{asrPhiBInstr}} / {{asrOlmoBInstr}}%", "label": "The same attacks when the LLM only extracts fields for a scorecard (B)"},
-    {"value": "{{asrPhiBExtract}}&ndash;{{asrQwenBExtract}}%", "label": "Falsified documents that succeed against B, with or without an LLM reading them"},
-    {"value": "{{asrQwenCExtract}}&ndash;{{asrOlmoCExtract}}%", "label": "Falsified documents that succeed against C, which adds validation checks"}
+    {
+      "value": "{{asrPhiAInstr}} / {{asrOlmoAInstr}}%",
+      "label": "Injected instructions that succeed against an LLM decider, Phi-4-mini and Olmo-3 7B"
+    },
+    {
+      "value": "{{asrPhiBInstr}} / {{asrOlmoBInstr}}%",
+      "label": "The same attacks when the LLM only extracts fields for a scorecard (B)"
+    },
+    {
+      "value": "{{asrPhiBExtract}}&ndash;{{asrQwenBExtract}}%",
+      "label": "Falsified documents that succeed against B, with or without an LLM reading them"
+    },
+    {
+      "value": "{{asrQwenCExtract}}&ndash;{{asrOlmoCExtract}}%",
+      "label": "Falsified documents that succeed against C, which adds validation checks"
+    }
   ],
   "key_finding": "Moving the decision out of the LLM removes most of the effect of injected instructions. With Phi-4-mini and Olmo-3 7B, pooled attack success falls from {{asrPhiAInstr}}% and {{asrOlmoAInstr}}% for an LLM decider to {{asrPhiBInstr}}% and {{asrOlmoBInstr}}% when the LLM only extracts fields for a scorecard, and checks leave no success in {{asrPhiCInstrn}} Phi pairs or {{asrOlmoCInstrn}} Olmo pairs (95% upper bounds {{asrPhiCInstrhi}}% and {{asrOlmoCInstrhi}}%). What remains is mostly payloads that tell the extractor which values to write, plus falsified documents, which succeed against the scorecard {{asrPhiBExtract}}% to {{asrQwenBExtract}}% of the time whether or not an LLM reads them. Cross-document, range and plausible-band checks cut that to {{asrQwenCExtract}}% to {{asrOlmoCExtract}}%, at the price of flagging {{reviewPhiC}}% to {{reviewQwenC}}% of clean bundles for human review.",
   "abstract": "Lenders have started to let LLM agents read applicant documents, and applicants control those documents. This paper asks where the LLM should sit in an automated credit underwriting pipeline. On synthetic payslip, bank statement and application-form bundles generated from {{nCleanRows}} real credit records, it compares four configurations under {{nAttacks}} attack variants and three open-weight models of {{modelRange}}: an LLM that decides, the same with a prompt-level defense, an LLM that only extracts fields for a logistic scorecard (B), and B with schema, cross-document and plausible-band checks and a human-review rule (C). For the two models that do not approve everyone, injected instructions steer the deciding LLM in {{asrPhiAInstr}}% and {{asrOlmoAInstr}}% of attacked cases and still in {{asrPhiAdefInstr}}% and {{asrOlmoAdefInstr}}% with a prompt defense. As extractors the same models are steered in {{asrPhiBInstr}}% and {{asrOlmoBInstr}}% of cases, mostly by payloads that name the values to write, and C records no success in {{asrPhiCInstrn}} Phi pairs or {{asrOlmoCInstrn}} Olmo pairs (95% upper bounds {{asrPhiCInstrhi}}% and {{asrOlmoCInstrhi}}%). Falsified documents succeed against B in {{asrPhiBExtract}}% to {{asrQwenBExtract}}% of cases, about as often as or less often than with an oracle extractor that makes no error, so the LLM adds no success of its own. C lowers it to {{asrQwenCExtract}}% to {{asrOlmoCExtract}}% and flags {{reviewPhiC}}% to {{reviewQwenC}}% of clean bundles for review, a cost that follows mainly from extraction errors, since {{flagWrongPhi}}% to {{flagWrongQwen}}% of the flagged bundles contain a wrongly extracted or missing field. Olmo-3 7B ran on 200 applicants and 50 targets, so its intervals are wide. Per model, the preregistered rules are met as follows: H1 (B at or below 2% on instruction attacks) for one of three models, H2 (extraction-manipulation success rising with plausibility) for two, and H3 (C lowers extraction success at a higher review rate) for all three. By the majority rule H1 is not supported and H2 and H3 are.",
   "scope": "All documents and attack payloads are synthetic. The documents are generated from rows of the public Give Me Some Credit dataset, with fictional names, employers and identifiers, and no real applicant documents, company documents or live systems are involved. The study covers three small open-weight models, a fixed set of 26 attacks written before any model ran and no adaptive attacker. The plan, the hypotheses and their decision rules were fixed before any model ran on study data. Every later change, including the corrected group sizes and the run sizes, is in <code>docs/decisions.md</code> and the preregistration addenda. This is independent research. It is not produced, reviewed or endorsed by any lender, model provider or owner of the data, and it is not a tool for credit decisions.",
   "table": {
     "title": "Attack success by architecture, model and attack type",
-    "header": ["Architecture", "Categories 1 to 4 (%)", "Extraction manipulation (%)", "Clean bundles referred (%)", "Clean bundles flagged by checks (%)"],
+    "header": [
+      "Architecture",
+      "Categories 1 to 4 (%)",
+      "Extraction manipulation (%)",
+      "Clean bundles referred (%)",
+      "Clean bundles flagged by checks (%)"
+    ],
     "groups": [
-      {"name": "Qwen2.5 1.5B", "rows": [
-        ["A: LLM decides", "{{asrQwenAInstr}}", "{{asrQwenAExtract}}", "{{referQwenA}}", "n/a"],
-        ["A + prompt defense", "{{asrQwenAdefInstr}}", "{{asrQwenAdefExtract}}", "{{referQwenAdef}}", "n/a"],
-        ["B: LLM extracts, scorecard decides", "{{asrQwenBInstr}}", "{{asrQwenBExtract}}", "{{referQwenB}}", "n/a"],
-        ["C: B + checks", "{{asrQwenCInstr}}", "{{asrQwenCExtract}}", "{{referQwenC}}", "{{reviewQwenC}}"]]},
-      {"name": "Phi-4-mini 3.8B", "rows": [
-        ["A: LLM decides", "{{asrPhiAInstr}}", "{{asrPhiAExtract}}", "{{referPhiA}}", "n/a"],
-        ["A + prompt defense", "{{asrPhiAdefInstr}}", "{{asrPhiAdefExtract}}", "{{referPhiAdef}}", "n/a"],
-        ["B: LLM extracts, scorecard decides", "{{asrPhiBInstr}}", "{{asrPhiBExtract}}", "{{referPhiB}}", "n/a"],
-        ["C: B + checks", "{{asrPhiCInstr}}", "{{asrPhiCExtract}}", "{{referPhiC}}", "{{reviewPhiC}}"]]},
-      {"name": "Olmo-3 7B (200 applicants, 50 targets)", "rows": [
-        ["A: LLM decides", "{{asrOlmoAInstr}}", "{{asrOlmoAExtract}}", "{{referOlmoA}}", "n/a"],
-        ["A + prompt defense", "{{asrOlmoAdefInstr}}", "{{asrOlmoAdefExtract}}", "{{referOlmoAdef}}", "n/a"],
-        ["B: LLM extracts, scorecard decides", "{{asrOlmoBInstr}}", "{{asrOlmoBExtract}}", "{{referOlmoB}}", "n/a"],
-        ["C: B + checks", "{{asrOlmoCInstr}}", "{{asrOlmoCExtract}}", "{{referOlmoC}}", "{{reviewOlmoC}}"]]}
+      {
+        "name": "Qwen2.5 1.5B",
+        "rows": [
+          [
+            "A: LLM decides",
+            "{{asrQwenAInstr}}",
+            "{{asrQwenAExtract}}",
+            "{{referQwenA}}",
+            "n/a"
+          ],
+          [
+            "A + prompt defense",
+            "{{asrQwenAdefInstr}}",
+            "{{asrQwenAdefExtract}}",
+            "{{referQwenAdef}}",
+            "n/a"
+          ],
+          [
+            "B: LLM extracts, scorecard decides",
+            "{{asrQwenBInstr}}",
+            "{{asrQwenBExtract}}",
+            "{{referQwenB}}",
+            "n/a"
+          ],
+          [
+            "C: B + checks",
+            "{{asrQwenCInstr}}",
+            "{{asrQwenCExtract}}",
+            "{{referQwenC}}",
+            "{{reviewQwenC}}"
+          ]
+        ]
+      },
+      {
+        "name": "Phi-4-mini 3.8B",
+        "rows": [
+          [
+            "A: LLM decides",
+            "{{asrPhiAInstr}}",
+            "{{asrPhiAExtract}}",
+            "{{referPhiA}}",
+            "n/a"
+          ],
+          [
+            "A + prompt defense",
+            "{{asrPhiAdefInstr}}",
+            "{{asrPhiAdefExtract}}",
+            "{{referPhiAdef}}",
+            "n/a"
+          ],
+          [
+            "B: LLM extracts, scorecard decides",
+            "{{asrPhiBInstr}}",
+            "{{asrPhiBExtract}}",
+            "{{referPhiB}}",
+            "n/a"
+          ],
+          [
+            "C: B + checks",
+            "{{asrPhiCInstr}}",
+            "{{asrPhiCExtract}}",
+            "{{referPhiC}}",
+            "{{reviewPhiC}}"
+          ]
+        ]
+      },
+      {
+        "name": "Olmo-3 7B (200 applicants, 50 targets)",
+        "rows": [
+          [
+            "A: LLM decides",
+            "{{asrOlmoAInstr}}",
+            "{{asrOlmoAExtract}}",
+            "{{referOlmoA}}",
+            "n/a"
+          ],
+          [
+            "A + prompt defense",
+            "{{asrOlmoAdefInstr}}",
+            "{{asrOlmoAdefExtract}}",
+            "{{referOlmoAdef}}",
+            "n/a"
+          ],
+          [
+            "B: LLM extracts, scorecard decides",
+            "{{asrOlmoBInstr}}",
+            "{{asrOlmoBExtract}}",
+            "{{referOlmoB}}",
+            "n/a"
+          ],
+          [
+            "C: B + checks",
+            "{{asrOlmoCInstr}}",
+            "{{asrOlmoCExtract}}",
+            "{{referOlmoC}}",
+            "{{reviewOlmoC}}"
+          ]
+        ]
+      }
     ],
     "note": "Attack success is the share of applicants whom the clean scorecard would refer or decline that an architecture approves under attack. Categories 1 to 4 are instruction-style injections, and extraction manipulation changes what the documents say. Qwen2.5 1.5B approves {{cleanApproveQwenA}}% of these applicants even on clean documents, so its A rows start high. Phi-4-mini and Olmo-3 7B approve none of them on clean documents (0 of 150 and 0 of 50), which makes every approval under an instruction attack attack-caused, and keeps their A rows for extraction manipulation low because these deciders approve almost no one. Referred counts every refer outcome on the clean utility sample: the scorecard's own referrals, parse failures and, for C, the bundles its checks flag. Flagged counts only the checks of C, and A and B have none. A 0.0 means no success among the pairs tested. The 95% upper bound for a zero is {{asrPhiCInstrhi}}% with the {{asrPhiCInstrn}} instruction pairs of Qwen and Phi and {{asrOlmoCInstrhi}}% with the {{asrOlmoCInstrn}} pairs of Olmo."
   },
   "findings_title": "What the evaluation shows",
   "findings": [
-    {"title": "Moving the decision out of the LLM removes most instruction-injection success",
-     "text": "Pooled over the four instruction categories, B succeeds in {{asrQwenBInstr}}%, {{asrPhiBInstr}}% and {{asrOlmoBInstr}}% of attacked cases (Qwen, Phi, Olmo), against {{asrPhiAInstr}}% and {{asrOlmoAInstr}}% for the LLM decider on the two models that do not approve everyone. A prompt-level defense reaches {{asrPhiAdefInstr}}% and {{asrOlmoAdefInstr}}%, and does not stop forged role markers or injected JSON."},
-    {"title": "Payloads that name values still get through the extractor",
-     "text": "Two variants whose payloads state the income to write account for most of B's remaining instruction-injection successes, which is why the preregistered limit of 2% holds for Olmo-3 7B only. C flags these cases through its cross-document checks, because the injected income disagrees with the declared income and the deposits."},
-    {"title": "Falsified documents succeed with or without an LLM",
-     "text": "B succeeds on falsified documents in {{asrQwenBExtract}}%, {{asrPhiBExtract}}% and {{asrOlmoBExtract}}% of cases. An oracle extractor that reads the stated values exactly reaches {{asrQwenBorExtract}}%, {{asrPhiBorExtract}}% and {{asrOlmoBorExtract}}%. Three variants dominate: a payslip in Kenyan shillings, an understated revolving balance and zeroed late-payment counts."},
-    {"title": "Checks cost review time, and extraction errors set the price",
-     "text": "C lowers falsification success to {{asrQwenCExtract}}%, {{asrPhiCExtract}}% and {{asrOlmoCExtract}}%, and flags {{reviewQwenC}}%, {{reviewPhiC}}% and {{reviewOlmoC}}% of clean bundles. Most of those flags follow from extraction errors, such as net pay read as gross pay or an empty field, so a more accurate extractor lowers the review burden without weakening the checks."}
+    {
+      "title": "Moving the decision out of the LLM removes most instruction-injection success",
+      "text": "Pooled over the four instruction categories, B succeeds in {{asrQwenBInstr}}%, {{asrPhiBInstr}}% and {{asrOlmoBInstr}}% of attacked cases (Qwen, Phi, Olmo), against {{asrPhiAInstr}}% and {{asrOlmoAInstr}}% for the LLM decider on the two models that do not approve everyone. A prompt-level defense reaches {{asrPhiAdefInstr}}% and {{asrOlmoAdefInstr}}%, and does not stop forged role markers or injected JSON."
+    },
+    {
+      "title": "Payloads that name values still get through the extractor",
+      "text": "Two variants whose payloads state the income to write account for most of B's remaining instruction-injection successes, which is why the preregistered limit of 2% holds for Olmo-3 7B only. C flags these cases through its cross-document checks, because the injected income disagrees with the declared income and the deposits."
+    },
+    {
+      "title": "Falsified documents succeed with or without an LLM",
+      "text": "B succeeds on falsified documents in {{asrQwenBExtract}}%, {{asrPhiBExtract}}% and {{asrOlmoBExtract}}% of cases. An oracle extractor that reads the stated values exactly reaches {{asrQwenBorExtract}}%, {{asrPhiBorExtract}}% and {{asrOlmoBorExtract}}%. Three variants dominate: a payslip in Kenyan shillings, an understated revolving balance and zeroed late-payment counts."
+    },
+    {
+      "title": "Checks cost review time, and extraction errors set the price",
+      "text": "C lowers falsification success to {{asrQwenCExtract}}%, {{asrPhiCExtract}}% and {{asrOlmoCExtract}}%, and flags {{reviewQwenC}}%, {{reviewPhiC}}% and {{reviewOlmoC}}% of clean bundles. Most of those flags follow from extraction errors, such as net pay read as gross pay or an empty field, so a more accurate extractor lowers the review burden without weakening the checks."
+    }
   ],
   "figures": [
-    {"src": "paper/figures/fig_asr_by_category.png", "alt": "Attack success rate by category, architecture and model", "caption": "Attack success rate by attack category, architecture and model, with Wilson 95% intervals. The dashed line marks the share of targets that Qwen's A approves on clean documents"},
-    {"src": "paper/figures/fig_variants.png", "alt": "Attack success rate of each extraction manipulation variant", "caption": "Success of each extraction-manipulation variant against B, C and B with an oracle extractor"},
-    {"src": "paper/figures/fig_tradeoff.png", "alt": "Review rate against attack success as checks are enabled", "caption": "Review rate on clean inputs against extraction-manipulation success as the check groups are enabled one after another"},
-    {"src": "paper/figures/fig_plausibility.png", "alt": "Attack success by plausibility of the falsified value", "caption": "Attack success by plausibility of the falsified value. The oracle follows the same curve, so the pattern shows which falsified values flip decisions"},
-    {"src": "paper/figures/fig_clean_utility.png", "alt": "Clean-input AUROC, referral share and agreement by architecture and model", "caption": "Clean-input decision quality: AUROC, share referred to a human and agreement with the tabular scorecard"}
+    {
+      "src": "paper/figures/fig_asr_by_category.png",
+      "alt": "Attack success rate by category, architecture and model",
+      "caption": "Attack success rate by attack category, architecture and model, with Wilson 95% intervals. The dashed line marks the share of targets that Qwen's A approves on clean documents"
+    },
+    {
+      "src": "paper/figures/fig_variants.png",
+      "alt": "Attack success rate of each extraction manipulation variant",
+      "caption": "Success of each extraction-manipulation variant against B, C and B with an oracle extractor"
+    },
+    {
+      "src": "paper/figures/fig_tradeoff.png",
+      "alt": "Review rate against attack success as checks are enabled",
+      "caption": "Review rate on clean inputs against extraction-manipulation success as the check groups are enabled one after another"
+    },
+    {
+      "src": "paper/figures/fig_plausibility.png",
+      "alt": "Attack success by plausibility of the falsified value",
+      "caption": "Attack success by plausibility of the falsified value. The oracle follows the same curve, so the pattern shows which falsified values flip decisions"
+    },
+    {
+      "src": "paper/figures/fig_clean_utility.png",
+      "alt": "Clean-input AUROC, referral share and agreement by architecture and model",
+      "caption": "Clean-input decision quality: AUROC, share referred to a human and agreement with the tabular scorecard"
+    }
   ],
   "data": {
     "title": "Data",
-    "header": ["Item", "Role", "Size"],
+    "header": [
+      "Item",
+      "Role",
+      "Size"
+    ],
     "rows": [
-      ["Give Me Some Credit (Kaggle, 2011)", "Applicant records and default labels", "{{nCleanRows}} cleaned rows"],
-      ["Synthetic documents", "Payslip, bank statement and application form per applicant", "Generated, fixed seeds"],
-      ["Attack catalogue", "Five categories of injection and falsification", "{{nAttacks}} variants, fixed before any run"],
-      ["Open-weight models", "Qwen2.5-1.5B-Instruct, Phi-4-mini-instruct, Olmo-3-7B-Instruct", "fp16, greedy decoding"],
-      ["Cached model outputs", "Raw outputs replayed through every architecture", "One JSON line per call"]
+      [
+        "Give Me Some Credit (Kaggle, 2011)",
+        "Applicant records and default labels",
+        "{{nCleanRows}} cleaned rows"
+      ],
+      [
+        "Synthetic documents",
+        "Payslip, bank statement and application form per applicant",
+        "Generated, fixed seeds"
+      ],
+      [
+        "Attack catalogue",
+        "Five categories of injection and falsification",
+        "{{nAttacks}} variants, fixed before any run"
+      ],
+      [
+        "Open-weight models",
+        "Qwen2.5-1.5B-Instruct, Phi-4-mini-instruct, Olmo-3-7B-Instruct",
+        "fp16, greedy decoding"
+      ],
+      [
+        "Cached model outputs",
+        "Raw outputs replayed through every architecture",
+        "One JSON line per call"
+      ]
     ],
     "note": "The Give Me Some Credit data is not redistributed here. Download it from Kaggle (brycecf/give-me-some-credit-dataset). Generated data, outputs and the paper are released under CC BY 4.0, and the code under the MIT licence."
   },
   "bibtex": "@misc{ouma2026underwriting,\n  title   = {Where Should the {LLM} Sit? Architectural Defenses\n             Against Document-Borne Prompt Injection in\n             Automated Credit Underwriting},\n  author  = {Ouma, Craig Carlos},\n  year    = {2026},\n  month   = {November},\n  note    = {Preprint},\n  url     = {https://craigouma.github.io/llm-underwriting-injection/}\n}",
   "links": [
-    {"label": "GitHub", "url": "https://github.com/craigouma/llm-underwriting-injection"},
-    {"label": "Sentinel-1 Flood Mapping, Kenya", "url": "https://craigouma.github.io/kenya-floods-sar-2024/"},
-    {"label": "EO Drought and Food Security", "url": "https://craigouma.github.io/eo-drought-food-security-kenya/"},
-    {"label": "Child Nutrition SHAP", "url": "https://craigouma.github.io/child-nutrition-shap/"},
-    {"label": "Neonatal Early Warning", "url": "https://craigouma.github.io/neonatal-paper/"},
-    {"label": "ECG Classification", "url": "https://craigouma.github.io/ptbxl-ecg-paper/"},
-    {"label": "Credit Default SHAP", "url": "https://craigouma.github.io/credit-default/"}
+    {
+      "label": "GitHub",
+      "url": "https://github.com/craigouma/llm-underwriting-injection"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=hI6OXwsAAAAJ&hl=en"
+    },
+    {
+      "label": "Sentinel-1 Flood Mapping, Kenya",
+      "url": "https://craigouma.github.io/kenya-floods-sar-2024/"
+    },
+    {
+      "label": "EO Drought and Food Security",
+      "url": "https://craigouma.github.io/eo-drought-food-security-kenya/"
+    },
+    {
+      "label": "Child Nutrition SHAP",
+      "url": "https://craigouma.github.io/child-nutrition-shap/"
+    },
+    {
+      "label": "Neonatal Early Warning",
+      "url": "https://craigouma.github.io/neonatal-paper/"
+    },
+    {
+      "label": "ECG Classification",
+      "url": "https://craigouma.github.io/ptbxl-ecg-paper/"
+    },
+    {
+      "label": "Credit Default SHAP",
+      "url": "https://craigouma.github.io/credit-default/"
+    }
   ],
   "footer": [
     "Craig Carlos Ouma &middot; Independent Researcher &middot; 2026",

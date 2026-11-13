@@ -1,0 +1,135 @@
+{
+  "meta": {
+    "title": "Compact 1D Residual Networks for Efficient 12-Lead ECG Classification",
+    "subtitle": "A PTB-XL Benchmarking Study",
+    "scholar_title": "Compact 1D Residual Networks for Efficient 12-Lead ECG Classification: A PTB-XL Benchmarking Study",
+    "html_title": "Efficient ECG Classification — Craig Carlos Ouma",
+    "og_title": "Compact 1D ResNet for ECG Classification — Craig Carlos Ouma",
+    "og_description": "ResNet1D-Lite (1M params, 4MB) matches ResNet1D-Full (8.6M params) on PTB-XL diagnostic superclass classification — macro AUROC 0.9253 vs 0.9246 at 8.65× fewer parameters.",
+    "tags": [
+      "Preprint",
+      "Open Code"
+    ],
+    "date_label": "June 2026",
+    "year": "2026",
+    "online_date": "2026/06/13",
+    "authors": [
+      {
+        "name": "Craig Carlos Ouma",
+        "scholar": "Ouma, Craig Carlos",
+        "affiliation": "Independent Researcher",
+        "email": "craigcarlos95@gmail.com"
+      }
+    ],
+    "site_url": "https://craigouma.github.io/ptbxl-ecg-paper/",
+    "pdf": "ptbxl_efficient_ecg.pdf",
+    "keywords": [
+      "ECG classification",
+      "ResNet1D",
+      "PTB-XL",
+      "efficient deep learning",
+      "resource-constrained",
+      "cardiology",
+      "arrhythmia"
+    ],
+    "keywords_display": [
+      "12-lead ECG",
+      "ResNet1D",
+      "PTB-XL",
+      "Efficient deep learning",
+      "Multi-label classification",
+      "Edge deployment",
+      "Resource-constrained settings",
+      "Cardiology",
+      "Model compression"
+    ]
+  },
+  "actions": [
+    {
+      "label": "Download PDF",
+      "url": "ptbxl_efficient_ecg.pdf"
+    },
+    {
+      "label": "Code &amp; Notebook",
+      "url": "https://github.com/craigouma/ptbxl-ecg-paper"
+    },
+    {
+      "label": "Dataset",
+      "url": "https://www.kaggle.com/datasets/khyeh0719/ptb-xl-dataset-reformatted"
+    }
+  ],
+  "stats": [
+    {
+      "value": "21,801",
+      "label": "ECG recordings"
+    },
+    {
+      "value": "0.9253",
+      "label": "Lite macro AUROC"
+    },
+    {
+      "value": "8.65×",
+      "label": "Parameter reduction"
+    },
+    {
+      "value": "4 MB",
+      "label": "Lite model size"
+    }
+  ],
+  "key_finding": "ResNet1D-Lite (1.0M parameters, 4 MB) matches and marginally exceeds ResNet1D-Full (8.6M parameters, 34.5 MB) on macro AUROC — 0.9253 vs 0.9246 — at 8.65× fewer parameters, demonstrating competitive ECG classification within a footprint suitable for edge deployment.",
+  "abstract": "Automated 12-lead ECG classification has reached near-cardiologist accuracy on established benchmarks, yet most published models are too large for the low-resource clinical hardware common in sub-Saharan Africa and other resource-constrained settings. We ask whether a substantially smaller architecture can match the discriminative performance of a full-scale model on the PTB-XL diagnostic superclass task. We train two 1D residual networks — ResNet1D-Full (8.6M parameters, 34.5 MB) and ResNet1D-Lite (1.0M parameters, 4.0 MB) — on the same five-class multi-label task (NORM, MI, STTC, CD, HYP) using the standard PTB-XL train/validation/test split. On the held-out test set, ResNet1D-Lite achieves a macro AUROC of 0.9253 versus 0.9246 for ResNet1D-Full, exceeding the larger model at 8.65× fewer parameters. ResNet1D-Lite also generalises better: its post-peak validation AUROC decay (0.0103) is roughly half that of ResNet1D-Full (0.0181), indicating that capacity reduction acts as implicit regularisation. These results demonstrate that a compact 1D ResNet is sufficient for competitive diagnostic superclass classification on PTB-XL, with model size and storage requirements compatible with edge deployment.",
+  "figures_title": "Key Results",
+  "figures": [
+    [
+      {
+        "src": "fig_per_class_auroc.png",
+        "alt": "Per-class AUROC comparison",
+        "caption": "Per-class &amp; macro AUROC — test set"
+      },
+      {
+        "src": "fig_training_curves.png",
+        "alt": "Training curves",
+        "caption": "Validation AUROC &amp; training loss over 40 epochs"
+      }
+    ]
+  ],
+  "bibtex": "@misc{ouma2026ecg,\n  title   = {Compact 1D Residual Networks for Efficient\n             12-Lead {ECG} Classification:\n             A {PTB-XL} Benchmarking Study},\n  author  = {Ouma, Craig Carlos},\n  year    = {2026},\n  month   = {June},\n  note    = {Preprint},\n  url     = {https://craigouma.github.io/ptbxl-ecg-paper/}\n}",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/craigouma/ptbxl-ecg-paper"
+    },
+    {
+      "label": "Google Scholar",
+      "url": "https://scholar.google.com/citations?user=hI6OXwsAAAAJ&hl=en"
+    },
+    {
+      "label": "Where Should the LLM Sit?",
+      "url": "https://craigouma.github.io/llm-underwriting-injection/"
+    },
+    {
+      "label": "Sentinel-1 Flood Mapping, Kenya",
+      "url": "https://craigouma.github.io/kenya-floods-sar-2024/"
+    },
+    {
+      "label": "EO Drought and Food Security",
+      "url": "https://craigouma.github.io/eo-drought-food-security-kenya/"
+    },
+    {
+      "label": "Child Nutrition SHAP",
+      "url": "https://craigouma.github.io/child-nutrition-shap/"
+    },
+    {
+      "label": "Neonatal Early Warning",
+      "url": "https://craigouma.github.io/neonatal-paper/"
+    },
+    {
+      "label": "Credit Default SHAP",
+      "url": "https://craigouma.github.io/credit-default/"
+    }
+  ],
+  "footer": [
+    "Craig Carlos Ouma &middot; Independent Researcher &middot; 2026",
+    "Dataset: PTB-XL (Wagner et al. 2020, CC BY 4.0)"
+  ]
+}
